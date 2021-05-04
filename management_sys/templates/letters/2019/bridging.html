@@ -1,0 +1,152 @@
+{% load static %}
+{% load custom_tags %}
+<html>
+<head>
+
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Applicant Placement and Management System | Print page</title>
+    <!-- uikit -->
+    <link rel="stylesheet" href="https://ttuportal.com/static/bower_components/uikit/css/uikit.almost-flat.min.css"
+          media="all">
+
+
+    <link rel="stylesheet" href="https://ttuportal.com/static/assets/css/main.min.css" media="all">
+
+
+    <link rel="stylesheet" href="https://ttuportal.com/static/assets/css/themes/themes_combined.min.css" media="all">
+
+    <style>
+        body {
+            font-size: 13px;
+
+        }
+
+    </style>
+
+</head>
+<body>
+{#<a onclick="javascript:printDiv('print')" class="btn btn-outline-info ks-light">Click to print letter</a>#}
+<div id="print">
+
+    <div id="page1">
+        <input type="hidden" value="{{ applicant.id }}" class="data"/>
+
+        <img src="https://ttuportal.com/static/assets/img/header.jpg" alt="photo" style="margin-top: -460px"
+             class="ui fluid image"/>
+
+
+        <br/>
+        <div class="content" id="regular">
+            <div class="watermark">
+
+                <div id="photo" style="margin-left: 622px;margin-top: -150px">
+
+                    <img alt="photo"
+                              src="https://ttuportal.com/admissions_portal/public/albums/thumbnails/{{ applicant.application_number }}.jpg"
+
+                         style="width:96px;height: auto ">
+
+
+                </div>
+
+                <div style="margin-left: 2px;text-align: justify">
+                    <div style="margin-left: 0px">
+                        <p style="text-transform: capitalize">Dear <span
+                                style=""> {{ applicant.title | upper }}. {{ applicant.name |upper }}</span></p>
+                    </div>
+                    <center><b>OFFER OF ADMISSION
+                        - {{ applicant.programme_admitted.department.faculty_id.faculty_name | upper }}
+                        {% if applicant.nationality.name == 'Ghana' %}
+
+                            (GHANAIAN)
+
+                        {% else %}
+                            (INTERNATIONAL STUDENT)
+                        {% endif %}
+                        - ADMISSION
+
+                        N<u>O </u>: {{ applicant.application_number }} </b></center>
+                    <hr>
+
+                    <div id="letter">
+                        <p> We write on behalf of the Academic Board to offer you admission to Takoradi Technical
+                            University, to pursue a Six Month (6) programme of study (Bridging Programme) leading to
+                            admission into  ({{ applicant.programme_admitted.name }})
+                            programme.
+                        </p>
+
+                        <p>All payment of fees should be done with your admission number above.</p>
+
+
+                        <p>1. Your admission is for <b>the {{ applicant.letter_settings.working_year }} Academic
+                            Year.</b> If you fail to enroll, or if
+
+                            you withdraw from the programme without prior approval from the University,
+                            you shall forfeit the admission automatically.
+                        </p>
+                        <p>2. <b>The {{ applicant.letter_settings.working_year }} Academic Year</b> is scheduled to
+                            begin on 26th April, 2019.
+                        </p>
+                        <p>3.
+                            You are required to make a <b>PAYMENT</b> of <b>
+                                GH¢1500.00
+                            </b>
+
+                            at any
+                            branch of
+
+
+                                Zenith Bank into Account 6010406900
+
+                            with this admission number <b>{{ applicant.application_number }}</b>
+                            . If you do not indicate acceptance of
+                            this
+                            admission by paying the fees before
+                            <b>{{ applicant.letter_settings.fees_deadline |date:"l jS F Y" }},</b> your admission will
+
+                            be offered to another applicant on the waiting list. You are to make a photocopy of the
+
+                            pay-in-slip for keeps and present the original to the University’s Directorate of
+                            Finance on your arrival on campus. Indicate your admission number and
+                            programme of study on the pay-in-slip. Any Applicant who fails to <b>PAY</b> the
+                            fees
+                            forfeits his/her admission.
+                            <span> <b>Note: Fee payment is for the six months bridging programme.</b>
+
+                            </span>
+
+                        </p>
+                        <p> You will be dismissed at any time for misconduct. You will be required to adhere to ALL the
+                            rules and regulations of the University as contained in the University’s, Examination
+                            Policy, Ethics Policy and Students’ Handbook.</p>
+
+                        <p> Applicants will also be held personally responsible for any false statement or omission made
+                            in their applications.</p>
+
+                        <p>Please, accept my congratulations on your admission to the University.</p>
+
+                        <p>Yours faithfully</p>
+                        <p><img src="https://ttuportal.com/static/assets/img/signature_2019.png"
+                                style="width:90px;height:auto;"/></p>
+                        <p>SNR. ASSISTANT REGISTRAR(ADMISSIONS)<br/>For: REGISTRAR</p>
+
+                    </div>
+
+                    <div id="foot">
+                        <img src="https://ttuportal.com/static/assets/img/footer.jpg" style="width:1086px;height: auto"
+                             class="image-responsive responsive"/>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+

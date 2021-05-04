@@ -1,0 +1,6 @@
+{% for message in messages %}
+  <div class="uk-alert {{ message.tags }} uk-alert-dismissible" role="uk-alert">
+
+    {{ message }}
+  </div>
+{% endfor %}

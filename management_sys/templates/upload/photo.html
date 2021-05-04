@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+
+
+    {% for message in messages %}
+        {% if 'success' in message.tags %}
+
+
+            <div style="text-align: center;" class="uk-alert uk-alert-success" data-uk-alert="">
+                {{ message }}</div>
+
+        {% endif %}
+
+        {% if 'error' in message.tags %}
+
+
+            <div style="text-align: center;" class="uk-alert uk-alert-error" data-uk-alert="">
+                {{ message }}
+            </div>
+        {% endif %}
+
+    {% endfor %}
+
+
+    <h4 class="heading_c uk-margin-small-bottom uk-text-primary">
+        White Background Passport Picture. Only (.JPG .JPEG) are allowed.Max size 250KB.
+    </h4>
+
+    <div class="md-card uk-margin-medium-bottom">
+        <div class="md-card-content">
+            <div class="uk-overflow-container">
+
+
+                <div align="center">
+
+
+                    <form id="form" method="POST" action="{% url 'upload_photo' %}" enctype="multipart/form-data" accept-charset="utf-8" name="applicationForm" v-form>
+
+ {% csrf_token %}
+
+                        <div class="uk-width-medium-3-10">
+                        <label>Applicant form number</label>
+                        <p></p>
+                        <input type="number" v-model="forms"  v-form-ctrl="" class="md-input forms" name="forms" required="">
+
+                    </div>
+                        <input type="file" accept="image/jpeg" id="input-file-e" required="" name="file" v-model="file"
+                               v-form-ctrl="" class="dropify" data-max-file-size="2000K"/>
+
+
+                        <div class="uk-grid">
+                            <div class="uk-width-1-1">
+                                <input type="submit" v-show="applicationForm.$valid" class="md-btn md-btn-primary"
+                                       value="upload"/>
+                            </div>
+
+                        </div>
+
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}

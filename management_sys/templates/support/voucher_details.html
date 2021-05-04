@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+{% block contents %}
+
+
+    <center><h3 class="heading_c uk-margin-bottom">Change of Form Type</h3></center>
+
+
+    <form method="POST" name="applicationForm" v-form novalidate>
+        {% csrf_token %}
+        <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
+            <div class="uk-width-medium-1-2">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <div class="uk-overflow-container">
+                            <table>
+                                <tr>
+                                    <td align="">
+                                        <div align="right" class=" ">Block / Unblock</div>
+                                    </td>
+                                    <td>
+                                        <select name="type" required="" class="md-input type" v-form-ctrl=''
+                                                v-model='type'
+                                                v-select=''>
+                                            <option value="">--select--</option>
+                                            <option value="HND">HND</option>
+
+                                            <option value="HND">BRIDGING</option>
+                                            <option value="MATURE">MATURE</option>
+                                            <option>DIPLOMA</option>
+                                            <option>BTECH</option>
+                                            <option>DEGREE</option>
+                                            <option>MTECH</option>
+
+                                        </select>
+                                        <p class="uk-text-danger uk-text-small"
+                                           v-if="applicationForm.type.$error.required">Action is required</p>
+
+
+                                    </td>
+                                </tr>
+
+                            </table>
+                            <p></p>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="uk-width-medium-1-2">
+                <div class="md-card">
+                    <div class="md-card-content">
+                        <table>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td><b>BIODATA</b></td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td align="">
+                                                <div align="right">Form Type:</div>
+                                            </td>
+                                            <td class="uk-text-primary uk-text-bold">
+                                                {{ applicant.applicationuserid.type }}
+
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="">
+                                                <div align="right">Admission Number:</div>
+                                            </td>
+                                            <td>
+                                                {{ applicant.applicationnumber }}
+                                                <input type="hidden" class="applicant" name="applicant" id="applicant"
+                                                       value="{{ applicant.applicationnumber }}"/>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td align="">
+                                                <div align="right">Full Name:</div>
+                                            </td>
+                                            <td>
+                                                {{ applicant.firstname }} {{ applicant.lastname }}
+                                                <input type="hidden" class="applicant_name" name="name" id="name"
+                                                       value="{{ applicant.firstname }}"/>
+
+                                            </td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td align="">
+                                                <div align="right" class="uk-text-success">Phone N<u>o</u>:</div>
+                                            </td>
+                                            <td>
+
+                                                {{ applicant.phone }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td valign="top">
+
+
+                                    <img class="ks-avatar"
+                                         src="https://photos.ttuportal.com/public/albums/thumbnails/{{ applicant.applicationnumber }}.jpg"
+                                         style="width:150px;height: auto;">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <p></p>
+        <center>
+
+
+            <input type="button" v-show="applicationForm.$valid" type="button" value="Submit"
+                   class="md-btn md-btn-primary types"/>
+
+
+        </center>
+
+
+    </form>
+
+{% endblock %}
+
+
+
+{% block js %}
+
+    <script type="text/javascript"></script>
+
+
+{% endblock %}

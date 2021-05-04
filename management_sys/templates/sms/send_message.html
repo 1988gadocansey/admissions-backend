@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+
+    <h3 class="heading_c uk-margin-bottom">Send SMS here</h3>
+
+    <div class="md-card uk-margin-medium-bottom">
+        <div class="md-card-content">
+            <div class="uk-overflow-container">
+            <center> <p>Insert the following placeholders into the message [name] [first_name] [last_name] [application_number] [hall_admitted] [admission_fees] <br/>[programme_admitted]</p></center>
+
+
+                <form method="POST" name="admission" v-form novalidate >
+                    {% csrf_token %}
+
+
+                    <div class="uk-width-medium-3-10">
+
+                         <label for="product_search_price">Phone numbers</label>
+
+                        <input type="text" class="md-input phone" name="phone" required="" v-model="phone" v-form-ctrl="">
+                        <p class="uk-text-danger text-small" v-if="admission.phone.$error.required">Phone number is
+                            required</p>
+
+                    </div>
+
+
+                    <div class="uk-width-medium-3-10">
+                        <label>Message</label>
+
+                        <textarea class="md-input message" name="message" cols="7" rows="8" v-model="message" v-form-ctrl="" required="" ></textarea>
+
+                        <p class="uk-text-danger text-small" v-if="admission.message.$error.required">Message is
+                            required</p>
+
+                    </div>
+
+
+                    <div class="uk-width-medium-3-10">
+
+
+                        <button type="button" class="md-btn sms md-btn-small md-btn-success uk-margin-small-top"
+                                id="snippet_new_save" v-show="admission.$valid">Send Message
+                        </button>
+
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+
+    <h3 class="heading_c uk-margin-bottom">WAEC Results verification Page</h3>
+
+    <div class="md-card uk-margin-medium-bottom">
+        <div class="md-card-content">
+            <div class="uk-overflow-container">
+
+
+                <form method="POST" name="admission"
+                      action="{% url 'export_xlsx' %}" v-form>
+                    {% csrf_token %}
+
+
+                    <div class="uk-width-medium-3-10">
+                        <label>Programme</label>
+                        <p></p>
+                        <select required="required" class="md-input select" v-model="programme" v-form-ctrl=""
+                                v-select="programme" name="programme">
+                            <option selected="selected" value="">Select programme</option>
+
+                            {% for program in programme %}
+                                <option value="{{ program.id }}">{{ program.name|upper }}</option>
+                            {% endfor %}
+
+                        </select>
+                        <p class="uk-text-danger text-small" v-if="admission.programme.$error.required">Programme is
+                            required</p>
+
+                    </div>
+
+
+                    <div class="uk-width-medium-3-10">
+                        <label>Academic year</label>
+                        <p></p>
+                        <select required="required" class="md-input select" v-model="year" v-form-ctrl=""
+                                v-select="year" name="year">
+                            <option selected="selected" value="">Select year</option>
+
+
+                            {% for year in years %}
+                                <option value="{{ year }}">{{ year }}</option>
+                            {% endfor %}
+
+
+                        </select>
+                        <p class="uk-text-danger text-small" v-if="admission.year.$error.required">Year is
+                            required</p>
+
+                    </div>
+
+
+                    <div class="uk-width-medium-3-10">
+
+
+                        <button type="submit" class="md-btn  md-btn-small md-btn-success uk-margin-small-top"
+                                id="snippet_new_save" v-show="admission.$valid">Download excel
+                        </button>
+
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}

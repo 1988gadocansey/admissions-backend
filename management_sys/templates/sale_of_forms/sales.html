@@ -1,0 +1,682 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+    <div class="uk-width-xLarge-1-1" xmlns="http://www.w3.org/1999/html">
+        <div class="md-card">
+            <div class="md-card-content">
+                <form action="" class="form-inline" method="GET" id="group" accept-charset="utf-8">
+
+                    {% csrf_token %}
+
+                    <div class="uk-grid" data-uk-grid-margin="">
+
+
+                        <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <select class="md-input parent select" id="parent select" name="year">
+
+                                    <option value="">admission years</option>
+
+                                    <option value="2015/2016"
+                                            {% if 'year' in request.GET and request.GET.year == "2015/2016"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+                                    >
+
+
+                                        2015/2016
+                                    </option>
+                                    <option value="2016/2017"
+
+                                            {% if 'year' in request.GET and request.GET.year == "2016/2017"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+                                    >2016/2017
+                                    </option>
+                                    <option value="2017/2018"
+
+                                            {% if 'year' in request.GET and request.GET.year == "2017/2018"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >2017/2018
+                                    </option>
+                                    <option value="2018/2019"
+                                            {% if 'year' in request.GET and request.GET.year == "2018/2019"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+
+                                    >2018/2019
+                                    </option>
+                                    <option value="2019/2020"
+                                            {% if 'year' in request.GET and request.GET.year == "2019/2020"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+
+
+                                    >2019/2020
+                                    </option>
+                                    <option value="2020"
+                                            {% if 'year' in request.GET and request.GET.year == "2020"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+
+                                    >2020/2021
+                                    </option>
+                                    <option value="2021/2022"
+                                            {% if 'year' in request.GET and request.GET.year == "2021/2022"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+
+                                    >2021/2022
+                                    </option>
+                                    <option value="2022/2023"
+
+                                            {% if 'year' in request.GET and request.GET.year == "2022/2023"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+                                    >2022/2023
+                                    </option>
+                                    <option value="2023/2024"
+                                            {% if 'year' in request.GET and request.GET.year == "2023/2024"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+
+
+                                    >2023/2024
+                                    </option>
+                                    <option value="2024/2025"
+                                            {% if 'year' in request.GET and request.GET.year == "2024/2025"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+                                    >2025/2026
+                                    </option>
+                                    <option value="2025/2026"
+                                            {% if 'year' in request.GET and request.GET.year == "2025/2026"|striptags %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+                                    >2025/2026
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <select class="md-input parent select" name="type">
+
+
+                                    <option value="">All</option>
+
+
+                                    <option value="HND"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'HND' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >HND
+                                    </option>
+
+
+                                    <option value="BTECH"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'BTECH' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >BTECH
+
+
+                                    </option>
+
+                                    <option value="BRIDGING"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'BRIDGING' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >BRIDGING
+
+
+                                    </option>
+                                    <option value="MTECH"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'MTECH' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >MTECH
+
+
+                                    </option>
+
+                                    <option value="MATURE"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'MATURE' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >MATURE
+
+
+                                    </option>
+                                    <option value="DIPLOMA"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'DIPLOMA' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >DIPLOMA
+
+
+                                    </option>
+                                    <option value="ACCESS"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'ACCESS' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >ACCESS
+
+
+                                    </option>
+                                    <option value="CERTIFICATE"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'CERTIFICATE' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >CERTIFICATE
+
+
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <select class="md-input parent select" name="limit" id="select">
+
+
+                                    <option value="">Select total per page</option>
+
+
+                                    <option value="150"
+
+                                            {% if 'limit' in request.GET and request.GET.limit == '150' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >150
+                                    </option>
+
+                                    <option value="200"
+
+                                            {% if 'limit' in request.GET and request.GET.limit == '200' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >200
+                                    </option>
+
+                                    <option value="400"
+
+                                            {% if 'limit' in request.GET and request.GET.limit == '400' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >400
+                                    </option>
+
+
+                                    <option value="500"
+
+                                            {% if 'limit' in request.GET and request.GET.limit == '500' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >500
+                                    </option>
+
+
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <div class="uk-input-group">
+                                    <span class="uk-input-group-addon"><i
+                                            class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                    <input type="text" style="" data-uk-datepicker="{format:'YYYY-MM-DD'}" name="from"
+                                           id="invoice_dp" class="md-input" placeholder="Date from ">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="uk-width-medium-1-5">
+
+                            <div class="uk-margin-small-top">
+                                <div class="uk-input-group">
+                                    <span class="uk-input-group-addon"><i
+                                            class="uk-input-group-icon uk-icon-calendar"></i></span>
+                                    <input type="text" style="" data-uk-datepicker="{format:'YYYY-MM-DD'}" name="to"
+                                           class="md-input" placeholder="Date to">
+                                </div>
+                            </div>
+                        </div>
+
+                           <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <select class="md-input parent select" name="sold">
+
+                                      <option selected>Sold by</option>
+
+                                    <option value="">All</option>
+
+
+                                    <option value="TTU"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'TTU' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >TTU
+                                    </option>
+
+
+                                    <option value="POST"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'POST' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >POST
+
+
+                                    </option>
+
+                                    <option value="STANBIC"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'STANBIC' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >STANBIC
+
+
+                                    </option>
+                                    <option value="UBA"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'UBA' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >UBA
+
+
+                                    </option>
+                                <option value="CBGH"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'CBGH' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >CBGH
+
+
+                                    </option>
+
+                                 <option value="PRUDENTIAL"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'PRUDENTIAL' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >PRUDENTIAL
+
+
+                                    </option>
+
+                                    <option value="CALBANK"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'CALBANK' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >CALBANK
+
+
+                                    </option>
+                                    <option value="ZENITH"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'ZENITH' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >ZENITH
+
+
+                                    </option>
+                                    <option value="GCB"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'GCB' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >GCB
+
+
+                                    </option>
+
+                                </select>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <input type="text" style=" " name="search" class="md-input"
+                                       placeholder="search by name or phone number">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div align='center'>
+
+                        <button class="md-btn  md-btn-small md-btn-success uk-margin-small-top" type="submit"><i
+                                class="material-icons">search</i></button>
+                        <a title="click to refresh page" href="{% url 'sales' %}"
+                           class="md-btn  md-btn-small md-btn-success uk-margin-small-top">Clear Filters</a>
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <h3 class="heading_c uk-margin-bottom">Sales - Transactions  = {{ total}}</h3>
+
+
+
+
+    <div class="uk-width-xLarge-1-1">
+        <div class="md-card">
+            <div class="md-card-content">
+                <div class="uk-overflow-container" id='print'>
+
+                    <table class="uk-table uk-table-hover uk-table-condensed uk-table-align-vertical uk-table-nowrap tablesorterw tablesorter-altairw"
+                           id="ts_pager_filterw">
+                        <thead>
+                        <tr>
+                            <th class="filter-false remove sorter-false" data-priority="6">NO</th>
+                            <th>CUSTOMER NAME</th>
+
+                             <th>CUSTOMER PHONE</th>
+
+
+                            <th data-priority="critical">VOUCHER SERIAL</th>
+                            <th data-priority="critical">VOUCHER PIN</th>
+
+
+                            <th>FORM TYPE</th>
+                            <th>AMOUNT</th>
+                            <th>DATE SOLD</th>
+                             <th>UNIT</th>
+                            <th>SOLD BY</th>
+                            <TH>ACTION</TH>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+
+
+                            {% for record in data.object_list %}
+
+                            <tr>
+                                <td> {{ forloop.counter0|add:data.start_index }} {# starting index 1 #}</td>
+                                <td>{{ record.customer_name }}</td>
+                                <td>{{ record.customer_phone }}</td>
+                                <td>
+                                    {{ record.serial }}
+
+                                </td>
+                                <td>{{ record.pin }}</td>
+                                <td>{{ record.form_type }}</td>
+                                <td>{{ record.amount }}</td>
+                                <td>{{ record.date_sold | naturalday }}</td>
+                                <td>{{ record.belongs }}</td>
+                                <td>{{ record.sold_by.username }}</td>
+                                <td>
+
+                                    <input type="hidden" value="{{ record.id }}" id="ids" name="ids" class="ids"/>
+                                    <a onclick="return MM_openBrWindow('{% url 'print_receipt'  record.pin %}', 'mark', 'width=800,height=500')"><i
+                                            title='Click to print receipt .. please allow popups on browser'
+                                            class="md-icon material-icons">book</i>
+
+                                    </a>
+                                    {% if record.belongs == 'TTU' %}
+                                    <a title="click to delete transactions" class="delete_sales" href="#"><i
+                                            class="md-icon material-icons">&#xE872;</i></a>
+                                    {% endif %}
+
+
+                                </td>
+
+
+
+                            </tr>
+                            {% endfor %}
+
+
+
+
+
+
+                        </tbody>
+                    </table>
+                     <ul class="uk-pagination uk-margin-medium-top">
+                        {% if data.has_previous %}
+
+
+                            <li class="uk-disabled"><a
+                                    href="?{% url_replace request 'page' data.previous_page_number %}"><i
+                                    class="uk-icon-angle-double-left"></i></a></li>
+                        {% endif %}
+                        {% for pg in data.paginator.page_range %}
+                            {% if data.number == pg %}
+                                <li class="uk-active"><a href="?{% url_replace request 'page' pg %}">{{ pg }}</a></li>
+                            {% else %}
+                                <li><a href="?{% url_replace request 'page' pg %}">{{ pg }}</a></li>
+
+
+                            {% endif %}
+                        {% endfor %}
+                        {% if data.has_next %}
+
+
+                            <li><a href="?{% url_replace request 'page' data.next_page_number %}"><i
+                                    class="uk-icon-angle-double-right"></i></a></li>
+                        {% endif %}
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+     {% if  request.user.username == "tpconnect" %}
+        <div class="md-fab-wrapper">
+            <a class="md-fab md-fab-small md-fab-accent md-fab-wave" href="{% url 'sell' %}">
+                <i class="material-icons md-18">&#xE145;</i>
+            </a>
+        </div>
+    {% endif %}
+    </div>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+<script type="text/javascript">
+   $(document).ready(function () {
+        $('.delete_sales').on('click', function (e) {
+
+
+            var id = $('.ids').val();
+
+            //alert(id);
+            UIkit.modal.confirm("Are you sure you want to delete this sale? "
+                , function () {
+                    modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok deleting sales  <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                    //setTimeout(function(){ modal.hide() }, 500) })()
+                    $.ajax({
+
+                        type: "GET",
+                        url: "{% url 'delete_sales' %}",
+                        data: {
+                            id: id
+
+
+                        }, //your form data to post goes
+                        dataType: "json",
+
+                    }).done(function (data) {
+                        //  var objData = jQuery.parseJSON(data);
+                        console.log(data)
+                        modal.hide();
+                        location.reload(true);
+                        //
+                        //                                     UIkit.modal.alert("Action completed successfully");
+
+                        //alert(data.status + data.data);
+                        if (data.status == 'success') {
+                            UIkit.modal.alert(data.message.toString());
+
+
+                            {% comment %}  $(".uk-alert-success").show();
+
+                        $(".uk-alert-success").text(data.status + " " + data.message);
+                        $(".uk-alert-success").fadeOut(4000);
+                }{% endcomment %}
+                        } else {
+                            {% comment %} $(".uk-alert-danger").show();
+                                     $(".uk-alert-danger").text(data.status + " " + data.message);
+                                     $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                            UIkit.modal.alert(data.message.toString());
+                        }
+
+
+                    });
+                }
+            );
+
+        });
+
+
+    });
+</script>
+
+
+{% endblock %}

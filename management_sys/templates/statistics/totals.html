@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+
+    <h3 class="heading_c uk-margin-bottom">Admission Statistics live preview</h3>
+
+    <div class="md-card uk-margin-medium-bottom">
+        <div class="md-card-content">
+            <div class="uk-overflow-container">
+
+                <table class="gad uk-table uk-table-hover uk-table-condensed uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair"
+                       id="ts_pager_filter">
+                    <thead>
+                    <tr>
+                        <th>Programme</th>
+
+                        <th>Total Applicants</th>
+                        <th>Total Admitted</th>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}

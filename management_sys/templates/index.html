@@ -1,0 +1,1408 @@
+{% extends "base.html" %}
+{% load staticfiles%}
+{% load humanize%}
+
+{% load account_tags %}
+{% block style %}
+    <style>
+        ks-widget-payment-table-invoicing .ks-payment-table-invoicing td {
+    padding-bottom: 8px;
+    font-size: 13px;
+}
+    </style>
+{% endblock %}
+{% block breadcrumbs %}
+    <h5 class="ks-main-title">Dashboard / Tabbed Sidebar</h5>
+
+{% endblock %}
+{% block contents %}
+ <marquee><h4>WORK IN PROGRESS </h4></marquee>
+
+                <div class="ks-dashboard-tabbed-sidebar">
+                    <div class="ks-dashboard-tabbed-sidebar-widgets">
+                        <div class="row">
+                              <div class="col-lg-3 col-md-6">
+                                <div class="card ks-widget-payment-simple-amount-item ks-pink">
+                                    <div class="payment-simple-amount-item-icon-block">
+                                        <span class="ks-icon-user ks-icon"></span>
+                                    </div>
+
+                                    <div class="payment-simple-amount-item-body">
+                                        <div class="payment-simple-amount-item-amount">
+                                            <span class="ks-amount">{{ total }}</span>
+                                            <span class="ks-amount-icon ks-icon-circled-down-left"></span>
+                                        </div>
+                                        <div class="payment-simple-amount-item-description">
+                                           Total Applicants <span class="ks-progress-type">({{ total }}  )</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                              <div class="col-lg-3 col-md-6">
+                                <div class="card ks-widget-payment-simple-amount-item ks-pink">
+                                    <div class="payment-simple-amount-item-icon-block">
+                                        <span class="ks-icon-user ks-icon"></span>
+                                    </div>
+
+                                    <div class="payment-simple-amount-item-body">
+                                        <div class="payment-simple-amount-item-amount">
+                                            <span class="ks-amount">{{ admitted }}</span>
+                                            <span class="ks-amount-icon ks-icon-circled-down-left"></span>
+                                        </div>
+                                        <div class="payment-simple-amount-item-description">
+                                           Admitted Applicants <span class="ks-progress-type">({{ admitted }} = {{ admittedPercent }}%)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3 col-md-6">
+                                <div class="card ks-widget-payment-simple-amount-item ks-pink">
+                                    <div class="payment-simple-amount-item-icon-block">
+                                        <span class="ks-icon-user ks-icon"></span>
+                                    </div>
+
+                                    <div class="payment-simple-amount-item-body">
+                                        <div class="payment-simple-amount-item-amount">
+                                            <span class="ks-amount">{{ pending }}</span>
+                                            <span class="ks-amount-icon ks-icon-circled-down-left"></span>
+                                        </div>
+                                        <div class="payment-simple-amount-item-description">
+                                           pending admissions<span class="ks-progress-type">({{ pending }} = {{ pendingPercent }}%)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="col-lg-3 col-md-6">
+                                <div class="card ks-widget-payment-simple-amount-item ks-pink">
+                                    <div class="payment-simple-amount-item-icon-block">
+                                        <span class="ks-icon-user ks-icon"></span>
+                                    </div>
+
+                                    <div class="payment-simple-amount-item-body">
+                                        <div class="payment-simple-amount-item-amount">
+                                            <span class="ks-amount">Last Visit</span>
+                                            <span class="ks-amount-icon ks-icon-circled-down-left"></span>
+                                        </div>
+                                        <div class="payment-simple-amount-item-description">
+                                           Since <span class="ks-progress-type">{{ request.user.last_login|naturaltime|capfirst }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                            <div class="row">
+                                 <div class="col-xl-3">
+                                <div class="card ks-card-widget ks-widget-payment-total-amount ks-green-light">
+                                    <h5 class="card-header">
+                                        Diploma Applicants
+
+                                        <div class="dropdown ks-control">
+                                            <a class="btn btn-link ks-no-text ks-no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="ks-icon la la-ellipsis-h"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Add Card</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <div class="ks-payment-total-amount-item-icon-block">
+                                            <span class="la la-pie-chart ks-icon"></span>
+                                        </div>
+
+                                        <div class="ks-payment-total-amount-item-body">
+                                            <div class="ks-payment-total-amount-item-amount">
+                                                <span class="ks-amount">{{ diploma }}</span>
+                                            </div>
+                                            <div class="ks-payment-total-amount-item-description">
+                                               Today status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                   <div class="col-xl-3">
+                                <div class="card ks-card-widget ks-widget-payment-total-amount ks-green-light">
+                                    <h5 class="card-header">
+                                        Mature Applicants
+
+                                        <div class="dropdown ks-control">
+                                            <a class="btn btn-link ks-no-text ks-no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="ks-icon la la-ellipsis-h"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Add Card</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <div class="ks-payment-total-amount-item-icon-block">
+                                            <span class="la la-pie-chart ks-icon"></span>
+                                        </div>
+
+                                        <div class="ks-payment-total-amount-item-body">
+                                            <div class="ks-payment-total-amount-item-amount">
+                                                <span class="ks-amount">{{ mature }}</span>
+                                            </div>
+                                            <div class="ks-payment-total-amount-item-description">
+                                               Today status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-xl-3">
+                                <div class="card ks-card-widget ks-widget-payment-total-amount ks-pink-light">
+                                    <h5 class="card-header">
+                                       HND Applicants
+
+                                        <div class="dropdown ks-control">
+                                            <a class="btn btn-link ks-no-text ks-no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="ks-icon la la-ellipsis-h"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Add Card</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <div class="ks-payment-total-amount-item-icon-block">
+                                            <span class="la la-user ks-icon"></span>
+                                        </div>
+
+                                        <div class="ks-payment-total-amount-item-body">
+                                            <div class="ks-payment-total-amount-item-amount">
+                                                <span class="ks-amount">{{ hnd }}</span>
+                                            </div>
+                                            <div class="ks-payment-total-amount-item-description">
+                                                Today status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3">
+                                <div class="card ks-card-widget ks-widget-payment-total-amount ks-pink-light">
+                                    <h5 class="card-header">
+                                        BTECH Applicants
+
+                                        <div class="dropdown ks-control">
+                                            <a class="btn btn-link ks-no-text ks-no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="ks-icon la la-ellipsis-h"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Add Card</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <div class="ks-payment-total-amount-item-icon-block">
+                                            <span class="la la-user ks-icon"></span>
+                                        </div>
+
+                                        <div class="ks-payment-total-amount-item-body">
+                                            <div class="ks-payment-total-amount-item-amount">
+                                                <span class="ks-amount">{{ btech }}</span>
+                                            </div>
+                                            <div class="ks-payment-total-amount-item-description">
+                                                Today status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="row">
+                            <div class="col-xl-3">
+                                <div class="card ks-card-widget ks-widget-payment-total-amount ks-pink-light">
+                                    <h5 class="card-header">
+                                        Postgra Applicants
+
+                                        <div class="dropdown ks-control">
+                                            <a class="btn btn-link ks-no-text ks-no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="ks-icon la la-ellipsis-h"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Add Card</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <div class="ks-payment-total-amount-item-icon-block">
+                                            <span class="la la-user ks-icon"></span>
+                                        </div>
+
+                                        <div class="ks-payment-total-amount-item-body">
+                                            <div class="ks-payment-total-amount-item-amount">
+                                                <span class="ks-amount">{{ mtech }}</span>
+                                            </div>
+                                            <div class="ks-payment-total-amount-item-description">
+                                                Today status
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card ks-card-widget ks-widget-payment-table-invoicing">
+                                    <h5 class="card-header">
+                                       Applications today
+
+                                        <div class="ks-controls">
+                                            <a href="{% url 'applicants_index' %}" class="ks-control-link">View all Applicants</a>
+                                            <a href="#" class="ks-control-icon" title="Add applicant">
+                                                <span class="la la-plus-circle ks-icon"></span>
+                                            </a>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <table id="latest" class="table ks-payment-table-invoicing table-responsive">
+                                            <tr>
+                                                <td class="ks-text-light" width="1">Application No</td>
+                                                <td>Name</td>
+                                                <td class="ks-text-light">First Choice</td>
+
+                                                <td width="1">Phone No</td>
+                                                 <td class="ks-text">
+                                                    <span class="badge badge-cranberry">Status</span>
+                                                </td>
+                                                <td>Actions</td>
+                                            </tr>
+                                            <tbody>
+                                                {% for row in today %}
+
+                                                    <tr>
+                                                        <td>{{ row.application_number }}</td>
+                                                       <td style="width:200px">
+
+                                                            <div class="ks-user">
+                                                                <img class="ks-avatar"
+                                                                     src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{ row.application_number }}.jpg"
+                                                                     style="width:60px;height: 60px">
+                                                                <span class="ks-name">{{ row.name | capfirst }}</span>
+                                                            </div>
+
+                                                        </td>
+                                                        <td>{{ row.programme_id1.name }}</td>
+                                                        <td>{{ row.phone }}</td>
+
+                                                        <td class="ks-text">
+
+
+                                                            {% if row.status == 'admitted' %}
+                                                                <span class="badge badge-mantis">Admitted</span>
+                                                            {% else %}
+
+                                                                 <span class="badge badge-crusta">Admission Pending</span>
+                                                            {% endif %}
+
+
+                                                        </td>
+                                                          <td class="ks-controls">
+                                    <div class="dropdown">
+                                        <a class="btn btn-link" id="dropdownMenu1" data-toggle="dropdown"
+                                           aria-haspopup="true" aria-expanded="false">
+                                            <span class="la la-ellipsis-h"></span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right"
+                                             aria-labelledby="dropdownMenu1">
+                                            <a class="dropdown-item" href="{% url 'show_applicant'  row.id %}">View
+                                                Info</a>
+
+
+
+
+                                            {% if   row.admited == 1 %}
+                                                <form method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" class="applicant" value="{{ row.id }}"/>
+                                                    <input type="hidden" class="name" value="{{ row.name }}"/>
+                                                    <a class="dropdown-item revoke">Revoke admission</a>
+
+                                                    <a onclick="return MM_openBrWindow('{% url 'letter'  row.id %}', 'mark', 'width=800,height=500')">Print
+                                                        Letter</a>
+                                                </form>
+
+                                                <a onclick="return confirm('This will send sms notification to this applicant. Are you sure you want to continue?')"
+                                                   href='{% url 'show_applicant'  row.id %}'><i
+                                                        title='Click to send sms'
+                                                        class="la la-plus-phone ks-icon"></i></a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                                    </tr>
+
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card ks-card-widget ks-widget-tasks-table">
+                                    <h5 class="card-header">
+                                        Important Upcoming Tasks
+
+                                        <div class="ks-controls">
+                                            <a href="#" class="ks-control-link">View All Tasks</a>
+                                            <a href="#" class="ks-control-icon">
+                                                <span class="la la-plus-circle ks-icon"></span>
+                                            </a>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <table class="table ks-table-tasks">
+                                            <tr>
+                                                <td class="ks-cell-checkbox">
+                                                    <div class="custom-control custom-checkbox ks-checkbox ks-no-description ks-checkbox-success">
+                                                        <input id="c1" type="checkbox" class="custom-control-input">
+                                                        <label class="custom-control-label" for="c1"></label>
+                                                    </div>
+                                                </td>
+                                                <td>Create new prototype for the landing page</td>
+                                                <td class="ks-text-right">
+                                                    <span class="badge badge-cranberry">Out today</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ks-cell-checkbox">
+                                                    <div class="custom-control custom-checkbox ks-checkbox ks-no-description ks-checkbox-success">
+                                                        <input id="c2" type="checkbox" class="custom-control-input">
+                                                        <label class="custom-control-label" for="c2"></label>
+                                                    </div>
+                                                </td>
+                                                <td>Add new Google Analitics code to all files</td>
+                                                <td class="ks-text-right">
+                                                    <span class="badge badge-default">Due in 3 days</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ks-cell-checkbox">
+                                                    <div class="custom-control custom-checkbox ks-checkbox ks-no-description ks-checkbox-success">
+                                                        <input id="c3" type="checkbox" class="custom-control-input">
+                                                        <label class="custom-control-label" for="c3"></label>
+                                                    </div>
+                                                </td>
+                                                <td>Finish dashboard UI Kit</td>
+                                                <td class="ks-text-right">
+                                                    <span class="badge badge-default">Due in 5 days</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ks-cell-checkbox">
+                                                    <div class="custom-control custom-checkbox ks-checkbox ks-no-description ks-checkbox-success">
+                                                        <input id="c4" type="checkbox" class="custom-control-input">
+                                                        <label class="custom-control-label" for="c4"></label>
+                                                    </div>
+                                                </td>
+                                                <td>Update parallax scroll on team page</td>
+                                                <td class="ks-text-right">
+                                                    <span class="badge badge-default">Due in 7 days</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="ks-cell-checkbox">
+                                                    <div class="custom-control custom-checkbox ks-checkbox ks-no-description ks-checkbox-success">
+                                                        <input id="c5" type="checkbox" class="custom-control-input" checked>
+                                                        <label class="custom-control-label" for="c5"></label>
+                                                    </div>
+                                                </td>
+                                                <td class="ks-cell-checked" colspan="2">Add new Google Analitics code to all files</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    <div class="row">
+                          <div class="col-xl-12">
+                                <div class="card ks-card-widget ks-widget-chart-orders">
+                                    <h5 class="card-header">
+                                       Applicants growth chart
+                                        <div class="ks-controls">
+                                            <a href="index.html#" class="ks-control-link">January 2018</a>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <div class="ks-chart-orders-block"></div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="card ks-card-widget ks-widget-messages-inbox">
+                                    <h5 class="card-header">
+                                        Inbox
+
+                                        <div class="dropdown ks-control">
+                                            <a class="btn btn-link ks-no-text ks-no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="ks-icon la la-ellipsis-h"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Add Card</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <div class="ks-widget-messages-inbox-items">
+                                            <a href="#" class="ks-widget-messages-inbox-item">
+                                                <div class="ks-widget-messages-inbox-item-avatar ks-avatar ks-online">
+                                                    <img src="assets/img/avatars/avatar-6.jpg" width="36" height="36">
+                                                </div>
+                                                <div class="ks-widget-messages-inbox-item-body">
+                                                    <div class="ks-widget-messages-inbox-item-body-name-and-time">
+                                                        <span class="ks-name">Konstantin Berezhski</span>
+                                                        <span class="ks-time">12:55 pm</span>
+                                                    </div>
+                                                    <p class="ks-widget-messages-inbox-item-body-message">
+                                                        This isn't just about you. It's about wha...
+                                                    </p>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="ks-widget-messages-inbox-item">
+                                                <div class="ks-widget-messages-inbox-item-avatar ks-avatar ks-online">
+                                                    <img src="assets/img/avatars/avatar-4.jpg" width="36" height="36">
+                                                </div>
+                                                <div class="ks-widget-messages-inbox-item-body">
+                                                    <div class="ks-widget-messages-inbox-item-body-name-and-time">
+                                                        <span class="ks-name">Konstantin Berezhski</span>
+                                                        <span class="ks-time">12:55 pm</span>
+                                                    </div>
+                                                    <p class="ks-widget-messages-inbox-item-body-message">
+                                                        This isn't just about you. It's about wha...
+                                                    </p>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="ks-widget-messages-inbox-item">
+                                                <div class="ks-widget-messages-inbox-item-avatar ks-avatar ks-offline">
+                                                    <img src="assets/img/avatars/avatar-2.jpg" width="36" height="36">
+                                                </div>
+                                                <div class="ks-widget-messages-inbox-item-body">
+                                                    <div class="ks-widget-messages-inbox-item-body-name-and-time">
+                                                        <span class="ks-name">Konstantin Berezhski</span>
+                                                        <span class="ks-time">12:55 pm</span>
+                                                    </div>
+                                                    <p class="ks-widget-messages-inbox-item-body-message">
+                                                        This isn't just about you. It's about wha...
+                                                    </p>
+                                                </div>
+                                            </a>
+                                            <a href="#" class="ks-widget-messages-inbox-item">
+                                                <div class="ks-widget-messages-inbox-item-avatar ks-avatar ks-online">
+                                                    <img src="assets/img/avatars/avatar-13.jpg" width="36" height="36">
+                                                </div>
+                                                <div class="ks-widget-messages-inbox-item-body">
+                                                    <div class="ks-widget-messages-inbox-item-body-name-and-time">
+                                                        <span class="ks-name">Konstantin Berezhski</span>
+                                                        <span class="ks-time">12:55 pm</span>
+                                                    </div>
+                                                    <p class="ks-widget-messages-inbox-item-body-message">
+                                                        This isn't just about you. It's about wha...
+                                                    </p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="card ks-card-widget ks-widget-table">
+                                    <h5 class="card-header">
+                                        Recent Activities
+
+                                        <div class="ks-controls">
+                                            <a href="#" class="ks-control-link">View All Invoices</a>
+                                        </div>
+                                    </h5>
+                                    <div class="card-block">
+                                        <table class="table ks-payment-table-invoicing">
+                                            <tr>
+                                                <th width="1">#</th>
+                                                <th>Subject Name</th>
+                                                <th>Start Date</th>
+                                                <th>Due Date</th>
+                                                <th width="1">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>English – Paper 1</td>
+                                                <td>March 17, 2017</td>
+                                                <td>March 28, 2017</td>
+                                                <td>
+                                                    <span class="badge badge-cranberry">Delayed</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>English – Paper 1</td>
+                                                <td>March 17, 2017</td>
+                                                <td>March 28, 2017</td>
+                                                <td>
+                                                    <span class="badge badge-crusta">Pending</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>English – Paper 1</td>
+                                                <td>March 17, 2017</td>
+                                                <td>March 28, 2017</td>
+                                                <td>
+                                                    <span class="badge badge-success">Completed</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>English – Paper 1</td>
+                                                <td>March 17, 2017</td>
+                                                <td>March 28, 2017</td>
+                                                <td>
+                                                    <span class="badge badge-crusta">Pnding</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>English – Paper 1</td>
+                                                <td>March 17, 2017</td>
+                                                <td>March 28, 2017</td>
+                                                <td>
+                                                    <span class="badge badge-success">Completed</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card ks-widget-weather-and-datetime ks-sunny">
+                                    <div class="ks-widget-weather-and-datetime-weather-block">
+                                        <div class="ks-widget-weather-and-datetime-weather-block-amount">
+                                            +24º
+                                        </div>
+                                        <div class="ks-widget-weather-and-datetime-weather-block-type">
+                                            Sunny
+                                        </div>
+                                    </div>
+                                    <div class="ks-widget-weather-and-datetime-datetime-block">
+                                        <div class="ks-widget-weather-and-datetime-datetime-block-datetime">6:18 pm</div>
+                                        <div class="ks-widget-weather-and-datetime-datetime-block-location">los angeles</div>
+                                        <span class="ks-icon wi wi-day-cloudy"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card ks-widget-weather-and-datetime ks-cold">
+                                    <div class="ks-widget-weather-and-datetime-weather-block">
+                                        <div class="ks-widget-weather-and-datetime-weather-block-amount">
+                                            -24º
+                                        </div>
+                                        <div class="ks-widget-weather-and-datetime-weather-block-type">
+                                            Show
+                                        </div>
+                                    </div>
+                                    <div class="ks-widget-weather-and-datetime-datetime-block">
+                                        <div class="ks-widget-weather-and-datetime-datetime-block-datetime">6:18 pm</div>
+                                        <div class="ks-widget-weather-and-datetime-datetime-block-location">los angeles</div>
+                                        <span class="ks-icon wi wi-snow"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="card ks-widget-simple-weather-only ks-sunny">
+                                    <span class="ks-icon wi wi-day-cloudy"></span>
+                                    <div class="ks-widget-simple-weather-only-body">
+                                        <div class="ks-widget-simple-weather-only-block-amount">
+                                            +10º
+                                        </div>
+                                        <div class="ks-widget-simple-weather-only-location">
+                                            Los Angeles
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="card ks-widget-simple-weather-only ks-cold">
+                                    <span class="ks-icon wi wi-snow"></span>
+                                    <div class="ks-widget-simple-weather-only-body">
+                                        <div class="ks-widget-simple-weather-only-block-amount">
+                                            -2º
+                                        </div>
+                                        <div class="ks-widget-simple-weather-only-location">
+                                            Los Angeles
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ks-dashboard-tabbed-sidebar-sidebar">
+                        <div class="ks-tabs-container ks-tabs-default ks-tabs-with-separator ks-tabs-header-default ks-tabs-info">
+                            <ul class="nav ks-nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#" data-toggle="tab" data-target="#tabbed-sidebar-activity">
+                                        <span class="ks-icon la la-flash">
+                                            <span class="ks-amount">3</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-toggle="tab" data-target="#tabbed-sidebar-comments">
+                                        <span class="ks-icon la la-comments">
+                                            <span class="ks-amount">1</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-toggle="tab" data-target="#tabbed-sidebar-posts">
+                                        <span class="ks-icon la la-book">
+                                            <span class="ks-amount">6</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-toggle="tab" data-target="#tabbed-sidebar-favourites">
+                                        <span class="ks-icon la la-star-o">
+                                            <span class="ks-amount">4</span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tabbed-sidebar-activity" role="tabpanel">
+                                    <div class="tab-pane-content">
+                                        <div class="ks-tabbed-sidebar-activity">
+                                            <div class="ks-tabbed-sidebar-tab-content-header">
+                                                <h5>Activity</h5>
+                                                <div class="input-icon icon-right icon icon-lg icon-color-primary">
+                                                    <input id="input-group-icon-text" type="text" class="form-control" placeholder="Search">
+                                                    <span class="icon-addon">
+                                                        <span class="la la-search"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="ks-tabbed-sidebar-activity-items ks-scrollable" data-auto-height>
+                                                <div class="ks-tabbed-sidebar-activity-item ks-activity-item-status-active">
+                                                    <div class="ks-action-wrapper">
+                                                        <img src="assets/img/avatars/avatar-6.jpg" alt="" class="ks-avatar rounded-circle" width="25" height="25">
+                                                        <a href="#" class="ks-action-message">Hi, What you think about new deal</a>
+                                                    </div>
+                                                    <span class="badge badge-primary ks-sm">New</span>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item ks-activity-item-status-active">
+                                                    <div class="ks-action-wrapper">
+                                                        <img src="assets/img/avatars/avatar-11.jpg" alt="" class="ks-avatar rounded-circle" width="25" height="25">
+                                                        <a href="#" class="ks-action-message">Hi, What you think about new deal</a>
+                                                    </div>
+                                                    <span class="badge badge-success ks-sm">Completed</span>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item ks-activity-item-status-active">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-star ks-color-warning ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">GOOG:US, 300 @ 145.32 opportunity</a>
+                                                    </div>
+                                                    <span class="badge badge-danger ks-sm">Canceled</span>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-check ks-color-success ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Filled — Forson Inc. — 300 — $5,600</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-check ks-color-success ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Filled — Marta Skyson — 2000 — $34,600</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <img src="assets/img/avatars/avatar-5.jpg" alt="" class="ks-avatar rounded-circle" width="25" height="25">
+                                                        <a href="#" class="ks-action-message">Hi, What you think about new deal</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-flash ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Gold (-1,22%), estimated 3% loss</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-star ks-color-warning ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Samsung Note 7 Users Urged to Turn Phone</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-plus-circle ks-color-info ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">New — Shell Inc. — 120 — $5600</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <img src="assets/img/avatars/avatar-2.jpg" alt="" class="ks-avatar rounded-circle" width="25" height="25">
+                                                        <a href="#" class="ks-action-message">Hi Konstantin, Sent you quarter report</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-star ks-color-pink ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Asset Reporting Lored</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-archive ks-color-gray ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Gold (-1,22%), estimated 3% loss</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-calendar ks-color-info ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Gold (-1,22%), estimated 3% loss</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-plus-circle ks-color-info ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">New — Shell Inc. — 120 — $5600</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <img src="assets/img/avatars/avatar-3.jpg" alt="" class="ks-avatar rounded-circle" width="25" height="25">
+                                                        <a href="#" class="ks-action-message">Hi Konstantin, Sent you quarter report</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-star ks-color-pink ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Asset Reporting Lored</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-archive ks-color-gray ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Gold (-1,22%), estimated 3% loss</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-calendar ks-color-info ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Gold (-1,22%), estimated 3% loss</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-plus-circle ks-color-success ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">New — Shell Inc. — 120 — $5600</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <img src="assets/img/avatars/avatar-8.jpg" alt="" class="ks-avatar rounded-circle" width="25" height="25">
+                                                        <a href="#" class="ks-action-message">Hi Konstantin, Sent you quarter report</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-bookmark-o ks-color-danger ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Asset Reporting Lored</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-archive ks-color-gray ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Gold (-1,22%), estimated 3% loss</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-activity-item">
+                                                    <div class="ks-action-wrapper">
+                                                        <span class="ks-action-icon">
+                                                            <span class="la la-calendar ks-color-info ks-icon"></span>
+                                                        </span>
+                                                        <a href="#" class="ks-action-message">Gold (-1,22%), estimated 3% loss</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tabbed-sidebar-comments" role="tabpanel">
+                                    <div class="tab-pane-content">
+                                        <div class="ks-tabbed-sidebar-comments">
+                                            <div class="ks-tabbed-sidebar-tab-content-header">
+                                                <h5>Comments</h5>
+                                                <div class="input-icon icon-right icon icon-lg icon-color-primary">
+                                                    <input type="text" class="form-control" placeholder="Search">
+                                                    <span class="icon-addon">
+                                                        <span class="la la-search"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="ks-tabbed-sidebar-comment-items ks-scrollable" data-auto-height>
+                                                <div class="ks-tabbed-sidebar-comment-item">
+                                                    <div class="ks-tabbed-sidebar-comment-action">
+                                                        <img src="assets/img/avatars/avatar-3.jpg" class="ks-avatar" width="25" height="25">
+                                                        <div class="ks-action">
+                                                            <a href="#" class="ks-name">Matthew Arnold</a>
+                                                            <span class="ks-description">added a new task to the project <a href="#" class="ks-color-info">Website redesign</a></span>
+
+                                                            <div class="ks-datetime">
+                                                                September 18, 2016 at 12:38 PM
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ks-tabbed-sidebar-comment-item-message">
+                                                        Perhaps you'll take me out one day - or do I have to make an appointment?
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-comment-item">
+                                                    <div class="ks-tabbed-sidebar-comment-action">
+                                                        <img src="assets/img/avatars/avatar-4.jpg" class="ks-avatar" width="25" height="25">
+                                                        <div class="ks-action">
+                                                            <a href="#" class="ks-name">Rachel Matthews</a>
+                                                            <span class="ks-description">leave a comment <a href="#" class="ks-color-info">Lake Hall Beer and Pizza</a></span>
+
+                                                            <div class="ks-datetime">
+                                                                September 26, 2016 at 19:25 PM
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ks-tabbed-sidebar-comment-item-message">
+                                                        It had to end sometime. Apple’s incredible growth that saw the company report record quarterly earnings over a span of 13 years was untenable.
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-comment-item">
+                                                    <div class="ks-tabbed-sidebar-comment-action">
+                                                        <img src="assets/img/avatars/avatar-10.jpg" class="ks-avatar" width="25" height="25">
+                                                        <div class="ks-action">
+                                                            <a href="#" class="ks-name">Marilyn Fox</a>
+                                                            <span class="ks-description">leave a comment <a href="#" class="ks-color-info">Sample Post</a></span>
+
+                                                            <div class="ks-datetime">
+                                                                September 17, 2016 at 11:00 PM
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ks-tabbed-sidebar-comment-item-message">
+                                                        Perhaps you'll take me out one day - or do I have to make an appointment?
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-comment-item">
+                                                    <div class="ks-tabbed-sidebar-comment-action">
+                                                        <img src="assets/img/avatars/avatar-3.jpg" class="ks-avatar" width="25" height="25">
+                                                        <div class="ks-action">
+                                                            <a href="#" class="ks-name">Matthew Arnold</a>
+                                                            <span class="ks-description">added a new task to the project <a href="#" class="ks-color-info">Website redesign</a></span>
+
+                                                            <div class="ks-datetime">
+                                                                September 18, 2016 at 12:38 PM
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ks-tabbed-sidebar-comment-item-message">
+                                                        Perhaps you'll take me out one day - or do I have to make an appointment?
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-comment-item">
+                                                    <div class="ks-tabbed-sidebar-comment-action">
+                                                        <img src="assets/img/avatars/avatar-3.jpg" class="ks-avatar" width="25" height="25">
+                                                        <div class="ks-action">
+                                                            <a href="#" class="ks-name">Matthew Arnold</a>
+                                                            <span class="ks-description">added a new task to the project <a href="#" class="ks-color-info">Website redesign</a></span>
+
+                                                            <div class="ks-datetime">
+                                                                September 18, 2016 at 12:38 PM
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ks-tabbed-sidebar-comment-item-message">
+                                                        Perhaps you'll take me out one day - or do I have to make an appointment?
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-comment-item">
+                                                    <div class="ks-tabbed-sidebar-comment-action">
+                                                        <img src="assets/img/avatars/avatar-3.jpg" class="ks-avatar" width="25" height="25">
+                                                        <div class="ks-action">
+                                                            <a href="#" class="ks-name">Matthew Arnold</a>
+                                                            <span class="ks-description">added a new task to the project <a href="#" class="ks-color-info">Website redesign</a></span>
+
+                                                            <div class="ks-datetime">
+                                                                September 18, 2016 at 12:38 PM
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ks-tabbed-sidebar-comment-item-message">
+                                                        Perhaps you'll take me out one day - or do I have to make an appointment?
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-comment-item">
+                                                    <div class="ks-tabbed-sidebar-comment-action">
+                                                        <img src="assets/img/avatars/avatar-3.jpg" class="ks-avatar" width="25" height="25">
+                                                        <div class="ks-action">
+                                                            <a href="#" class="ks-name">Matthew Arnold</a>
+                                                            <span class="ks-description">added a new task to the project <a href="#" class="ks-color-info">Website redesign</a></span>
+
+                                                            <div class="ks-datetime">
+                                                                September 18, 2016 at 12:38 PM
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ks-tabbed-sidebar-comment-item-message">
+                                                        Perhaps you'll take me out one day - or do I have to make an appointment?
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-comment-item">
+                                                    <div class="ks-tabbed-sidebar-comment-action">
+                                                        <img src="assets/img/avatars/avatar-3.jpg" class="ks-avatar" width="25" height="25">
+                                                        <div class="ks-action">
+                                                            <a href="#" class="ks-name">Matthew Arnold</a>
+                                                            <span class="ks-description">added a new task to the project <a href="#" class="ks-color-info">Website redesign</a></span>
+
+                                                            <div class="ks-datetime">
+                                                                September 18, 2016 at 12:38 PM
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ks-tabbed-sidebar-comment-item-message">
+                                                        Perhaps you'll take me out one day - or do I have to make an appointment?
+                                                    </div>
+                                                </div>
+                                                <div class="ks-tabbed-sidebar-comment-item">
+                                                    <div class="ks-tabbed-sidebar-comment-action">
+                                                        <img src="assets/img/avatars/avatar-3.jpg" class="ks-avatar" width="25" height="25">
+                                                        <div class="ks-action">
+                                                            <a href="#" class="ks-name">Matthew Arnold</a>
+                                                            <span class="ks-description">added a new task to the project <a href="#" class="ks-color-info">Website redesign</a></span>
+
+                                                            <div class="ks-datetime">
+                                                                September 18, 2016 at 12:38 PM
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ks-tabbed-sidebar-comment-item-message">
+                                                        Perhaps you'll take me out one day - or do I have to make an appointment?
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane" id="tabbed-sidebar-posts" role="tabpanel">
+                                    <div class="tab-pane-content">
+                                        <div class="ks-tabbed-sidebar-posts">
+                                            <div class="ks-tabbed-sidebar-tab-content-header">
+                                                <h5>Posts</h5>
+                                                <div class="input-icon icon-right icon icon-lg icon-color-primary">
+                                                    <input type="text" class="form-control" placeholder="Search">
+                                                    <span class="icon-addon">
+                                                        <span class="la la-search"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="ks-tabbed-sidebar-post-items ks-scrollable" data-auto-height>
+                                                <a href="#" class="ks-tabbed-sidebar-post-item">
+                                                    <img src="assets/img/thumbs/ph-1.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-post-item">
+                                                    <img src="assets/img/thumbs/ph-2.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-post-item">
+                                                    <img src="assets/img/thumbs/ph-3.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-post-item">
+                                                    <img src="assets/img/thumbs/ph-4.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-post-item">
+                                                    <img src="assets/img/thumbs/ph-5.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-post-item">
+                                                    <img src="assets/img/thumbs/ph-1.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-post-item">
+                                                    <img src="assets/img/thumbs/ph-1.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-post-item">
+                                                    <img src="assets/img/thumbs/ph-1.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tabbed-sidebar-favourites" role="tabpanel">
+                                    <div class="tab-pane-content">
+                                        <div class="ks-tabbed-sidebar-favourites">
+                                            <div class="ks-tabbed-sidebar-tab-content-header">
+                                                <h5>Favourites</h5>
+                                                <div class="input-icon icon-right icon icon-lg icon-color-primary">
+                                                    <input type="text" class="form-control" placeholder="Search">
+                                                    <span class="icon-addon">
+                                                        <span class="la la-search"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="ks-tabbed-sidebar-favourites-items ks-scrollable" data-auto-height>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <img src="assets/img/thumbs/ph-1.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <span class="ks-action-icon ks-action-file">
+                                                        <span class="la la-file-word-o ks-color-info ks-icon"></span>
+                                                    </span>
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">annual_report_2016.docx</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">156 KB</span>
+                                                        </span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <span class="ks-action-icon ks-action-file">
+                                                        <span class="la la-file-pdf-o ks-color-danger ks-icon"></span>
+                                                    </span>
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">certificate.pdf</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">88 KB</span>
+                                                        </span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <img src="assets/img/avatars/avatar-7.jpg" alt="" class="ks-avatar" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Barbara Curtis</span>
+                                                        <span class="ks-extra-info">Product Manager</span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <span class="ks-action-icon">
+                                                        <span class="la la-link ks-icon"></span>
+                                                    </span>
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">The Verge</span>
+                                                        <span class="ks-extra-info ks-color-info">HTTP://www.theverge.com</span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <img src="assets/img/thumbs/ph-3.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <span class="ks-action-icon ks-action-file">
+                                                        <span class="la la-file-word-o ks-color-info ks-icon"></span>
+                                                    </span>
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">annual_report_2016.docx</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">156 KB</span>
+                                                        </span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <span class="ks-action-icon ks-action-file">
+                                                        <span class="la la-file-pdf-o ks-color-danger ks-icon"></span>
+                                                    </span>
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">certificate.pdf</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">88 KB</span>
+                                                        </span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <img src="assets/img/avatars/avatar-7.jpg" alt="" class="ks-avatar" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Barbara Curtis</span>
+                                                        <span class="ks-extra-info">Product Manager</span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <span class="ks-action-icon">
+                                                        <span class="la la-link ks-icon"></span>
+                                                    </span>
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">The Verge</span>
+                                                        <span class="ks-extra-info ks-color-info">HTTP://www.theverge.com</span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <img src="assets/img/thumbs/ph-2.png" alt="" class="ks-thumb" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Road trip essentials</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">1200 views</span>
+                                                            <span class="ks-amount-block">34 comments</span>
+                                                        </span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <span class="ks-action-icon ks-action-file">
+                                                        <span class="la la-file-word-o ks-color-info ks-icon"></span>
+                                                    </span>
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">annual_report_2016.docx</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">156 KB</span>
+                                                        </span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <span class="ks-action-icon ks-action-file">
+                                                        <span class="la la-file-pdf-o ks-color-danger ks-icon"></span>
+                                                    </span>
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">certificate.pdf</span>
+                                                        <span class="ks-extra-info">
+                                                            <span class="ks-amount-block">88 KB</span>
+                                                        </span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <img src="assets/img/avatars/avatar-7.jpg" alt="" class="ks-avatar" width="36" height="36">
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">Barbara Curtis</span>
+                                                        <span class="ks-extra-info">Product Manager</span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                                <a href="#" class="ks-tabbed-sidebar-favourite-item">
+                                                    <span class="ks-action-icon">
+                                                        <span class="la la-link ks-icon"></span>
+                                                    </span>
+                                                    <span href="#" class="ks-description">
+                                                        <span class="ks-name">The Verge</span>
+                                                        <span class="ks-extra-info ks-color-info">HTTP://www.theverge.com</span>
+                                                    </span>
+
+                                                    <button class="btn btn-outline-primary ks-light ks-no-text ks-remove">
+                                                        <span class="la la-trash-o ks-icon"></span>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}

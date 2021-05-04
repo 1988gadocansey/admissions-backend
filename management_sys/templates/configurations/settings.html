@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+
+    <div class="uk-modal" id="edit">
+        <div class="uk-modal-dialog uk-modal-dialog uk-modal-dialog-large">
+            <div class="uk-modal-header">
+                <h4 class="uk-modal-title">Edit settings</h4>
+            </div>
+
+            <div class="uk-modal-content">
+                <!-- content goes here -->
+                <form method="POST" class="updateFormz"
+                      data-validate="parsley">
+                    {% csrf_token %}
+                    <div class="uk-grid" data-uk-grid-margin="">
+
+
+                        <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Admissions Oficer's Name</label>
+                            <input type="text" class="md-input nameedit" name="nameedit" required="">
+                        </div>
+                        <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Orientation starts</label>
+                            <input type="text" class="md-input orient_startsedit" name="orient_startsedit" required=""
+                                   data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                        </div>
+
+                        <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Orientation ends</label>
+                            <input type="text" class="md-input orient_endsedit" name="orient_endsedit" required=""
+                                   data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                        </div>
+
+                        <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Reporting date</label>
+                            <input type="text" class="md-input reportingedit" name="reportingedit" required=""
+                                   data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                        </div>
+
+                        <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Deadline for payment of fees</label>
+                            <input type="text" class="md-input deadlineedit" name="deadlineedit" required=""
+                                   data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                        </div>
+
+                        <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Medicals Starts</label>
+                            <input type="text" class="md-input medicalseditstarts" name="medicalseditstarts" required=""
+                                   data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                        </div>
+
+                      <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Medicals Ends</label>
+                            <input type="text" class="md-input medicalseditsend" name="medicalseditsend" required=""
+                                   data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                        </div>
+
+
+                        <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Working Year</label>
+                            <p></p>
+                            <select required="required" class="md-input yearedit" v-model="year" v-form-ctrl=""
+                                    v-select="year" name="yearedit">
+                                <option selected="selected" value="">Select year</option>
+
+                                {% for year in years %}
+
+                                    <option>{{ year }}</option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                    </div>
+                    <div class="uk-modal-footer uk-text-right">
+                        <button type="button" class="edit_button md-btn md-btn-flat md-btn-flat-primary md-btn-wave"
+                                id="snippet_new_save">Update
+                        </button>
+                        <button type="button" class="md-btn md-btn-flat uk-modal-close md-btn-wave">Close</button>
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="uk-modal" id="new_task">
+        <div class="uk-modal-dialog uk-modal-dialog uk-modal-dialog-large">
+            <div class="uk-modal-header">
+                <h4 class="uk-modal-title">Create configuration settings</h4>
+            </div>
+
+
+            <form method="POST" class="createForms"
+                  data-validate="parsley" >
+                {% csrf_token %}
+                <div class="uk-grid" data-uk-grid-margin="">
+
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Admissions Oficer's Name</label>
+                        <input type="text" class="md-input name" name="name" required="">
+                    </div>
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Orientation starts</label>
+                        <input type="text" class="md-input orient_starts" name="orient_starts" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Orientation ends</label>
+                        <input type="text" class="md-input orient_ends" name="orient_ends" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Reporting date</label>
+                        <input type="text" class="md-input reporting" name="reporting" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Deadline for payment of fees</label>
+                        <input type="text" class="md-input deadline" name="deadline" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Medicals Starts</label>
+                        <input type="text" class="md-input medicals_start" name="medicals_starts" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                 <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Medicals Ends</label>
+                        <input type="text" class="md-input medicals_end" name="medicals_ends" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Working Year</label>
+                        <p></p>
+                        <select required="required" class="md-input year" v-model="year" v-form-ctrl=""
+                                v-select="year" name="year">
+                            <option selected="selected" value="">Select year</option>
+
+                            {% for year in years %}
+
+                                <option>{{ year }}</option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+                <div class="uk-modal-footer uk-text-right">
+                    <button type="button" class="createForm md-btn md-btn-flat md-btn-flat-primary md-btn-wave"
+                            id="snippet_new_save">Save
+                    </button>
+                    <button type="button" class="md-btn md-btn-flat uk-modal-close md-btn-wave">Close</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <h3 class="heading_c uk-margin-bottom">Systems Settings</h3>
+
+    <div class="md-card uk-margin-medium-bottom">
+        <div class="md-card-content">
+            <div class="uk-overflow-container">
+                <table class="uk-table uk-table-hover uk-table-condensed uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair"
+                       id="ts_pager_filter">
+                    <thead>
+                    <tr>
+                        <th class="uk-width-1-10">Admissions Officer</th>
+                        <th class="uk-width-2-10">Reporting date</th>
+                        <th class="uk-width-2-10">Deadline for fees</th>
+                        <th class="uk-width-2-10">Medicals Starts</th>
+                        <th class="uk-width-2-10">Medicals Ends</th>
+                        <th class="uk-width-1-10">Orientation starts</th>
+                        <th class="uk-width-2-10">Orientation ends</th>
+                        <th class="uk-width-2-10">Academic year</th>
+                        <th class="uk-width-2-10">Created by</th>
+                        <th class="uk-width-2-10">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for row in data %}
+
+                        <tr>
+
+                            <td name="name" class="name">{{ row.admission_officer|upper }}</td>
+                            <td class="reporting">{{ row.reporting |date:"Y-m-d"}}</td>
+                            <td class="deadline">{{ row.fees_deadline |date:"Y-m-d"}}</td>
+                            <td class="medicals_start">{{ row.medical_examinations_starts |date:"Y-m-d"}}</td>
+                            <td class="medicals_end">{{ row.medical_examinations_ends |date:"Y-m-d"}}</td>
+                            <td class="orient_starts">{{ row.orientation_starts|date:"Y-m-d" }}</td>
+                            <td class="orient_ends">{{ row.orientation_ends |date:"Y-m-d"}}</td>
+                            <td class="year">{{ row.working_year }}</td>
+                            <td>{{ row.created_by.username|capfirst }}</td>
+
+                            <input type="hidden" value="{{ row.id }}" id="id" name="id" class="id"/>
+                            <td class="uk-text-center">
+                                <a href="#" class="edit"><i class="md-icon material-icons">&#xE254;</i></a>
+                                <a class="deletes" href="#"><i class="md-icon material-icons">&#xE872;</i></a>
+                            </td>
+
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="md-fab-wrapper">
+        <a class="md-fab md-fab-small md-fab-accent md-fab-wave" href="#new_task" data-uk-modal="{ center:true }">
+            <i class="material-icons md-18">&#xE145;</i>
+        </a>
+    </div>
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}

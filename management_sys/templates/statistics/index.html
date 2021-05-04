@@ -1,0 +1,129 @@
+{% extends "old/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% load account_tags %}
+{% block style %}
+    <style>
+        ks-widget-payment-table-invoicing .ks-payment-table-invoicing td {
+            padding-bottom: 8px;
+            font-size: 13px;
+        }
+    </style>
+{% endblock %}
+{% block breadcrumbs %}
+    <h5 class="ks-main-title">Admissions Statistics</h5>
+
+{% endblock %}
+{% block contents %}
+
+
+    <div class="ks-dashboard-tabbed-sidebar">
+        <div class="ks-dashboard-tabbed-sidebar-widgets">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card ks-widget-payment-simple-amount-item ks-pink">
+                        <div class="payment-simple-amount-item-icon-block">
+                            <span class="ks-icon-user ks-icon"></span>
+                        </div>
+
+                        <div class="payment-simple-amount-item-body">
+                            <div class="payment-simple-amount-item-amount">
+                                <span class="ks-amount">{{ total }}</span>
+                                <span class="ks-amount-icon ks-icon-circled-down-left"></span>
+                            </div>
+                            <div class="payment-simple-amount-item-description">
+                                Total Applicants <span class="ks-progress-type">({{ total }}  )</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card ks-widget-payment-simple-amount-item ks-pink">
+                        <div class="payment-simple-amount-item-icon-block">
+                            <span class="ks-icon-user ks-icon"></span>
+                        </div>
+
+                        <div class="payment-simple-amount-item-body">
+                            <div class="payment-simple-amount-item-amount">
+                                <span class="ks-amount">{{ admitted }}</span>
+                                <span class="ks-amount-icon ks-icon-circled-down-left"></span>
+                            </div>
+                            <div class="payment-simple-amount-item-description">
+                                Admitted Applicants <span
+                                    class="ks-progress-type">({{ admitted }}  )</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card ks-widget-payment-simple-amount-item ks-pink">
+                        <div class="payment-simple-amount-item-icon-block">
+                            <span class="ks-icon-user ks-icon"></span>
+                        </div>
+
+                        <div class="payment-simple-amount-item-body">
+                            <div class="payment-simple-amount-item-amount">
+                                <span class="ks-amount">{{ pending }}</span>
+                                <span class="ks-amount-icon ks-icon-circled-down-left"></span>
+                            </div>
+                            <div class="payment-simple-amount-item-description">
+                                pending admissions<span
+                                    class="ks-progress-type">({{ pending }}  )</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+             <div class="container-fluid">
+
+                         <h5 class="card-header">
+                            Admissions as at today
+
+
+                        </h5>
+
+                            <table id="gad" class="gad table table-hover table-responsive dataTable no-footer">
+                                <tr>
+                                    <td class="ks-text-light" width="1">Programme</td>
+
+                                    <td class="ks-text-light">Total Applicants</td>
+                                    <td class="ks-text-light">Total Admitted</td>
+
+
+                                </tr>
+                                <tbody>
+
+
+                                </tbody>
+                            </table>
+
+                </div>
+
+
+
+
+
+
+
+
+{% endblock %}
+{% block js %}
+
+{% endblock %}

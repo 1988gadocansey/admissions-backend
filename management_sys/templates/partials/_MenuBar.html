@@ -1,0 +1,173 @@
+﻿{% load static %}
+{% load humanize %}
+
+{% load account_tags %}
+
+<aside id="sidebar_main">
+
+    <div class="sidebar_main_header">
+        <div class="sidebar_logo">
+
+
+        </div>
+
+    </div>
+ {% if user.groups.all.0.name  ==  "finance" %}
+    <div class="menu_section">
+        <ul>
+            <li class="current_section" title="Dashboard">
+                <a  href="{% url 'dashboard' %}">
+                    <span class="menu_icon"><i class="material-icons">home</i></span>
+                    <span class="menu_title">Home</span>
+                </a>
+            </li>
+
+             <li title="Plugins">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
+                    <span class="menu_title">Forms</span>
+                </a>
+                <ul>
+                    <li><a href="{% url 'sell' %}">Sell</a></li>
+
+                    <li><a href="{% url 'sales' %}">View Sales</a></li>
+
+{#                    <li><a href="{% url 'recover_voucher' %}">Recover Lost Voucher</a></li>#}
+                </ul>
+
+            </li>
+
+            <li title="Click to Logout">
+
+
+                <a href="{% url 'logout' %}" class="nav-link text-dark">
+
+
+                    <span class="menu_icon"><i class="material-icons">logout</i></span>
+                    <span class="menu_title">Logout</span>
+
+                </a>
+
+
+            </li>
+
+        </ul>
+    </div>
+{% else %}
+
+    <div class="menu_section">
+        <ul>
+            <li class="current_section" title="Dashboard">
+                <a  href="{% url 'dashboard' %}">
+                    <span class="menu_icon"><i class="material-icons">home</i></span>
+                    <span class="menu_title">Home</span>
+                </a>
+            </li>
+
+             <li class='dash ' title="Letters">
+                    <a href="#">
+                        <span class="menu_icon"><i class="uk-icon-list-alt uk-icon-small"></i></span>
+                        <span class="menu_title">Letters</span>
+                    </a>
+                </li>
+
+
+            <li title="Forms">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">person</i></span>
+                    <span class="menu_title">Applicants</span>
+                </a>
+                <ul>
+                    <li><a href="{% url 'applicants_index' %}">View Applicants</a></li>
+
+{#                    <li><a href="#">Applicants Issues</a></li>#}
+
+                </ul>
+            </li>
+
+            <li class='' title="View Programs">
+                    <a href="{% url 'programmes' %}"> <!-- &#xE158;-->
+                        <span class="menu_icon"><i class="material-icons">view_list</i></span>
+                        <span class="menu_title">Programs</span>
+                    </a>
+                </li>
+                <li class='dash ' title="Hall Management">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">home</i></span>
+                        <span class="menu_title">Accommodation</span>
+                    </a>
+                </li>
+
+             <li class='dash ' title="SMS">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">sms</i></span>
+                        <span class="menu_title">SMS</span>
+                    </a>
+                </li>
+
+            <li class='dash ' title="Downloads">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">download</i></span>
+                        <span class="menu_title">Downloads</span>
+                    </a>
+                </li>
+
+ <li title="Forms">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">person</i></span>
+                    <span class="menu_title">User Support</span>
+                </a>
+                <ul>
+
+                    <li><a href="{% url 'block_unblock' %}">Open or Close Applicant</a></li>
+                    <li><a href="{% url 'changeForm' %}">Change Voucher</a></li>
+
+                </ul>
+            </li>
+
+            <li title="Plugins">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
+                    <span class="menu_title">Settings</span>
+                </a>
+                <ul>
+                    <li><a href="{% url 'calender' %}">Calendar</a></li>
+
+
+                </ul>
+
+            </li>
+
+            <li title="Click to Logout">
+
+
+                <a href="{% url 'logout' %}" class="nav-link text-dark">
+
+
+                    <span class="menu_icon"><i class="material-icons">logout</i></span>
+                    <span class="menu_title">Logout</span>
+
+                </a>
+
+
+            </li>
+            {% comment %} <li title="Plugins">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
+                    <span class="menu_title">Forms</span>
+                </a>
+                <ul>
+                    <li><a href="{% url 'sell' %}">Sell</a></li>
+
+                    <li><a href="{% url 'sales' %}">View Sales</a></li>
+
+{#                    <li><a href="{% url 'recover_voucher' %}">Recover Lost Voucher</a></li>#}
+                </ul>
+
+            </li>
+{% endcomment %}
+        </ul>
+    </div>
+{% endif %}
+
+</aside><!-- main sidebar end -->

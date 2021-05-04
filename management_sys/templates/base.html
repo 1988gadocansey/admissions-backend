@@ -1,0 +1,1211 @@
+{% load static %}
+{% load humanize %}
+
+{% load account_tags %}
+<!doctype html>
+<!--[if lte IE 9]>
+<html class="lte-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="csrfmiddlewaretoken" content="{{ csrf_token }}"/>
+    <link rel="icon" type="image/png" href="~/favicon.ico" sizes="16x16">
+    <link rel="icon" type="image/png" href="assets/img/favicon-32x32.png" sizes="32x32">
+
+    <title>TTU Admissions</title>
+
+    <!-- uikit -->
+    <link rel="stylesheet" href="{% static '/assets/plugins/uikit/css/uikit.almost-flat.min.css' %}" media="all">
+
+    <link rel="stylesheet" href="{% static '/assets/css/main.min.css' %}" media="all">
+
+    <link rel="stylesheet" href="{% static '/assets/css/select2.min.css' %}" media="all">
+
+    <link rel="stylesheet" href="{% static '/assets/css/dropify.css' %}" media="all">
+
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    {% block style %}{% endblock %}
+    <style>
+        .md-user-image {
+            width: 34px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+
+<body class=" sidebar_main_open sidebar_main_swipe">
+<!-- main header -->
+<header id="header_main">
+    <div class="header_main_content">
+        <nav class="uk-navbar">
+
+            <!-- main sidebar switch -->
+            <a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
+                <span class="sSwitchIcon"></span>
+            </a>
+
+
+            <div class="uk-navbar-flip">
+                <ul class="uk-navbar-nav user_actions">
+                    <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+
+
+                    <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                    <li class="user_action_icon"><a>Hi {{ request.user|capfirst }}</a></li>
+
+                    <div class="uk-dropdown uk-dropdown-small">
+                        <ul class="uk-nav js-uk-prevent">
+                            <li>
+                                <a href="{% url 'logout' %}"
+                                >
+                                    Logout
+                                </a>
+
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+</header><!-- main header end -->
+<!-- main sidebar -->
+<aside id="sidebar_main">
+
+    <div class="sidebar_main_header">
+        <div class="sidebar_logo">
+
+
+        </div>
+
+    </div>
+
+    <div class="menu_section">
+
+        {% include 'partials/_MenuBar.html' %}
+
+    </div>
+</aside><!-- main sidebar end -->
+
+<div id="page_content">
+    <div id="page_content_inner">
+
+        {% block contents %}
+
+        {% endblock %}
+
+    </div>
+</div>
+
+
+<!-- google web fonts -->
+<script>WebFontConfig = {
+    google: {
+        families: [
+            'Source+Code+Pro:400,700:latin',
+            'Roboto:400,300,500,700,400italic:latin'
+        ]
+    }
+};
+(function () {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+})();</script>
+
+
+<script src="{% static '/assets/js/common.min.js' %}"></script>
+
+
+<script src="{% static '/assets/js/uikit_custom.min.js' %}"></script>
+
+
+<script src="{% static '/assets/js/altair_admin_common.min.js' %}"></script>
+
+
+<script src="{% static '/assets/js/dropify.min.js' %}"></script>
+
+<script src="{% static '/assets/js/file_input.min.js' %}"></script>
+
+<script src="{% static '/assets/js/vue.min.js' %}"></script>
+<script src="{% static '/assets/js/vue-form.min.js' %}"></script>
+
+
+<script src="{% static '/assets/js/jquery-ui.min.js' %}"></script>
+
+
+<script src="{% static '/assets/plugins/tablesorter/dist/js/jquery.tablesorter.min.js' %}"></script>
+<script src="{% static '/assets/plugins/tablesorter/dist/js/jquery.tablesorter.widgets.min.js' %}"></script>
+<script src="{% static '/assets/plugins/tablesorter/dist/js/widgets/widget-columnSelector.min.js' %}"></script>
+<script src="{% static '/assets/plugins/tablesorter/dist/js/widgets/widget-columnSelector.min.js' %}"></script>
+<script src="{% static '/assets/plugins/tablesorter/dist/js/widgets/widget-print.min.js' %}"></script>
+
+<script src="{% static '/assets/js/plugins_tablesorter.min.js' %}"></script>
+
+<script src="{% static '/assets/js/tinymce.min.js' %}"></script>
+
+<script src="{% static '/assets/js/forms_wysiwyg.min.js' %}"></script>
+
+
+
+<script>$(document).ready(function () {
+
+    $(".uk-alert-success").fadeOut(2500);
+    $(".uk-alert-danger").fadeOut(2500);
+
+});
+</script>
+
+<script src="{% static '/assets/js/select2.full.min.js' %}"></script>
+
+<script type="text/javascript">
+    function getCookie(c_name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=");
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start, c_end));
+            }
+        }
+        return "";
+    }
+
+    $(function () {
+        $.ajaxSetup({
+            headers: {"X-CSRFToken": getCookie("csrftoken")}
+        });
+    });
+
+
+</script>
+
+<script>$(document).ready(function () {
+    // console.log($('select[name="status"]'));
+    $('select[name="status"]').on('change', function (e) {
+        var newval = $(this).val();
+        var status_id = $(this).attr("status_id");
+        var name = $(this).attr("name");
+        var phone = $(this).attr("phone");
+        UIkit.modal.confirm('Update status of order?', function () {
+            $.post("updatestatus/" + status_id, {"newval": newval}, function (data, status) {
+                if (data == "success") {
+
+                    UIkit.notify({
+                        message: 'Status Updated!',
+                        status: 'success',
+                        timeout: 8000,
+                        pos: 'top-center'
+                    });
+
+                } else {
+                    UIkit.notify('My message');
+                    UIkit.notify({
+                        message: 'Error updating status of order!',
+                        status: 'danger',
+                        timeout: 10000,
+                        pos: 'top-center'
+                    });
+
+                }
+            });
+        });
+    });
+});</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        $.ajax({
+            type: "GET",
+            {#url: "{% url 'live' %}",#}
+            success: function (data) {
+
+                {% comment %} modal = UIkit.modal.blockUI("<div class='uk-text-center'>Wait fetching data...<br/><img class='uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' alt=''>");
+
+
+                 //modal.show();
+                 modalTimeout = setTimeout(function () {
+                     if (modal.isActive()) {
+
+                         modal.hide();
+                     }
+                 }, 2000);{% endcomment %}
+
+
+                var trHTML = '';
+                $.each(data, function (i, item) {
+
+
+                    trHTML += '<tr><td>' + item.name.toUpperCase() + '</td><td>' + item.applicants + '</td><td>' + item.admittedApplicants + '</td></tr>';
+
+
+                });
+                $('.gad').append(trHTML);
+
+
+//modal.hide();
+
+            },
+
+
+            error: function (error) {
+
+                jsonValue = jQuery.parseJSON(error.responseText);
+                alert("error" + error.responseText);
+            }
+        });
+    });
+</script>
+<script>
+
+    $(document).ready(function () {
+
+        $(".parent").on('change', function (e) {
+
+            $("#group").submit();
+        });
+    });
+    $(document).ready(function () {
+        $('.admit').on('click', function (e) {
+
+
+            var applicant = $(this).closest('tr').find('.app').val();
+            var program = $(this).closest('tr').find('.programs').val();
+            var hall = $(this).closest('tr').find('.halls').val();
+            var admit = $(this).closest('tr').find('.admit').val();
+            var level = $(this).closest('tr').find('.level').val();
+            var type = $(this).closest('tr').find('.type').val();
+            var applicant_id = $(this).closest('tr').find('.applicant').val();
+            var name = $(this).closest('tr').find('.names').val().toUpperCase();
+            var resident = $(this).closest('tr').find('.resident').val();
+            //alert(resident);
+            if (program == "" || type == "" || hall == "" || resident == "" || level == "") {
+                alert("please select program,admission type,hall, level of admission and residential status ");
+            } else {
+                UIkit.modal.confirm("Are you sure you want to admit this applicant?? "
+                    , function () {
+                        modal = UIkit.modal.blockUI("<div class='uk-text-center'>Admitting Applicant " + name.toUpperCase() + " <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                        //setTimeout(function(){ modal.hide() }, 500) })()
+                        $.ajax({
+
+                            type: "GET",
+                            {#url: "{% url 'admit' %}",#}
+                            data: {
+                                applicant: applicant,
+                                program: program,
+                                hall: hall,
+                                admit: admit,
+                                level: level,
+                                type: type,
+                                resident: resident
+                            }, //your form data to post goes
+                            dataType: "json",
+                        }).done(function (data) {
+                            //  var objData = jQuery.parseJSON(data);
+
+                            modal.hide();
+                            //
+                            //                                     UIkit.modal.alert("Action completed successfully");
+
+                            //alert(data.status + data.data);
+                            if (data.status == 'success') {
+                                UIkit.modal.alert(name + " Admitted successfully ");
+
+                                location.reload(true);
+                                {% comment %}  $(".uk-alert-success").show();
+
+                            $(".uk-alert-success").text(data.status + " " + data.message);
+                            $(".uk-alert-success").fadeOut(4000);
+                    }{% endcomment %}
+                            } else {
+                                {% comment %} $(".uk-alert-danger").show();
+                                         $(".uk-alert-danger").text(data.status + " " + data.message);
+                                         $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                                UIkit.modal.alert(" Error admitting " + name + "check if the selected programme has fees and courses assigned.");
+                            }
+
+
+                        });
+                    }
+                );
+            }
+        });
+
+
+        // reversing admissions
+
+        $('.reverse').on('click', function (e) {
+
+
+            var applicant = $(this).closest('tr').find('.app').val();
+            var reverse = $(this).closest('tr').find('.reverse').val();
+            var name = $(this).closest('tr').find('.names').val().toUpperCase();
+
+
+            UIkit.modal.confirm("Are you sure you want to cancel " + name + " admission?"
+                , function () {
+                    modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok reversing the admission of " + name.toUpperCase() + " <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                    //setTimeout(function(){ modal.hide() }, 500) })()
+                    $.ajax({
+
+                        type: "GET",
+                        {#url: "{% url 'revoke_admission' %}",#}
+                        data: {
+                            applicant: applicant,
+
+                        }, //your form data to post goes
+                        dataType: "json",
+                    }).done(function (data) {
+                        //  var objData = jQuery.parseJSON(data);
+
+                        modal.hide();
+                        //
+                        //                                     UIkit.modal.alert("Action completed successfully");
+
+                        //alert(data.status + data.data);
+                        if (data.status == 'success') {
+                            UIkit.modal.alert(name + " Admission reversed successfully ");
+
+
+                            {% comment %}  $(".uk-alert-success").show();
+
+                        $(".uk-alert-success").text(data.status + " " + data.message);
+                        $(".uk-alert-success").fadeOut(4000);
+                }{% endcomment %}
+                        } else {
+                            {% comment %} $(".uk-alert-danger").show();
+                                     $(".uk-alert-danger").text(data.status + " " + data.message);
+                                     $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                            UIkit.modal.alert(" Error reversing " + name + " admission.Try again later");
+                        }
+
+
+                    });
+                }
+            );
+
+        });
+
+
+    });
+    // sending custom sms
+
+    $('.sms').on('click', function (e) {
+
+
+        var message = $('.message').val();
+        var phone = $('.phone').val();
+
+
+        UIkit.modal.confirm("Are you sure you want to send this sms?"
+            , function () {
+                modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok send sms to  " + phone.split(",") + " <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                //setTimeout(function(){ modal.hide() }, 500) })()
+                $.ajax({
+
+                    type: "POST",
+                    {#url: "{% url 'fireCustomSMS' %}",#}
+                    data: {
+                        message: message,
+                        phone: phone
+
+                    }, //your form data to post goes
+                    dataType: "json",
+                }).done(function (data) {
+                    //  var objData = jQuery.parseJSON(data);
+
+                    modal.hide();
+                    //
+                    //                                     UIkit.modal.alert("Action completed successfully");
+
+                    //alert(data.status + data.data);
+                    if (data.status == 'success') {
+                        UIkit.modal.alert(data.message);
+
+
+                        {% comment %}  $(".uk-alert-success").show();
+
+                    $(".uk-alert-success").text(data.status + " " + data.message);
+                    $(".uk-alert-success").fadeOut(4000);
+            }{% endcomment %}
+                    } else {
+                        {% comment %} $(".uk-alert-danger").show();
+                                 $(".uk-alert-danger").text(data.status + " " + data.message);
+                                 $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                        UIkit.modal.alert(" Error sending sms to " + phone.split(",") + "Try again later");
+                    }
+
+
+                });
+            }
+        );
+
+    });
+
+
+</script>
+
+
+<script>
+
+
+    $(document).ready(function () {
+        $('.createForm').on('click', function (e) {
+
+            e.preventDefault();
+
+            var name = $('.name').val();
+            var deadline = $('.deadline').val();
+            var medicals_starts = $('.medicals_start').val();
+            var medicals_ends = $('.medicals_end').val();
+            var orient_ends = $('.orient_ends').val();
+            var orient_starts = $('.orient_starts').val();
+            var reporting = $('.reporting').val();
+            var year = $('.year').val();
+
+
+            //alert(resident);
+            if (year == "" || name == "" || deadline == "" || medicals_starts == "" || medicals_ends == "") {
+                alert("please fill all fields");
+            } else {
+                UIkit.modal.confirm("Sure you want to save? "
+                    , function () {
+                        modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok saving configuration with name " + name.toUpperCase() + " <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                        //setTimeout(function(){ modal.hide() }, 500) })()
+                        $.ajax({
+
+                            type: "POST",
+                            {#url: "{% url 'create_settings' %}",#}
+                            data: {
+                                year: year,
+                                name: name,
+                                deadline: deadline,
+                                medicals_starts: medicals_starts,
+                                medicals_ends: medicals_ends,
+                                orient_starts: orient_starts,
+                                orient_ends: orient_ends,
+                                reporting: reporting
+
+
+                            }, //your form data to post goes
+                            dataType: "json",
+
+                        }).done(function (data) {
+                            //  var objData = jQuery.parseJSON(data);
+
+                            modal.hide();
+                            location.reload(true);
+                            //
+                            //                                     UIkit.modal.alert("Action completed successfully");
+
+                            //alert(data.status + data.data);
+                            if (data.status == 'success') {
+                                UIkit.modal.alert(data.message.toString());
+
+
+                                {% comment %}  $(".uk-alert-success").show();
+
+                            $(".uk-alert-success").text(data.status + " " + data.message);
+                            $(".uk-alert-success").fadeOut(4000);
+                    }{% endcomment %}
+                            } else {
+                                {% comment %} $(".uk-alert-danger").show();
+                                         $(".uk-alert-danger").text(data.status + " " + data.message);
+                                         $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                                UIkit.modal.alert(data.message.toString());
+                            }
+
+
+                        });
+                    }
+                );
+            }
+        });
+
+
+    });
+
+
+    $(document).ready(function () {
+        $('.recover').on('click', function (e) {
+
+
+                var phone = $('.phone').val();
+
+
+                UIkit.modal.confirm("Are you sure of this action? "
+                    , function () {
+                        modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok recoving lost voucher.  <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                        //setTimeout(function(){ modal.hide() }, 500) })()
+                        $.ajax({
+
+                            type: "POST",
+                            {% comment %}  url: "{% url 'recover_voucher' %}",{% endcomment %}
+                            data: {
+                                phone: phone
+
+
+                            }, //your form data to post goes
+                            dataType: "json",
+
+                        }).done(function (data) {
+                            //  var objData = jQuery.parseJSON(data);
+
+                            modal.hide();
+                            location.reload(true);
+                            //
+                            //                                     UIkit.modal.alert("Action completed successfully");
+
+                            //alert(data.status + data.data);
+                            if (data.status == 'success') {
+                                UIkit.modal.alert(data.message.toString());
+
+
+                                $(".uk-alert-success").show();
+
+                                $(".uk-alert-success").text(data.status + " " + data.message);
+                                $(".uk-alert-success").fadeOut(4000);
+                            }
+                        }
+                    else
+                        {
+                            $(".uk-alert-danger").show();
+                            $(".uk-alert-danger").text(data.status + " " + data.message);
+                            $(".uk-alert-danger").fadeOut(4000);
+                            UIkit.modal.alert(data.message.toString());
+                        }
+
+
+                    });
+            }
+        );
+
+    });
+
+
+    })
+    ;
+
+
+    $(document).ready(function () {
+        $('.edit_button').on('click', function (e) {
+            //alert();
+            e.preventDefault();
+
+            var name = $('.nameedit').val();
+            var deadline = $('.deadlineedit').val();
+            var medicals_starts = $('.medicalseditstarts').val();
+            var medicals_ends = $('.medicalseditsend').val();
+            var orient_ends = $('.orient_endsedit').val();
+            var orient_starts = $('.orient_startsedit').val();
+            var reporting = $('.reportingedit').val();
+            var year = $('.yearedit').val();
+
+
+            //alert(resident);
+            if (year == "" || name == "" || deadline == "" || medicals_ends == "" || medicals_starts == "") {
+                alert("please fill all fields");
+            } else {
+                UIkit.modal.confirm("Sure you want to update this settings? "
+                    , function () {
+                        modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok updating configuration with name " + name.toUpperCase() + " <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                        //setTimeout(function(){ modal.hide() }, 500) })()
+                        $.ajax({
+
+                            type: "POST",
+                            {#url: "{% url 'create_settings' %}",#}
+                            data: {
+                                year: year,
+                                name: name,
+                                deadline: deadline,
+                                medicals_starts: medicals_starts,
+                                medicals_ends: medicals_ends,
+                                orient_starts: orient_starts,
+                                orient_ends: orient_ends,
+                                reporting: reporting
+
+
+                            }, //your form data to post goes
+                            dataType: "json",
+
+                        }).done(function (data) {
+                            //  var objData = jQuery.parseJSON(data);
+
+                            modal.hide();
+                            location.reload(true);
+                            //
+                            //                                     UIkit.modal.alert("Action completed successfully");
+
+                            //alert(data.status + data.data);
+                            if (data.status == 'success') {
+                                UIkit.modal.alert(data.message.toString());
+
+
+                                {% comment %}  $(".uk-alert-success").show();
+
+                            $(".uk-alert-success").text(data.status + " " + data.message);
+                            $(".uk-alert-success").fadeOut(4000);
+                    }{% endcomment %}
+                            } else {
+                                {% comment %} $(".uk-alert-danger").show();
+                                         $(".uk-alert-danger").text(data.status + " " + data.message);
+                                         $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                                UIkit.modal.alert(data.message.toString());
+                            }
+
+
+                        });
+                    }
+                );
+            }
+        });
+
+
+    });
+
+
+    $(document).ready(function () {
+        $('.deletes').on('click', function (e) {
+
+
+            var id = $('.id').val();
+
+
+            UIkit.modal.confirm("Are you sure you want to delete this setting? "
+                , function () {
+                    modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok deleting setting  <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                    //setTimeout(function(){ modal.hide() }, 500) })()
+                    $.ajax({
+
+                        type: "GET",
+                        {#url: "{% url 'setting-delete' %}",#}
+                        data: {
+                            id: id
+
+
+                        }, //your form data to post goes
+                        dataType: "json",
+
+                    }).done(function (data) {
+                        //  var objData = jQuery.parseJSON(data);
+
+                        modal.hide();
+                        location.reload(true);
+                        //
+                        //                                     UIkit.modal.alert("Action completed successfully");
+
+                        //alert(data.status + data.data);
+                        if (data.status == 'success') {
+                            UIkit.modal.alert(data.message.toString());
+
+
+                            {% comment %}  $(".uk-alert-success").show();
+
+                        $(".uk-alert-success").text(data.status + " " + data.message);
+                        $(".uk-alert-success").fadeOut(4000);
+                }{% endcomment %}
+                        } else {
+                            {% comment %} $(".uk-alert-danger").show();
+                                     $(".uk-alert-danger").text(data.status + " " + data.message);
+                                     $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                            UIkit.modal.alert(data.message.toString());
+                        }
+
+
+                    });
+                }
+            );
+
+        });
+
+
+    });
+
+
+    $(document).ready(function () {
+        $('.delete_sales').on('click', function (e) {
+
+
+            var id = $('.ids').val();
+
+            //alert(id);
+            UIkit.modal.confirm("Are you sure you want to delete this sale? "
+                , function () {
+                    modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok deleting sales  <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                    //setTimeout(function(){ modal.hide() }, 500) })()
+                    $.ajax({
+
+                        type: "GET",
+                        url: "{% url 'delete_sales' %}",
+                        data: {
+                            id: id
+
+
+                        }, //your form data to post goes
+                        dataType: "json",
+
+                    }).done(function (data) {
+                        //  var objData = jQuery.parseJSON(data);
+                        console.log(data)
+                        modal.hide();
+                        location.reload(true);
+                        //
+                        //                                     UIkit.modal.alert("Action completed successfully");
+
+                        //alert(data.status + data.data);
+                        if (data.status == 'success') {
+                            UIkit.modal.alert(data.message.toString());
+
+
+                            {% comment %}  $(".uk-alert-success").show();
+
+                        $(".uk-alert-success").text(data.status + " " + data.message);
+                        $(".uk-alert-success").fadeOut(4000);
+                }{% endcomment %}
+                        } else {
+                            {% comment %} $(".uk-alert-danger").show();
+                                     $(".uk-alert-danger").text(data.status + " " + data.message);
+                                     $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                            UIkit.modal.alert(data.message.toString());
+                        }
+
+
+                    });
+                }
+            );
+
+        });
+
+
+    });
+
+    // applicant form settings
+
+
+    $(document).ready(function () {
+        $('.actions_command').on('click', function (e) {
+
+
+            var name = $('.applicant_name').val();
+            var applicant = $('.applicant').val();
+            var action = $('.action').val();
+
+
+            UIkit.modal.confirm("Are you sure you want to perform this action? "
+                , function () {
+                    modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok updating" + name + " admission forms  <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                    //setTimeout(function(){ modal.hide() }, 500) })()
+                    $.ajax({
+
+                        type: "POST",
+                        {#url: "{% url 'modify_applicant_form' %}",#}
+                        data: {
+                            name: name,
+                            applicant: applicant,
+                            action: action
+
+
+                        }, //your form data to post goes
+                        dataType: "json",
+
+                    }).done(function (data) {
+                        //  var objData = jQuery.parseJSON(data);
+
+                        modal.hide();
+
+                        //location.reload(true);
+                        //
+                        //                                     UIkit.modal.alert("Action completed successfully");
+
+                        //alert(data.status + data.data);
+                        if (data.status == 'success') {
+                            UIkit.modal.alert(data.message.toString());
+
+
+                            {% comment %}  $(".uk-alert-success").show();
+
+                        $(".uk-alert-success").text(data.status + " " + data.message);
+                        $(".uk-alert-success").fadeOut(4000);
+                }{% endcomment %}
+                        } else {
+                            {% comment %} $(".uk-alert-danger").show();
+                                     $(".uk-alert-danger").text(data.status + " " + data.message);
+                                     $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                            UIkit.modal.alert(data.message.toString());
+                        }
+
+
+                    });
+                }
+            );
+
+        });
+
+
+    });
+
+
+    $(document).ready(function () {
+        var brand = document.getElementById('logo-id');
+        brand.className = 'attachment_upload';
+        brand.onchange = function () {
+            document.getElementById('fakeUploadLogo').value = this.value.substring(12);
+        };
+
+        // Source: http://stackoverflow.com/a/4459419/6396981
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.img-preview').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#logo-id").change(function () {
+            readURL(this);
+        });
+    });
+
+
+    $('.edit').on('click', function () {
+        //var myModal = $('#edit');
+        var myModal = UIkit.modal("#edit");
+
+        // now get the values from the table
+        var name = $(this).closest('tr').find('.name').html();
+        var medicals_start = $(this).closest('tr').find('.medicals_start').html();
+        var medicals_end = $(this).closest('tr').find('.medicals_end').html();
+        var year = $(this).closest('tr').find('.year').html();
+        var orient_starts = $(this).closest('tr').find('.orient_starts').html();
+        var orient_ends = $(this).closest('tr').find('.orient_ends').html();
+        var reporting = $(this).closest('tr').find('.reporting').html();
+        var deadline = $(this).closest('tr').find('.deadline').html();
+
+
+        // and set them in the modal:
+        $('.nameedit').val(name);
+        $('.medicalseditstarts').val(medicals_start);
+        $('.medicalseditend').val(medicals_end);
+        $('.yearedit').val(year);
+        $('.orient_endsedit').val(orient_ends);
+        $('.orient_startsedit').val(orient_starts);
+        $('.reportingedit').val(reporting);
+        $('.deadlineedit').val(deadline);
+
+
+        // and finally show the modal
+        myModal.show();
+
+
+    });
+
+
+</script>
+
+<script type="text/javascript">
+    //Javascript
+    $(function () {
+        $("#q").autocomplete({
+            {#source: {% url 'applicant_live_search' %},#}
+            minLength: 3,
+            select: function (event, ui) {
+                $('#q').val(ui.item.value);
+
+            }
+        });
+    });
+
+    function MM_openBrWindow(theURL, winName, features) { //v2.0
+        window.open(theURL, winName, features);
+    }
+</script>
+
+
+<script>//code for ensuring vuejs can work with select2 select boxes
+Vue.directive('select', {
+    twoWay: true,
+    priority: 1000,
+    params: ['options'],
+    bind: function () {
+        var self = this
+        $(this.el)
+            .select2({
+                data: this.params.options,
+                width: "resolve"
+            })
+            .on('change', function () {
+                self.vm.$set(this.name, this.value)
+                Vue.set(self.vm.$data, this.name, this.value)
+            })
+    },
+    update: function (newValue, oldValue) {
+        $(this.el).val(newValue).trigger('change')
+    },
+    unbind: function () {
+        $(this.el).off().select2('destroy')
+    }
+})
+var vm = new Vue({
+    el: "body",
+    ready: function () {
+    },
+    data: {
+
+
+        options: [],
+        in_payment_section: false,
+    },
+    methods: {
+        go_to_payment_section: function (event) {
+            UIkit.modal.confirm(vm.$els.confirm_modal.innerHTML, function () {
+
+                vm.$data.in_payment_section = true
+            })
+        },
+        submit_form: function () {
+            return (function (modal) {
+                modal = UIkit.modal.blockUI("<div class='uk-text-center'>Selling Form...<br/><img class='uk-thumbnail uk-margin-top' src='https://apply.ttuportal.com/assets/img/spinners/spinner_success.gif' /></div>");
+                setTimeout(function () {
+                    modal.hide()
+                }, 50000)
+            })();
+        },
+
+        go_to_fill_form_section: function (event) {
+            vm.$data.in_payment_section = false
+        }
+    }
+})
+
+
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        $('.select').select2({width: "resolve"});
+    });
+
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        // TODO: send new value to controller to update
+        $('.UpdateBtn').click(function () {
+            let val = "";
+            const newState = $(this).parents('td').siblings().children('.running').val();
+            const theID = $(this).siblings('.programID').val();
+            if (newState == "false") {
+                val = "Close"
+            } else {
+                val = "Open"
+            }
+
+            const name = $(this).closest('tr').find('.name').html().toUpperCase();
+
+            UIkit.modal.confirm("Are you sure you want to " + val + " admission for " + name + "?? "
+                , function () {
+                    $.ajax({
+
+                        url: "{% url 'update_programme' %}",
+                        type: "POST",
+                        data: {running: newState, id: theID},
+                        success: function (data) {
+                            if (data.code === 1) {
+
+                                UIkit.modal.alert("Program Status Successfully updated");
+                                $('.programmes').row($(el).parents("tr")).remove().draw();
+                            }
+                            if (data.code === 0) {
+
+                                UIkit.modal.alert("Program could not be updated, please try again later");
+                            }
+                        }
+                    });//end of update button click function
+                });
+        });
+    }); //end of document ready
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+        $('.actions_command').on('click', function (e) {
+
+
+            var name = $('.applicant_name').val();
+            var applicant = $('.applicant').val();
+            var action = $('.action').val();
+
+
+            UIkit.modal.confirm("Are you sure you want to perform this action? "
+                , function () {
+                    modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok updating" + name + " admission forms  <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                    //setTimeout(function(){ modal.hide() }, 500) })()
+                    $.ajax({
+
+                        type: "POST",
+                        url: "{% url 'modify_applicant_form' %}",
+                        data: {
+                            name: name,
+                            applicant: applicant,
+                            action: action
+
+
+                        }, //your form data to post goes
+                        dataType: "json",
+
+                    }).done(function (data) {
+                        //  var objData = jQuery.parseJSON(data);
+
+                        modal.hide();
+
+                        //location.reload(true);
+                        //
+                        //                                     UIkit.modal.alert("Action completed successfully");
+
+                        //alert(data.status + data.data);
+                        if (data.status == 'success') {
+                            UIkit.modal.alert(data.message.toString());
+
+
+                            {% comment %}  $(".uk-alert-success").show();
+
+                        $(".uk-alert-success").text(data.status + " " + data.message);
+                        $(".uk-alert-success").fadeOut(4000);
+                }{% endcomment %}
+                        } else {
+                            {% comment %} $(".uk-alert-danger").show();
+                                     $(".uk-alert-danger").text(data.status + " " + data.message);
+                                     $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                            UIkit.modal.alert(data.message.toString());
+                        }
+
+
+                    });
+                }
+            );
+
+        });
+
+
+    });
+
+$(document).ready(function () {
+        $('.types').on('click', function (e) {
+
+
+            var type = $('.type').val();
+            var applicant = $('.applicant').val();
+
+
+
+            UIkit.modal.confirm("Are you sure you want to perform this action? "
+                , function () {
+                    modal = UIkit.modal.blockUI("<div class='uk-text-center'>Ok changing form to " + name + " <br/><img class='uk-thumbnail uk-margin-top' src='{% static 'assets/img/spinners/spinner.gif'%}' /></div>");
+                    //setTimeout(function(){ modal.hide() }, 500) })()
+                    $.ajax({
+
+                        type: "POST",
+                        url: "{% url 'changeVoucher' %}",
+                        data: {
+                            name: name,
+                            applicant: applicant,
+                            type: type
+
+
+                        }, //your form data to post goes
+                        dataType: "json",
+
+                    }).done(function (data) {
+                        //  var objData = jQuery.parseJSON(data);
+
+                        modal.hide();
+
+                        //location.reload(true);
+                        //
+                        //                                     UIkit.modal.alert("Action completed successfully");
+
+                        //alert(data.status + data.data);
+                        if (data.status == 'success') {
+                            UIkit.modal.alert(data.message.toString());
+
+
+                            {% comment %}  $(".uk-alert-success").show();
+
+                        $(".uk-alert-success").text(data.status + " " + data.message);
+                        $(".uk-alert-success").fadeOut(4000);
+                }{% endcomment %}
+                        } else {
+                            {% comment %} $(".uk-alert-danger").show();
+                                     $(".uk-alert-danger").text(data.status + " " + data.message);
+                                     $(".uk-alert-danger").fadeOut(4000);{% endcomment %}
+                            UIkit.modal.alert(data.message.toString());
+                        }
+
+
+                    });
+                }
+            );
+
+        });
+
+
+    });
+
+</script>
+<script type="text/javascript">
+      $(document).ready(function(){
+        $('.formTypesEle').select2({
+          // placeholder: 'Select an option'
+        });
+        CKEDITOR.replace( 'local',
+        {
+          toolbar : 'MyToolbar',
+          uiColor : '#9AB8F3'
+        }
+
+       );
+       CKEDITOR.replace( 'foreign',
+       {
+         toolbar : 'MyToolbar',
+         uiColor : '#9AB8F3'
+       }
+
+      );
+      CKEDITOR.replace( 'postgrad',
+      {
+        toolbar : 'MyToolbar',
+        uiColor : '#9AB8F3'
+      }
+
+     );
+      });
+    </script>
+{% block js %}
+{% endblock %}
+</body>
+</html>

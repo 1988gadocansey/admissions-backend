@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+
+
+
+    <h3 class="heading_c uk-margin-bottom">Generate Bulk Outreach- Admissions Officer Only</h3>
+
+    <div class="md-card uk-margin-medium-bottom">
+        <div class="md-card-content">
+
+
+                <form method="POST"
+                      data-validate="parsley">
+                    {% csrf_token %}
+                    <div class="uk-grid" data-uk-grid-margin="">
+
+
+
+                        <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Form Category</label>
+                            <p></p>
+                            <select required="required" class="md-input type select" v-model="type" v-form-ctrl=""
+                                    v-select="type" name="type">
+                                <option value="">Select form</option>
+
+                                <option value="HND">HND</option>
+
+                                <option value="HND">BRIDGING</option>
+                                <option value="HND">MATURE</option>
+                                <option>DIPLOMA</option>
+                                <option>CERTIFICATE</option>
+                                <option value="HND">ACCESS</option>
+                                <option>BTECH</option>
+                                <option>MTECH</option>
+
+
+                            </select>
+
+                        </div>
+
+                        <div class="uk-width-medium-3-10">
+                            <label for="product_search_price">Number of forms</label>
+                            <p></p>
+                            <select required="required" class="md-input number select" v-model="number" v-form-ctrl=""
+                                    v-select="number" name="number">
+                                <option value="">Select number</option>
+
+                                <option value="1000">1000</option>
+
+                                <option value="500">500</option>
+                                <option value="400">400</option>
+                                <option value="300">300</option>
+                                <option>200</option>
+                                <option value="100">100</option>
+                                <option>50</option>
+                                <option>20</option>
+                                <option>10</option>
+                                <option>5</option>
+                                <option>1</option>
+
+
+                            </select>
+
+                        </div>
+
+
+                    </div>
+                    <div class="uk-modal-footer uk-text-right">
+                        <button type="submit" class="md-btn md-btn-primary"
+                                 >Sell
+                        </button>
+                        <button type="reset" class="md-btn md-btn-flat">Cancel</button>
+                    </div>
+                </form>
+
+
+
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}

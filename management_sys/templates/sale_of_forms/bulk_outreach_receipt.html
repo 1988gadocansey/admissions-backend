@@ -1,0 +1,147 @@
+{% extends "printLayout.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+{% load account_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Receipt</title>
+    <style>
+        @media print {
+            html, body {
+    height:100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+            table {
+                float: none !important;
+            }
+
+            div {
+                float: none !important;
+            }
+
+            #page1 {
+                page-break-inside: avoid;
+                page-break-before: always;
+            }
+
+            #page2 {
+                page-break-inside: avoid;
+                page-break-before: always;
+            }
+
+            #page3 {
+                page-break-inside: avoid;
+                page-break-before: always;
+            }
+        }
+
+        @page {
+            size: A4;
+        }
+    </style>
+</head>
+<body>
+
+{% block contents %}
+{% comment %}<script type="text/javascript">
+
+    window.print();
+
+</script>{% endcomment %}
+  <a onclick="javascript:printDiv('print')" class="btn btn-outline-info ks-light">Click to print letter</a>
+    <div id="print">
+
+    {% for row in data %}
+         <div id="page1" style="page-break-before:always">
+    <div class="md-card uk-margin-medium-bottom">
+        <div class="md-card-content">
+            <div class="row">
+
+
+        <div class="col-md-12" style="text-align:center">
+        <p>
+            <img src="{% static 'assets/img/header.jpg' %}" style="width:1086px;height: auto"
+             class="ui fluid image"/>
+        </p>
+
+            <center><strong> ADMISSIONS VOUCHER - OUTREACH SECTION</strong></center>
+
+
+            <p> SERIAL NO: <span style='color:green'>{{row.username}}</span>
+
+           <strong>PIN CODE: <span  style='color: purple'>{{row.pin}} </span> </strong></p>
+             <p> {{row.form_type}} - NOT FOR SALE</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+        </div>
+    </div>
+
+            <div>
+
+            &nbsp;
+             <p><center><strong>STEPS IN FILLING THE ONLINE FORM</strong></center></p>
+                                        <hr>
+			<p>All Applicants for 2019/2020 Academic year admission are required to use Takoradi Technical University online admissions portal. The procedure for the online application process is as follows:</p>
+			<p>
+				<strong>I. </strong>You are kindly advised to use Mozilla Firefox or
+				Chrome browser for the online admission form filling
+			</p>
+			<p>
+				<strong>II.</strong>Log on to admissions.ttuportal.com
+			</p>
+			<p>
+				<strong>II. </strong>Login with serial number and pin code in the
+				receipt you were given
+			</p>
+			<p>
+				<strong>III. </strong>The Serial Number and Pin Code can be used for
+				maximum of 10 times after which it will be deactivated
+			</p>
+
+			<p>
+				<strong>IV. </strong>. In completing the online form, applicants will
+				be required to upload their passport size photograph (not more than
+				500KB) with a white background.
+			</p>
+			<p>
+				<strong>V.  </strong>Applicants are advised to check thoroughly all
+				details entered before they finally submit their online
+				applications. A form, once submitted, can be viewed, but cannot be
+				edited.
+			</p>
+			<p>
+				<strong>VII.</strong> Applicants should print out application
+				summary; attach result slips,certificates (WASSCE/SSSCE)or
+				Certificates(BTECH) and all other relevant documents.
+			</p>
+			<p>
+				<strong>VIII. </strong>The application documents as specified (III)
+				above should sent by post to
+			<p align="center"><strong>The Registrar</strong></p>
+                                <p align="center"><strong>Takoradi Technical University,</strong></p>
+                                <p align="center"><strong>P. O Box 256, Takoradi, W/R.</strong></p>
+ 							<p align="center"><strong>For more information call 0332094767 / 0262321123 / 0243348522 / 0246091283 / 0505284060</strong></p>
+
+            </div>
+
+        </div>
+    </div>
+
+         </div>
+    {% endfor %}
+    </div>
+{% endblock %}
+
+</body>
+
+</html>

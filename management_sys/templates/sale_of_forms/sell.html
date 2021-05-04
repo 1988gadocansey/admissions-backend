@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+
+
+
+    <h6 class="heading_b uk-margin-bottom">Sell Voucher</h6>
+    <div class="uk-width-xLarge-1-10">
+        <div class="md-card">
+            <div class="md-card-content" style="">
+
+
+                <form method="POST" accept-charset="utf-8" name="updateForm" v-form>
+                    {% csrf_token %}
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <div class="uk-width-medium-2-10" style="margin-top: 16px">
+
+
+                            <select required="required" class="md-input type select" v-model="type" v-form-ctrl=""
+                                    v-select="type" name="type">
+                                <option value="">Select form</option>
+
+                                <option value="HND">HND</option>
+
+                                <option value="HND">BRIDGING</option>
+                                <option value="MATURE">MATURE</option>
+                                <option>DIPLOMA</option>
+                                 <option>BTECH</option>
+                                <option>DEGREE</option>
+                                <option>MTECH</option>
+
+
+                            </select>
+                            <p class=" uk-text-danger uk-text-small" v-if="updateForm.type.$error.required">Please
+                                select form type</p>
+
+                        </div>
+
+                        <div class="uk-width-medium-2-10">
+                            <label for="product_search_price">Customer Name</label>
+                            <input type="text" class="md-input name" id="name" name="name" required="" v-model="name"
+                                   v-form-ctrl>
+                            <p class=" uk-text-danger uk-text-small" v-if="updateForm.name.$error.required">Please
+                                provide customer name</p>
+
+                        </div>
+                        <div class="uk-width-medium-2-10">
+                            <label for="product_search_price">Customer Phone</label>
+                            <input type="text" class="md-input name" name="phone" required="" v-model="phone"
+                                   v-form-ctrl data-parsley-type="digits" minlength="10" maxlength="10"
+                                   pattern='^[0-9]{10}$'>
+
+                            <p class="uk-text-danger uk-text-small" v-if="updateForm.phone.$invalid">Please enter a
+                                valid phone </p>
+
+
+                        </div>
+
+                        <div class="uk-width-medium-2-10" style="margin-top: 19px">
+
+                            <input v-show="updateForm.$valid" class="md-btn md-btn-primary uk-margin-small-top"
+                                   type="submit" name="submit_order" value="Sell" v-on:click="submit_form"/>
+
+                            <button type="reset" class="md-btn md-btn-flat">Cancel</button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+{#    <div class="uk-width-xLarge-1-10">#}
+{#        <div class="md-card">#}
+{#            <div class="md-card-content" style="">#}
+{#                 <div class="uk-overflow-container" id='print'>#}
+{##}
+{#                    <table class="uk-table uk-table-hover uk-table-condensed uk-table-align-vertical uk-table-nowrap tablesorterw tablesorter-altairw"#}
+{#                           id="ts_pager_filterw">#}
+{#                        <thead>#}
+{#                        <tr>#}
+{#                            <th class="filter-false remove sorter-false" data-priority="6">NO</th>#}
+{#                            <th>CUSTOMER NAME</th>#}
+{##}
+{##}
+{#                            <th data-priority="critical">VOUCHER SERIAL</th>#}
+{#                            <th data-priority="critical">VOUCHER PIN</th>#}
+{##}
+{##}
+{#                            <th>FORM TYPE</th>#}
+{#                            <th>AMOUNT</th>#}
+{#                            <th>DATE SOLD</th>#}
+{#                            <th>SOLD BY</th>#}
+{#                            <TH>ACTION</TH>#}
+{##}
+{##}
+{#                        </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                        {% if request.user.username == "finance" or request.user.username == "tpconnect" %}#}
+{##}
+{#                            {% for record in data.object_list %}#}
+{##}
+{#                            <tr>#}
+{#                                <td> {{ forloop.counter0|add:data.start_index }} {# starting index 1 #}</td>#}
+{#                                <td>{{ record.full_name }}</td>#}
+{##}
+{#                                <td>#}
+{#                                    {{ record.username }}#}
+{##}
+{#                                </td>#}
+{#                                <td>{{ record.pin }}</td>#}
+{#                                <td>{{ record.form_type }}</td>#}
+{#                                <td>150</td>#}
+{#                                <td>{{ record.updated_at }}</td>#}
+{#                                <td>{{ record.sold_by }}</td>#}
+{#                                <td>#}
+{##}
+{#                                 {% if request.user.username != "tpconnect"  or request.user.username != "finance"%}#}
+{##}
+{#                                    <input type="hidden" value="{{ record.id }}" id="ids" name="ids" class="ids"/>#}
+{#                                    <a onclick="return MM_openBrWindow('{% url 'print_receipt'  record.pin %}', 'mark', 'width=800,height=500')"><i#}
+{#                                            title='Click to print receipt .. please allow popups on browser'#}
+{#                                            class="md-icon material-icons">book</i>#}
+{##}
+{#                                    </a>#}
+{#                                 {% endif %}#}
+{#                                    {% if request.user.username == "tpconnect" %}#}
+{#                                    <a title="click to delete transactions" class="delete_sales" href="#"><i#}
+{#                                            class="md-icon material-icons">&#xE872;</i></a>#}
+{##}
+{#                                    {% endif %}#}
+{##}
+{#                                </td>#}
+{##}
+{##}
+{##}
+{#                            </tr>#}
+{#                          {% endfor %}#}
+{##}
+{#                          {% else %}#}
+{#                            {% for record in data.object_list %}#}
+{##}
+{#                            <tr>#}
+{#                                <td> {{ forloop.counter0|add:data.start_index }} {# starting index 1 #}</td>#}
+{#                                <td>{{ record.customer_name }}</td>#}
+{#                                <td>{{ record.customer_phone }}</td>#}
+{#                                <td>#}
+{#                                    {{ record.serial }}#}
+{##}
+{#                                </td>#}
+{#                                <td>{{ record.pin }}</td>#}
+{#                                <td>{{ record.form_type }}</td>#}
+{#                                <td>{{ record.amount }}</td>#}
+{#                                <td>{{ record.date_sold }}</td>#}
+{#                                <td>{{ record.sold_by.username }}</td>#}
+{#                                <td>#}
+{##}
+{#                                    <input type="hidden" value="{{ record.id }}" id="ids" name="ids" class="ids"/>#}
+{#                                    <a onclick="return MM_openBrWindow('{% url 'print_receipt'  record.pin %}', 'mark', 'width=800,height=500')"><i#}
+{#                                            title='Click to print receipt .. please allow popups on browser'#}
+{#                                            class="md-icon material-icons">book</i>#}
+{##}
+{#                                    </a>#}
+{#                                    {% if request.user.username == "tpconnect" %}#}
+{#                                    <a title="click to delete transactions" class="delete_sales" href="#"><i#}
+{#                                            class="md-icon material-icons">&#xE872;</i></a>#}
+{##}
+{#                                    {% endif %}#}
+{##}
+{#                                </td>#}
+{##}
+{##}
+{##}
+{#                            </tr>#}
+{#                            {% endfor %}#}
+{##}
+{##}
+{#                             {% endif %}#}
+{##}
+{##}
+{##}
+{#                        </tbody>#}
+{#                    </table>#}
+{#                    <center><p><b>Total:GHC{{ total }}</b></p></center>#}
+{##}
+{#                    <ul class="uk-pagination uk-margin-medium-top">#}
+{#                        {% if data.has_previous %}#}
+{##}
+{##}
+{#                            <li class="uk-disabled"><a#}
+{#                                    href="?{% url_replace request 'page' data.previous_page_number %}"><i#}
+{#                                    class="uk-icon-angle-double-left"></i></a></li>#}
+{#                        {% endif %}#}
+{#                        {% for pg in data.paginator.page_range %}#}
+{#                            {% if data.number == pg %}#}
+{#                                <li class="uk-active"><a href="?{% url_replace request 'page' pg %}">{{ pg }}</a></li>#}
+{#                            {% else %}#}
+{#                                <li><a href="?{% url_replace request 'page' pg %}">{{ pg }}</a></li>#}
+{##}
+{##}
+{#                            {% endif %}#}
+{#                        {% endfor %}#}
+{#                        {% if data.has_next %}#}
+{##}
+{##}
+{#                            <li><a href="?{% url_replace request 'page' data.next_page_number %}"><i#}
+{#                                    class="uk-icon-angle-double-right"></i></a></li>#}
+{#                        {% endif %}#}
+{#                    </ul>#}
+{##}
+{##}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}

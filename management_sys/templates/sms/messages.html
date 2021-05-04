@@ -1,0 +1,377 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+   <div class="uk-width-xLarge-1-1">
+        <div class="md-card">
+            <div class="md-card-content">
+            <form action="" class="form-inline" method="GET" id="group" accept-charset="utf-8">
+
+                {% csrf_token %}
+
+                    <div class="uk-grid" data-uk-grid-margin="">
+
+
+                        <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <select class="md-input parent select" id="parent select" name="year">
+
+                                   <option value="">admission years</option>
+
+                                    <option value="2015/2016"
+                                     {% if 'year' in request.GET and request.GET.year == "2015/2016"|striptags %}
+
+                                     selected="selected"
+
+                                     {% endif %}
+
+
+                                    >
+
+
+                                        2015/2016</option>
+                                    <option value="2016/2017"
+
+                                     {% if 'year' in request.GET and request.GET.year == "2016/2017"|striptags %}
+
+                                     selected="selected"
+
+                                     {% endif %}
+
+
+                                    >2016/2017</option>
+                                    <option value="2017/2018"
+
+                                     {% if 'year' in request.GET and request.GET.year == "2017/2018"|striptags %}
+
+                                         selected="selected"
+
+                                     {% endif %}
+
+                                    >2017/2018</option>
+                                    <option value="2018/2019"
+                                     {% if 'year' in request.GET and request.GET.year == "2018/2019"|striptags %}
+
+                                         selected="selected"
+
+                                     {% endif %}
+
+
+
+                                    >2018/2019</option>
+                                    <option value="2019/2020"
+                                     {% if 'year' in request.GET and request.GET.year == "2019/2020"|striptags %}
+
+                                         selected="selected"
+
+                                     {% endif %}
+
+
+
+
+                                    >2019/2020</option>
+                                    <option value="2020/2021"
+                                     {% if 'year' in request.GET and request.GET.year == "2020/2021"|striptags %}
+
+                                         selected="selected"
+
+                                     {% endif %}
+
+
+
+                                    >2020/2021</option>
+                                    <option value="2021/2022"
+                                     {% if 'year' in request.GET and request.GET.year == "2021/2022"|striptags %}
+
+                                         selected="selected"
+
+                                     {% endif %}
+
+
+
+                                    >2021/2022</option>
+                                    <option value="2022/2023"
+
+                                     {% if 'year' in request.GET and request.GET.year == "2022/2023"|striptags %}
+
+                                         selected="selected"
+
+                                     {% endif %}
+
+
+                                    >2022/2023</option>
+                                    <option value="2023/2024"
+                                     {% if 'year' in request.GET and request.GET.year == "2023/2024"|striptags %}
+
+                                         selected="selected"
+
+                                     {% endif %}
+
+
+
+
+                                    >2023/2024</option>
+                                    <option value="2024/2025"
+                                     {% if 'year' in request.GET and request.GET.year == "2024/2025"|striptags %}
+
+                                         selected="selected"
+
+                                     {% endif %}
+
+
+                                    >2025/2026</option>
+                                    <option value="2025/2026"
+                                     {% if 'year' in request.GET and request.GET.year == "2025/2026"|striptags %}
+
+                                         selected="selected"
+
+                                     {% endif %}
+
+
+                                    >2025/2026</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+
+                     <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <select class="md-input parent select" name="limit">
+
+
+                            <option value="">Select total per page</option>
+
+
+                            <option value="150"
+
+                                    {% if 'limit' in request.GET and request.GET.limit == '150' %}
+
+                                    selected="selected"
+
+                                    {% endif %}
+                            >150
+                            </option>
+
+                                 <option value="200"
+
+                                    {% if 'limit' in request.GET and request.GET.limit == '200' %}
+
+                                    selected="selected"
+
+                                    {% endif %}
+                            >200
+                            </option>
+
+                                 <option value="400"
+
+                                    {% if 'limit' in request.GET and request.GET.limit == '400' %}
+
+                                    selected="selected"
+
+                                    {% endif %}
+                            >400
+                            </option>
+
+
+
+                                 <option value="500"
+
+                                    {% if 'limit' in request.GET and request.GET.limit == '500' %}
+
+                                    selected="selected"
+
+                                    {% endif %}
+                            >500
+                            </option>
+
+
+
+                        </select>
+                            </div>
+                        </div>
+
+                    <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <select class="md-input parent select" name="status">
+
+
+                            <option value="">All</option>
+
+
+                            <option value="1"
+
+                                    {% if 'status' in request.GET and request.GET.status == '1' %}
+
+                                    selected="selected"
+
+                                    {% endif %}
+                            >SMS sent
+                            </option>
+
+
+                            <option value="0"
+
+                             {% if 'status' in request.GET and request.GET.status == '0' %}
+
+                                    selected="selected"
+
+                                {% endif %}
+
+                            >SMS not sent
+
+
+
+                            </option>
+                        </select>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <input type="text" style=" " name="search" class="md-input"
+                                       placeholder="search by name or form number">
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                    <div align='center'>
+
+                        <button class="md-btn  md-btn-small md-btn-success uk-margin-small-top" type="submit"><i
+                                class="material-icons">search</i></button>
+                         <a title="click to refresh page" href="{% url 'messages' %}" class="md-btn  md-btn-small md-btn-success uk-margin-small-top"  >Clear Filters</a>
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <h3 class="heading_c uk-margin-bottom">Messages</h3>
+
+
+
+
+   <div class="uk-width-xLarge-1-1">
+        <div class="md-card">
+            <div class="md-card-content">
+                <div class="uk-overflow-container" id='print'>
+
+                <table class="uk-table uk-table-hover uk-table-condensed uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair"
+                       id="ts_pager_filter">
+                    <thead>
+                    <tr>
+                       <th class="filter-false remove sorter-false" data-priority="6">NO</th>
+                    <th>ADMISSION NO.</th>
+
+                    <th data-priority="critical">RECIPIENT</th>
+
+
+                    <th>MESSAGE</th>
+                    <th>STATUS</th>
+                    <th>SENDER</th>
+                    <th>DATE</th>
+                        <TH>ACTION</TH>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                {% for record in data.object_list %}
+
+                    <tr>
+                        <td> {{ forloop.counter0|add:data.start_index }} {# starting index 1 #}</td>
+                        <td>{{ record.applicant.application_number }}</td>
+                        <td style="width:200px">
+
+                            <div class="ks-user">
+                                <img class="ks-avatar"
+                                     src="http://www.ttuportal.com/admissions/public/albums/thumbnails/{{ record.applicant.application_number }}.jpg"
+                                     style="width:60px;height: 60px">
+                                <span class="ks-name">{{ record.applicant.name }}</span>
+                            </div>
+
+                        </td>
+                        <td>{{ record.message }}</td>
+                        <td>{{ record.status }}</td>
+                        <td>{{ record.sender.username }}</td>
+                        <td>{{ record.date_sent|naturaltime|capfirst }}</td>
+                    <td>
+
+
+                        {% if  record.status == 0  %}
+
+                                        <a  onclick="UIkit.modal.confirm('Are you sure?', function(){ UIkit.modal.alert('Confirmed!'); });"
+                                           href='{% url 'show_applicant'  record.id %}'>
+                                            <i title='Click to send sms' class="md-icon material-icons">phonelink_ring</i></a>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    </tr>
+                {% endfor %}
+
+                    </tbody>
+                </table>
+
+             <ul class="uk-pagination uk-margin-medium-top">
+                    {% if data.has_previous %}
+
+
+                        <li class="uk-disabled"><a href="?{% url_replace request 'page' data.previous_page_number %}"><i
+                                class="uk-icon-angle-double-left"></i></a></li>
+                    {% endif %}
+                    {% for pg in data.paginator.page_range %}
+                        {% if data.number == pg %}
+                            <li class="uk-active"><a href="?{% url_replace request 'page' pg  %}">{{ pg }}</a></li>
+                        {% else %}
+                            <li><a href="?{% url_replace request 'page' pg  %}">{{ pg }}</a></li>
+
+
+                        {% endif %}
+                    {% endfor %}
+                    {% if data.has_next %}
+
+
+                        <li><a href="?{% url_replace request 'page' data.next_page_number %}"><i
+                                class="uk-icon-angle-double-right"></i></a></li>
+                    {% endif %}
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+   </div>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}
