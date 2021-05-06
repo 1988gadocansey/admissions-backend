@@ -72,7 +72,7 @@
                                                 <div align="right">Form Type:</div>
                                             </td>
                                             <td class="uk-text-primary uk-text-bold">
-                                                {{ applicant.applicationuserid.type }}
+                                                {{ applicant.type }}
 
 
                                             </td>
@@ -82,9 +82,9 @@
                                                 <div align="right">Admission Number:</div>
                                             </td>
                                             <td>
-                                                {{ applicant.applicationnumber }}
+                                                {{ applicant.formno }}
                                                 <input type="hidden" class="applicant" name="applicant" id="applicant"
-                                                       value="{{ applicant.applicationnumber }}"/>
+                                                       value="{{ applicant.formno }}"/>
 
                                             </td>
                                         </tr>
@@ -94,9 +94,9 @@
                                                 <div align="right">Full Name:</div>
                                             </td>
                                             <td>
-                                                {{ applicant.firstname }} {{ applicant.lastname }}
+                                                {{ applicant.fullname }} -  {{ applicant.username }}  {{ applicant.pin }}
                                                 <input type="hidden" class="applicant_name" name="name" id="name"
-                                                       value="{{ applicant.firstname }}"/>
+                                                       value="{{ applicant.fullname }}"/>
 
                                             </td>
                                         </tr>
@@ -108,7 +108,7 @@
                                             </td>
                                             <td>
 
-                                                {{ applicant.phone }}
+                                                {{ applicant.phonenumber }}
                                             </td>
                                         </tr>
                                     </table>
@@ -117,7 +117,7 @@
 
 
                                     <img class="ks-avatar"
-                                         src="https://photos.ttuportal.com/public/albums/thumbnails/{{ applicant.applicationnumber }}.jpg"
+                                         src="https://photos.ttuportal.com/public/albums/thumbnails/{{ applicant.formno }}.jpg"
                                          style="width:150px;height: auto;">
                                 </td>
                             </tr>

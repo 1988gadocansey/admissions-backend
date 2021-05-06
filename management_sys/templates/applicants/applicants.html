@@ -364,7 +364,7 @@
                             </option>
 
 
-                            <option value="applicant"
+                            <option value="Applicant"
 
                              {% if 'status' in request.GET and request.GET.status == 'applicant' %}
 
@@ -1047,10 +1047,14 @@
                                     <a title="click to view details of applicant"
                                        href="https://apply.ttuportal.com/api/Data/{{record.applicationnumber}}">
                                         <img class="ks-avatar"
-                                             src="http://photos.ttuportal.com/public/albums/thumbnails/{{record.applicationnumber}}.jpg"
-
+                                              src="https://photos.ttuportal.com/public/albums/thumbnails/{{record.applicationnumber}}.jpg"
+                                             onerror="this.onerror = function my()
+    { return this.src = 'https://photos.ttuportal.com/public/albums/thumbnails/{{record.applicationnumber}}.jpeg'; };
+    this.src = 'https://photos.ttuportal.com/public/albums/thumbnails/{{record.applicationnumber}}.JPG';"
 
                                              style="width:77px;height: auto"/></a>
+
+
 
 
                                 </td>
