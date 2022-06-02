@@ -2,27 +2,73 @@
 {% load custom_tags %}
 <html>
 <head>
-
+    <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Applicant Placement and Management System | Print page</title>
     <!-- uikit -->
-     <link rel="stylesheet" href="https://ttuportal.com/static/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
+    <link rel="stylesheet" href="https://ttuportal.com/static/bower_components/uikit/css/uikit.almost-flat.min.css"
+          media="all">
 
 
     <link rel="stylesheet" href="https://ttuportal.com/static/assets/css/main.min.css" media="all">
 
 
     <link rel="stylesheet" href="https://ttuportal.com/static/assets/css/themes/themes_combined.min.css" media="all">
+    <link href='http://fonts.googleapis.com/css?family=Avenir' rel='stylesheet' type='text/css'>
 
-    <style>
-    body{
-        font-size: 13px;
+    <style type="text/css">
+        @font-face {
+            font-family: Avenir;
+            font-style: normal;
 
-    }
+            src: url(https://fonts.gstatic.com/l/font?kit=ijwUs5PnXdA4ZZUA6Zd-m2FJXA&skey=8887f17a62203d44&v=v4) format('woff2');
+        }
 
-</style>
+        body {
+            position: relative;
+            margin: 0 auto;
+
+            background: #FFFFFF;
+            font-family: Arial, sans-serif;
+            font-family: Avenir;
+            font-size: 14px;
+             pdf-page-break: always;
+             page-break-after: always;
+        }
+
+        @page {
+            size: A4 portrait;
+            font-family: Arial, sans-serif;
+            font-family: 'Avenir', cursive;
+            font-size: 14px;
+            pdf-page-break: always;
+             page-break-after: always;
+        {#background-image: url('https://ttuportal.com/static/assets/watermark.jpg');#}
+        }
+
+        #photo {
+            margin-left: 625px;
+        }
+
+        .letter {
+            margin: 2cm;
+        }
+
+        .ui.table td .uppercase {
+            font-weight: bold;
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+        table {
+            float: none !important;
+        }
+
+
+    </style>
+
 
 </head>
 <body>
@@ -32,7 +78,8 @@
     <div id="page1">
         <input type="hidden" value="{{ applicant.id }}" class="data"/>
 
-        <img src="https://ttuportal.com/static/assets/img/header.jpg" alt="photo" style="margin-top: -460px"
+        <img src="https://ttuportal.com/static/assets/letterheads/2020/header.jpg" alt="photo"
+             style="margin-top: -460px"
              class="ui fluid image"/>
 
 
@@ -40,119 +87,122 @@
         <div class="content" id="regular">
             <div class="watermark">
 
-                <div id="photo" style="margin-left: 622px;margin-top: -150px">
+                <div id="photo" style="">
 
-                     <img alt="photo"
-                            src="http://photos.ttuportal.com/public/albums/thumbnails/{{ applicant.application_number }}.jpg"
+                    <img alt="photo"
+                         src="http://photos.ttuportal.com/public/albums/thumbnails/{{ applicant.applicationnumber }}.jpg"
 
                          style="width:96px;height: auto ">
 
 
                 </div>
 
-                <div style="margin-left: 2px;text-align: justify">
-                    <div style="margin-left: 0px">
+                <div style="text-align: justify">
+                    <div style=" margin-left: 100px;">
                         <p style="text-transform: capitalize">Dear <span
-                                style=""> {{ applicant.title | upper }}. {{ applicant.name |upper }}</span></p>
+                             style=""> <b>{{ applicant.title | title }}. {{ applicant.lastname |title }} {{ applicant.firstname |title }} </b>,</span></p>
+
                     </div>
                     <center><b>OFFER OF ADMISSION
-                        - {{ applicant.programme_admitted.department.faculty_id.faculty_name | upper }}
-                        {% if applicant.admission_type == 'foreign' %}
-                          (INTERNATIONAL STUDENT)
+                        - {{ applicant.programmeadmittedid.department.faculty_id.faculty_name | upper }}
+                        {% if applicant.nationalityid.name == 'Ghana' %}
 
+                            (GHANAIAN)
 
                         {% else %}
-                          (GHANAIAN)
+                            (INTERNATIONAL STUDENT)
                         {% endif %}
                         - ADMISSION
 
-                        N<u>O </u>: {{ applicant.application_number }} </b></center>
-                    <hr>
+                        NO : {{ applicant.applicationnumber }} </b></center>
+                    <hr width="80%">
+                    <br/>
 
-                    <div id="letter">
+                    <div class="letter">
                         <p>We write on behalf of the Academic Board to offer you admission to Takoradi Technical
                             University to pursue a programme of study leading
                             to the award of
-                            {% if applicant.programme_admitted.type == 'HND' %}
+                            {% if applicant.programmeadmittedid.type == 'HND' %}
                                 Higher National Diploma
-                            {% elif applicant.programme_admitted.type == 'BTECH' %}
+                            {% elif applicant.programmeadmittedid.type == 'BTECH' %}
 
 
-                            {% elif applicant.programme_admitted.type == 'MTECH' %}
+                            {% elif applicant.programmeadmittedid.type == 'MTECH' %}
 
 
                             {% endif %}
 
-                          ({{ applicant.programme_admitted.name }}).
-                             {% if applicant.programme_admitted.type == 'BTECH'  and applicant.programme_admitted.duration == '2'%}
+                            <b>{{ applicant.programmeadmittedid.name }}</b>.
+                            {% if applicant.programmeadmittedid.type == 'BTECH'  and applicant.programme_admitted.duration == '2' %}
                                 (Weekends).
 
-                                {% endif %}The duration of the programme is
-                         {% if applicant.form.form_type == "ACCELERATED_HND" %}
-                            two(2)
-                        {% else %}
+                            {% endif %}The duration of the programme is
+                            {% if applicant.applicationuserid.type == "ACCELERATED_HND" %}
+                                two(2)
+                            {% else %}
 
-                            {{ applicant.programme_admitted.duration }}
+                                {{ applicant.programmeadmittedid.duration }}
 
                             {% endif %}
 
+                            academic years. All payment of fees should be done with your <b>admission number</b> above.
+                        </p>
 
-academic years. All payment of fees should be done with your <b>admission number</b> above.</p>
 
-
-
-                        <p>1. Your admission is for <b>the {{ applicant.letter_settings.working_year }} Academic Year.</b> If you fail to enroll, or if
+                        <p>1. Your admission is for <b>the {{ applicant.lettersettings.working_year }} Academic
+                            Year.</b> If you fail to enroll, or if
 
                             you withdraw from the programme without prior approval from the University,
                             you shall forfeit the admission automatically.
                         </p>
-                        <p>2. <b>The {{ applicant.letter_settings.working_year }} Academic Year</b> is scheduled to begin <b>provisionally</b> on <b>{{ applicant.letter_settings.reporting|date:"l jS F Y" }}</b>.
+                        <p>2. <b>The {{ applicant.lettersettings.working_year }} Academic Year</b> is scheduled to
+                            begin <b>provisionally</b> on
+                            <b>{{ applicant.lettersettings.reporting|date:"l jS F Y" }}</b>.
                             You are therefore expected to report for medical examinations and registration from
-                            <b>{{ applicant.letter_settings.medical_examinations_starts |date:"l jS F Y" }}</b> to <b>{{ applicant.letter_settings.medical_examinations_ends |date:"l jS F Y" }}.</b>
-                            You are also required to participate in a compulsory orientation programme which shall run from
+                            <b>{{ applicant.lettersettings.medical_examinations_starts |date:"l jS F Y" }}</b> to
+                            <b>{{ applicant.lettersettings.medical_examinations_ends |date:"l jS F Y" }}.</b>
+                            You are also required to participate in a compulsory orientation programme which shall run
+                            from
 
-                            <b>{{ applicant.letter_settings.orientation_starts|date:"l jS F Y" }}</b> to <b>{{ applicant.letter_settings.orientation_ends |date:"l jS F Y" }}.</b>
+                            <b>{{ applicant.lettersettings.orientation_starts|date:"l jS F Y" }}</b> to
+                            <b>{{ applicant.lettersettings.orientation_ends |date:"l jS F Y" }}.</b>
                         </p>
                         <p>3.
                             You are required to make a <b>PAYMENT</b> of <b>
+                                {% if applicant.nationality.name == 'Ghana' %}
 
+                                    {% if applicant.yearofadmission == "2020/2021" %}
 
-                                    USD2600.00
+                                        GHS
+                                        {% getFees applicant.programmeadmittedid.code applicant.leveladmitted applicant.yearofadmission %}
 
+                                    {% else %}
+                                        GH{{ applicant.admission_fees }}
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    USD1750.00
+                                {% endif %}
                             </b>
 
                             at any
                             branch of
-                            {% if   applicant.programme_admitted.section == 'Evening' %}
-                                <!--  Ecobank into Account  Number 0189104488868901 -->
-                                Calbank Bank into Account  Number 1400001216327
-                            {% elif applicant.programme_admitted.type == 'NON TERTIARY' %}
+                            {% if '(EVENING)' in applicant.programmeadmittedid.bank %}
 
-                                UBA into Account  Number 00511448001580
-                            {% elif applicant.programme_admitted.type == 'BTECH' %}
-
-                                Calbank Bank into Account  Number 1400001216327
-                            {% elif applicant.nationality != '239' %}
-
-                                Zenith Bank into Account 6010406900
+                                UBA
                             {% else %}
-                                <b>{{ applicant.programme_admitted.department.faculty_id.bank_id.bank_name }}</b> into
-                                Account
-                                Number
-                                <b>{{ applicant.programme_admitted.department.faculty_id.bank_id.bank_account_number }}
-                                </b>
-
+                                {{ applicant.programmeadmittedid.bank }}
 
                             {% endif %}
-                         or using <b>swift
-                                Account  Name: TTU
-                                Account #  : 6040404999
-                                Swift Code: ZEBLGHAC
-                                Sort Code: 120401</b>
-                            with this admission number <b>{{ applicant.application_number }}</b>
+
+
+                            with this admission number <b>{{ applicant.applicationnumber }}</b>
                             . If you do not indicate acceptance of
                             this
-                            admission by paying the fees before <b>{{ applicant.letter_settings.fees_deadline |date:"l jS F Y" }},</b> your admission will
+                            admission by paying the fees before
+                            <b>{{ applicant.lettersettings.fees_deadline |date:"l jS F Y" }},</b> your admission will
 
                             be offered to another applicant on the waiting list. You are to make a photocopy of the
 
@@ -164,18 +214,32 @@ academic years. All payment of fees should be done with your <b>admission number
                             <span> <b>Note: Fee payment is for an Academic Year, and it is non-refundable.</b></span>
 
                         </p>
+                        {% if applicant.programme_admitted.type == 'HND' or applicant.programme_admitted.type == 'NON TERTIARY' %}
+                            <p>
+                                4. A mandatory Health and Safety programme will be pursued by all first year students at
+                                a fee of GHC100.00 to be paid at any branch of GTBank into Account Number 4011091305110.
+                            </p>
+                            <p>5.
+                                You shall be on probation for the full duration of your programme, and you may
+                                be dismissed at any time for unsatisfactory academic work or misconduct.
+                                You shall be required to adhere to <b>ALL</b> the rules and regulations of the
+                                University as
+                                contained in the University Statutes, the Examinations Policy, the Ethics Policy
+                                and the Students’ Handbook.
+                            </p>
+                        {% else %}
 
-                          <p>
-                            4. A mandatory Health and Safety programme will be pursued by all first year students at a fee of GHC100.00 to be paid at any branch of Guaranty Trust (GT) Bank into Account Number 4011091305110.
-                        </p>
-                        <p>5.
-                            You shall be on probation for the full duration of your programme, and you may
-                            be dismissed at any time for unsatisfactory academic work or misconduct.
-                            You shall be required to adhere to <b>ALL</b> the rules and regulations of the
-                            University as
-                            contained in the University Statutes, the Examinations Policy, the Ethics Policy
-                            and the Students’ Handbook.
-                        </p>
+                            <p>4.
+                                You shall be on probation for the full duration of your programme, and you may
+                                be dismissed at any time for unsatisfactory academic work or misconduct.
+                                You shall be required to adhere to <b>ALL</b> the rules and regulations of the
+                                University as
+                                contained in the University Statutes, the Examinations Policy, the Ethics Policy
+                                and the Students’ Handbook.
+                            </p>
+
+                        {% endif %}
+
 
 
                         <p>6.
@@ -190,17 +254,14 @@ academic years. All payment of fees should be done with your <b>admission number
                             Applicants shall also be held personally responsible for any false statement(s) or
                             omission(s) made in their applications.
                         </p>
-
-                         <p>7.
-                            Applicants shall also be held personally responsible for any false statement(s) or
-                            omission(s) made in their applications.
+                            <br/>
+                        <p>8.
+                            Any applicant who falsifies result(s) shall be withdrawn from the University
+                            and shall forfeit his/her fees paid.
                         </p>
+                        <div class="">
 
-                         <p>8.
-                                Any applicant who falsifies result(s) shall be withdrawn from the University
-                                and shall forfeit his/her fees paid.
-                            </p>
-
+                        </div>
                         <p>9.
                             The University does not give financial assistance to students. It is therefore the
                             responsibility of students to arrange for their own sponsorship and maintenance
@@ -208,10 +269,10 @@ academic years. All payment of fees should be done with your <b>admission number
                         </p>
 
                         <p>10.
-                            You are to note that the University is a secular institution; it is therefore not
+                            You are to note that the University is a secular institution, it is therefore not
                             bound by observance of any religious or sectarian practices. As much as possible,
                             the University lectures and/or examinations would be scheduled to take place
-                            within normal working days, but, where it is not feasible, lectures and
+                            within normal working days, but where it is not feasible, lectures and
                             examinations would be held on other days.
                         </p>
 
@@ -220,7 +281,7 @@ academic years. All payment of fees should be done with your <b>admission number
                             National Health Insurance Scheme (NHIS) on their own to enable them access
                             medical care whilst on campus.
                         </p>
-                       {% comment %} {% if applicant.hall_accomodation == 1 %}
+                        {% comment %} {% if applicant.hall_accomodation == 1 %}
                             <p>11.
                                 You have been given Hall Accommodation at {{ applicant.hall_admitted.hall_name }} You
                                 will be required to
@@ -236,52 +297,162 @@ academic years. All payment of fees should be done with your <b>admission number
                         {% else %}{% endcomment %}
 
 
-                              <p>12.You are affiliated to {{ applicant.hall_admitted.hall_name}}. You are required to pay GHC130 as hall dues,
-                                  Faculty fees of GHC100.00 and University Cloth fee of GHC100.00 at any branch of GTBank into Account Number 4011091305110.<br/>After payment of full fees, use your index number received via SMS to pay your hall residency fee of (GHC{{ applicant.hall_admitted.hall_fees }}) at any UBA Branch.
-
-                            </p>
+                        {#                        {% endif %}#}
 
 
-{#                        {% endif %}#}
 
 
-                         {% if applicant.programme_admitted.department.faculty_id.faculty_name == 'FACULTY OF ENGINEERING' %}
-
-                              {% if applicant.nationality.name == 'Ghana' %}
-
-                             <p>13. Personal Protective Equipment(PPE) and Drawing Equipment would be provided by the University.You are therefore required to pay GHC400.00 at GTBANK (4011091305110).</p>
-
-                             {% else %}
 
 
-                                  <p>13. Personal Protective Equipment(PPE) and Drawing Equipment would be provided by the University. You are therefore required to pay USD70.0 at GTBANK (4011091305110).</p>
 
+                        {% if applicant.form.form_type == "ACCELERATED_BTECH" %}
 
-                              {% endif %}
-
-
-                             <p>14. All Hall fees should be paid into UBA account (511448001580) to enable interested applicants to do <b>self selection</b> of limited rooms at the halls of residence.</p>
-
-                         {% else %}
-
-
-                        <p>13.  All Hall fees should be paid into UBA account (511448001580) to enable interested applicants to do <b>self selection</b> of limited rooms at the halls of residence.</p>
-
+                            <p>12. NOTE: The admission of applicants with pass or trails after the sixth semester would
+                                be revoked</p>
 
                         {% endif %}
+
+
+
+
+
                         <p>
                             Accept my congratulations on your admission to the University.
 
 
                         </p>
                         <p>Yours faithfully</p>
-                        <p><img src="https://ttuportal.com/static/assets/img/signature.png" style="width:90px;height:auto;"/></p>
-                        <p>SNR. ASSISTANT REGISTRAR(ADMISSIONS)<br/>For: REGISTRAR</p>
+                        <p><img src="https://ttuportal.com/static/assets/signatures/2020.png"
+                                style="width:90px;height:auto;"/></p>
+                        <p><b>SNR. ASSISTANT REGISTRAR (ADMISSIONS)</b><br/>For: REGISTRAR</p>
+
+                        <center><u>FEES AND DUES</u></center>
+
+                        <table border="0">
+                            <thead>
+                            <tr>
+
+                                <th>Dues/Fees</th>
+                                <th>Amount</th>
+                                <th>Bank</th>
+                                <th>Account No</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td>School Fees</td>
+                                <td>
+                                    {% if applicant.nationality.name == 'Ghana' %}
+
+                                        {% if applicant.yearofadmission == "2020/2021" %}
+                                            GHS
+                                            {% getFees applicant.programme_admitted.code applicant.level_admitted applicant.yearofadmission %}
+                                        {% else %}
+                                            GHS{{ applicant.admission_fees }}
+
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        USD1750.00
+                                    {% endif %}
+
+
+                                </td>
+
+                                {% if '(EVENING)' in applicant.programme_admitted.bank %}
+
+                                    <td> UBA</td>
+                                    <td>511448001580</td>
+
+                                {% else %}
+
+
+                                    <td> {{ applicant.programme_admitted.bank }} </td>
+
+
+                                    <td>9040008599992</td>
+
+                                {% endif %}
+
+
+                            </tr>
+
+                            <tr>
+
+
+                                <td>Hall affiliated: {{ applicant.hall_admitted.hall_name }}</td>
+                                {#                                     <td>GHS{{ applicant.hall_admitted.hall_fees }}</td>#}
+                                <td>UBA</td>
+                                <td>511448001580</td>
+
+
+                            </tr>
+
+
+
+                            {% if applicant.programme_admitted.department.faculty_id.faculty_name == 'FACULTY OF ENGINEERING' %}
+
+
+
+                                <tr>
+                                    <td>Personal Protective Equipment(PPE) and Drawing Equipment</td>
+                                    {% if applicant.nationality.name == 'Ghana' %}
+                                        <td>GHS400.00</td>
+
+                                    {% else %}
+                                        <td> USD70.00</td>
+
+                                    {% endif %}
+                                    <td>GTBank</td>
+                                    <td>4011091305110</td>
+
+                                </tr>
+                            {% endif %}
+
+
+                            <tr>
+                                <td>Faculty fees</td>
+                                <td>GHS100.00</td>
+                                <td>GTBank</td>
+                                <td>4011091305110</td>
+                            </tr>
+
+                            <tr>
+                                <td>University Cloth</td>
+                                <td>GHS100.00</td>
+                                <td>GTBank</td>
+                                <td>4011091305110</td>
+                            </tr>
+
+                            <tr>
+                                <td>Hall Dues</td>
+                                <td>GHS130.00</td>
+                                <td>GTBank</td>
+                                <td>4011091305110</td>
+                            </tr>
+
+                            {% if  applicant.programme_admitted.department.department_id == 10 %}
+                                <tr>
+
+                                    <td>Catering Fee</td>
+                                    <td>GHS330.00</td>
+                                    <td>GTBank</td>
+                                    <td>4011091305110</td>
+
+                                </tr>
+                            {% endif %}
+
+
+                            </tbody>
+                        </table>
 
                     </div>
 
                     <div id="foot">
-                        <img src="https://ttuportal.com/static/assets/img/footer.jpg" style="width:1086px;height: auto"
+                        <img src="https://ttuportal.com/static/assets/letterheads/2020/footer.jpg"
+                             style="width:1086px;height: auto"
                              class="image-responsive responsive"/>
 
                     </div>

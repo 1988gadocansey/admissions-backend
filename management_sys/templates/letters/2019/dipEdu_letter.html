@@ -119,17 +119,17 @@ thead th, tfoot th, tfoot td {
 
 
 
-                        <p>1. Your admission is for <b>the {{ applicant.letter_settings.working_year }} Academic Year.</b> If you fail to enroll, or if
+                        <p>1. Your admission is for <b>the {{ applicant.lettersettings.working_year }} Academic Year.</b> If you fail to enroll, or if
 
                             you withdraw from the programme without prior approval from the University,
                             you shall forfeit the admission automatically.
                         </p>
-                        <p>2. <b>The {{ applicant.letter_settings.working_year }} Academic Year</b> is scheduled to begin on {{ applicant.letter_settings.reporting|date:"l jS F Y" }}.
+                        <p>2. <b>The {{ applicant.lettersettings.working_year }} Academic Year</b> is scheduled to begin on {{ applicant.lettersettings.reporting|date:"l jS F Y" }}.
                             You are therefore expected to report for medical examinations and registration from
-                            <b>{{ applicant.letter_settings.medical_examinations_starts |date:"l jS F Y" }}</b> to <b>{{ applicant.letter_settings.medical_examinations_ends |date:"l jS F Y" }}.</b>
+                            <b>{{ applicant.lettersettings.medical_examinations_starts |date:"l jS F Y" }}</b> to <b>{{ applicant.lettersettings.medical_examinations_ends |date:"l jS F Y" }}.</b>
                             You are also mandated to participate in an orientation programme which shall run from
 
-                            <b>{{ applicant.letter_settings.orientation_starts|date:"l jS F Y" }}</b> to <b>{{ applicant.letter_settings.orientation_ends |date:"l jS F Y" }}.</b>
+                            <b>{{ applicant.lettersettings.orientation_starts|date:"l jS F Y" }}</b> to <b>{{ applicant.lettersettings.orientation_ends |date:"l jS F Y" }}.</b>
                         </p>
                         <p>3.
                             You are required to make a PAYMENT of <b>GH¢2666</b>, which include tuition and graduation fee and at any branch of <b>Consolidated Bank of Ghana</b> into <b>Account Number 0152000570361</b> with this admission number {{ applicant.application_number }}.

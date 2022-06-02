@@ -30,8 +30,10 @@ urlpatterns = [
 
     path("registration/", include("account.urls")),
 
-    path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
 
-    path(r'^auth/$', auth_views.LoginView.as_view, {'template_name': 'account/login.html'}, name='login'),
+
+    path(r'logout/$', auth_views.LogoutView.as_view(), name='logout'),
+
+    path(r'auth/$', auth_views.LoginView.as_view, {'template_name': 'account/login.html'}, name='login'),
 
 ]

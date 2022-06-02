@@ -16,97 +16,106 @@
 
 
     <div class="uk-modal" id="new_task">
-    <div class="uk-modal-dialog">
-        <div class="uk-modal-header">
-            <h4 class="uk-modal-title">Send sms  here</h4>
-        </div>
-          <center> <p>Insert the following placeholders into the message [name] [first_name] [last_name] [application_number] [hall_admitted] [admission_fees] <br/>[programme_admitted]</p></center>
-
-        <form method="POST" action="#" name="admission" v-form novalidate >
-             {% csrf_token %}
-            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-
-
-            <textarea cols="30" rows="4" name="message"class="md-input" required=""></textarea>
-
-
-            <div class="uk-modal-footer uk-text-right">
-{#                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary md-btn-wave" id="snippet_new_save"><i   class="material-icons"   >smartphone</i>Send</button>#}
-{#                #}
-                 <button type="submit" class="md-btn ss md-btn-small md-btn-success uk-margin-small-top"
-                                id="snippet_new_save" v-show="admission.$valid">Send Message
-                        </button>
-
-                <button type="button" class="md-btn md-btn-flat uk-modal-close md-btn-wave">Close</button>
-
+        <div class="uk-modal-dialog">
+            <div class="uk-modal-header">
+                <h4 class="uk-modal-title">Send sms here</h4>
             </div>
-        </form>
+            <center><p>Insert the following placeholders into the message [name] [first_name] [last_name]
+                [application_number] [hall_admitted] [admission_fees] <br/>[programmeadmittedid]</p></center>
+
+            <form method="POST" action="#" name="admission" v-form novalidate>
+                {% csrf_token %}
+                <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+
+
+                <textarea cols="30" rows="4" name="message" class="md-input" required=""></textarea>
+
+
+                <div class="uk-modal-footer uk-text-right">
+                    {#                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary md-btn-wave" id="snippet_new_save"><i   class="material-icons"   >smartphone</i>Send</button>#}
+                    {#                #}
+                    <button type="submit" class="md-btn ss md-btn-small md-btn-success uk-margin-small-top"
+                            id="snippet_new_save" v-show="admission.$valid">Send Message
+                    </button>
+
+                    <button type="button" class="md-btn md-btn-flat uk-modal-close md-btn-wave">Close</button>
+
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<h3 class="heading_b uk-margin-bottom">Applicants pool </h3>
+    <h3 class="heading_b uk-margin-bottom">Applicants pool </h3>
 
-<div style="" class="">
+    <div style="" class="">
 
-    <!--    <div class="uk-margin-bottom" style="margin-left:910px" >-->
-    <div class="uk-margin-bottom" style="" >
-        <a  href="#new_task" data-uk-modal="{ center:true }"> <i title="click to send sms to students"   class="material-icons md-36 uk-text-success"   > message</i></a>
+        <!--    <div class="uk-margin-bottom" style="margin-left:910px" >-->
+        <div class="uk-margin-bottom" style="">
+            <a href="#new_task" data-uk-modal="{ center:true }"> <i title="click to send sms to students"
+                                                                    class="material-icons md-36 uk-text-success">
+                message</i></a>
 
 
-        <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
-            <button class="md-btn md-btn-small md-btn-success"> columns <i class="uk-icon-caret-down"></i></button>
-            <div class="uk-dropdown">
-                <ul class="uk-nav uk-nav-dropdown" id="columnSelector"></ul>
+            <div class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
+                <button class="md-btn md-btn-small md-btn-success"> columns <i class="uk-icon-caret-down"></i></button>
+                <div class="uk-dropdown">
+                    <ul class="uk-nav uk-nav-dropdown" id="columnSelector"></ul>
+                </div>
             </div>
+
+
+            <div style="margin-top: -5px" class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
+                <button class="md-btn md-btn-small md-btn-success uk-margin-small-top">Export <i
+                        class="uk-icon-caret-down"></i></button>
+                <div class="uk-dropdown">
+                    <ul class="uk-nav uk-nav-dropdown">
+                        <li><a href="#"
+                               onClick="$('#ts_pager_filter').tableExport({type: 'csv', escape: 'false'});"><img
+                                src='{% static 'assets/icons/csv.png' %}' width="24"/> CSV</a></li>
+
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#"
+                               onClick="$('#ts_pager_filter').tableExport({type: 'excel', escape: 'false'});"><img
+                                src={% static 'assets/icons/xls.png' %}' width="24"/> XLS</a></li>
+                    <li><a href="#" onClick ="$(' #ts_pager_filter').tableExport({type: 'doc', escape: 'false'});"><img
+                                src='{% static 'assets/icons/word.png"' %}' width="24"/> Word</a></li>
+                        <li><a href="#"
+                               onClick="$('#ts_pager_filter').tableExport({type: 'powerpoint', escape: 'false'});"><img
+                                src='{% static 'assets/icons/ppt.png' %}' width="24"/> PowerPoint</a></li>
+                        <li class="uk-nav-divider"></li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+            <i title="click to print" onclick="javascript:printDiv('print')"
+               class="material-icons md-36 uk-text-success">print</i>
+
+            <a href="{% url 'bulksms' %}" onclick="return alert('This will send bulk admission notification to all applicants')"
+               title="sent bulk admission notification to applicants"> <i
+                    title="click to sent bulk admission notification to applicants"
+                    class="material-icons md-36 uk-text-success">phonelink_ring</i></a>
+
+
+        </div>
+
+        <div style="text-align: center;display: none" class="uk-alert uk-alert-success" data-uk-alert="">
+
         </div>
 
 
+        <div style="text-align: center;display: none" class="uk-alert uk-alert-danger" data-uk-alert="">
 
-
-
-        <div style="margin-top: -5px" class="uk-button-dropdown" data-uk-dropdown="{mode:'click'}">
-            <button class="md-btn md-btn-small md-btn-success uk-margin-small-top">Export <i class="uk-icon-caret-down"></i></button>
-            <div class="uk-dropdown">
-                <ul class="uk-nav uk-nav-dropdown">
-                    <li><a href="#" onClick ="$('#ts_pager_filter').tableExport({type: 'csv', escape: 'false'});"><img src='{% static 'assets/icons/csv.png'%}' width="24"/> CSV</a></li>
-
-                    <li class="uk-nav-divider"></li>
-                    <li><a href="#" onClick ="$('#ts_pager_filter').tableExport({type: 'excel', escape: 'false'});"><img src={% static 'assets/icons/xls.png'%}' width="24"/> XLS</a></li>
-                    <li><a href="#" onClick ="$('#ts_pager_filter').tableExport({type: 'doc', escape: 'false'});"><img src='{% static 'assets/icons/word.png"'%}' width="24"/> Word</a></li>
-                    <li><a href="#" onClick ="$('#ts_pager_filter').tableExport({type: 'powerpoint', escape: 'false'});"><img src='{% static 'assets/icons/ppt.png'%}' width="24"/> PowerPoint</a></li>
-                    <li class="uk-nav-divider"></li>
-
-                </ul>
-            </div>
         </div>
-
-
-
-
-        <i title="click to print" onclick="javascript:printDiv('print')" class="material-icons md-36 uk-text-success"   >print</i>
-
-            <a  href="#"  onclick="return alert('This will send bulk admission notification to all applicants')"  title="sent bulk admission notification to applicants"> <i   title="click to sent bulk admission notification to applicants"  class="material-icons md-36 uk-text-success"   >phonelink_ring</i></a>
-
-
     </div>
-
-<div style="text-align: center;display: none" class="uk-alert uk-alert-success" data-uk-alert="">
-
-    </div>
-
-
-
-    <div style="text-align: center;display: none" class="uk-alert uk-alert-danger" data-uk-alert="">
-
-    </div>
-</div>
 
 
     <div class="uk-width-xLarge-1-1">
         <div class="md-card">
             <div class="md-card-content">
-            <form action="" class="form-inline" method="GET" id="group" accept-charset="utf-8">
+                <form action="" class="form-inline" method="GET" id="group" accept-charset="utf-8">
 
-                {% csrf_token %}
+                    {% csrf_token %}
 
                     <div class="uk-grid" data-uk-grid-margin="">
 
@@ -115,153 +124,163 @@
                                 <select class="md-input parent select" name="gender">
 
 
-                            <option value="">All genders</option>
+                                    <option value="">All genders</option>
 
 
-                            <option value="Male"
+                                    <option value="Male"
 
-                                    {% if 'gender' in request.GET and request.GET.gender == 'Male' %}
+                                            {% if 'gender' in request.GET and request.GET.gender == 'Male' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >Males
-                            </option>
-
-
-                            <option value="Female"
-
-                             {% if 'gender' in request.GET and request.GET.gender == 'Female' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >Females
+                                            {% endif %}
+                                    >Males
+                                    </option>
 
 
+                                    <option value="Female"
 
-                            </option>
-                        </select>
+                                            {% if 'gender' in request.GET and request.GET.gender == 'Female' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >Females
+
+
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <select class="md-input parent select" id="parent select" name="year">
 
-                                   <option value="">admission years</option>
+                                    <option value="">admission years</option>
 
                                     <option value="2015/2016"
-                                     {% if 'year' in request.GET and request.GET.year == "2015/2016"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2015/2016"|striptags %}
 
-                                     selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
+                                            {% endif %}
 
 
                                     >
 
 
-                                        2015/2016</option>
+                                        2015/2016
+                                    </option>
                                     <option value="2016/2017"
 
-                                     {% if 'year' in request.GET and request.GET.year == "2016/2017"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2016/2017"|striptags %}
 
-                                     selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
+                                            {% endif %}
 
 
-                                    >2016/2017</option>
+                                    >2016/2017
+                                    </option>
                                     <option value="2017/2018"
 
-                                     {% if 'year' in request.GET and request.GET.year == "2017/2018"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2017/2018"|striptags %}
 
-                                         selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
+                                            {% endif %}
 
-                                    >2017/2018</option>
+                                    >2017/2018
+                                    </option>
                                     <option value="2018/2019"
-                                     {% if 'year' in request.GET and request.GET.year == "2018/2019"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2018/2019"|striptags %}
 
-                                         selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
+                                            {% endif %}
 
 
 
-                                    >2018/2019</option>
+                                    >2018/2019
+                                    </option>
                                     <option value="2019/2020"
-                                     {% if 'year' in request.GET and request.GET.year == "2019/2020"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2019/2020"|striptags %}
 
-                                         selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
-
-
+                                            {% endif %}
 
 
-                                    >2019/2020</option>
+
+
+                                    >2019/2020
+                                    </option>
                                     <option value="2020/2021"
-                                     {% if 'year' in request.GET and request.GET.year == "2020/2021"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2020/2021"|striptags %}
 
-                                         selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
+                                            {% endif %}
 
 
 
-                                    >2020/2021</option>
+                                    >2020/2021
+                                    </option>
                                     <option value="2021/2022"
-                                     {% if 'year' in request.GET and request.GET.year == "2021/2022"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2021/2022"|striptags %}
 
-                                         selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
+                                            {% endif %}
 
 
 
-                                    >2021/2022</option>
+                                    >2021/2022
+                                    </option>
                                     <option value="2022/2023"
 
-                                     {% if 'year' in request.GET and request.GET.year == "2022/2023"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2022/2023"|striptags %}
 
-                                         selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
+                                            {% endif %}
 
 
-                                    >2022/2023</option>
+                                    >2022/2023
+                                    </option>
                                     <option value="2023/2024"
-                                     {% if 'year' in request.GET and request.GET.year == "2023/2024"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2023/2024"|striptags %}
 
-                                         selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
-
-
+                                            {% endif %}
 
 
-                                    >2023/2024</option>
+
+
+                                    >2023/2024
+                                    </option>
                                     <option value="2024/2025"
-                                     {% if 'year' in request.GET and request.GET.year == "2024/2025"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2024/2025"|striptags %}
 
-                                         selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
+                                            {% endif %}
 
 
-                                    >2025/2026</option>
+                                    >2025/2026
+                                    </option>
                                     <option value="2025/2026"
-                                     {% if 'year' in request.GET and request.GET.year == "2025/2026"|striptags %}
+                                            {% if 'year' in request.GET and request.GET.year == "2025/2026"|striptags %}
 
-                                         selected="selected"
+                                            selected="selected"
 
-                                     {% endif %}
+                                            {% endif %}
 
 
-                                    >2025/2026</option>
+                                    >2025/2026
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -273,9 +292,9 @@
                                     <option value="">select programme</option>
                                     {% for programs in programme %}
 
-                                        <option value="{{programs.id}}"
-                                         {% if request.GET.program == programs.id|striptags %}
-                                            selected="selected"
+                                        <option value="{{ programs.id }}"
+                                                {% if request.GET.program == programs.id|striptags %}
+                                                selected="selected"
 
                                                 {% endif %}
 
@@ -293,33 +312,60 @@
 
                             </div>
                         </div>
-                    <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
 
                                 <select id="parent select" class="md-input parent select" name="department">
                                     <option value="">select department</option>
+                                        {% for departments in department %}
+
+                                        <option value="{{ departments.id }}"
+                                                {% if request.GET.department == departments.id|striptags %}
+                                                selected="selected"
+
+                                                {% endif %}
+
+
+                                        >
+
+
+                                            {{ departments.name |upper }}
+
 
 
                                         </option>
 
-
-
+                                {% endfor %}
                                 </select>
 
                             </div>
                         </div>
 
-                    <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
 
                                 <select id="parent select" class="md-input parent select" name="faculty">
                                     <option value="">select faculty</option>
 
+                                     {% for facultys in faculty %}
+
+                                        <option value="{{ facultys.id }}"
+                                                {% if request.GET.faculty == facultys.id|striptags %}
+                                                selected="selected"
+
+                                                {% endif %}
+
+
+                                        >
+
+
+                                            {{ facultys.name |upper }}
+
+
 
                                         </option>
 
-
-
+                                {% endfor %}
                                 </select>
 
                             </div>
@@ -331,152 +377,151 @@
                                 <select class="md-input parent select" name="status">
 
 
-                            <option value="">All status</option>
+                                    <option value="">All status</option>
 
 
-                                <option value="verified"
+                                    <option value="verified"
 
-                                    {% if 'status' in request.GET and request.GET.status == 'verified' %}
+                                            {% if 'status' in request.GET and request.GET.status == 'verified' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >Results verified
-                            </option>
+                                            {% endif %}
+                                    >Results verified
+                                    </option>
 
-                             <option value="In school"
+                                    <option value="In school"
 
-                                    {% if 'status' in request.GET and request.GET.status == 'In school' %}
+                                            {% if 'status' in request.GET and request.GET.status == 'In school' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >In school
-                            </option>
-                            <option value="admitted"
+                                            {% endif %}
+                                    >In school
+                                    </option>
+                                    <option value="admitted"
 
-                                    {% if 'status' in request.GET and request.GET.status == 'admitted' %}
+                                            {% if 'status' in request.GET and request.GET.status == 'admitted' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >Admitted
-                            </option>
-
-
-                            <option value="Applicant"
-
-                             {% if 'status' in request.GET and request.GET.status == 'applicant' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >Applicant
+                                            {% endif %}
+                                    >Admitted
+                                    </option>
 
 
+                                    <option value="Applicant"
 
-                            </option>
-                        </select>
+                                            {% if 'status' in request.GET and request.GET.status == 'applicant' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >Applicant
+
+
+                                    </option>
+                                </select>
                             </div>
                         </div>
 
-                         <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <select class="md-input parent select" name="type">
 
 
-                            <option value="">All form types</option>
+                                    <option value="">All form types</option>
 
-                                 <option value="BRIDGING"
+                                    <option value="BRIDGING"
 
-                             {% if 'type' in request.GET and request.GET.type == 'BRIDGING' %}
+                                            {% if 'type' in request.GET and request.GET.type == 'BRIDGING' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                {% endif %}
+                                            {% endif %}
 
-                            >BRIDGING
+                                    >BRIDGING
 
-                            </option>
-                                <option value="DIPLOMA"
+                                    </option>
+                                    <option value="DIPLOMA"
 
-                                    {% if 'type' in request.GET and request.GET.type == 'DIPLOMA' %}
+                                            {% if 'type' in request.GET and request.GET.type == 'DIPLOMA' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >DIPLOMA
-                            </option>
+                                            {% endif %}
+                                    >DIPLOMA
+                                    </option>
 
-                             <option value="HND"
+                                    <option value="HND"
 
-                                    {% if 'type' in request.GET and request.GET.type == 'HND' %}
+                                            {% if 'type' in request.GET and request.GET.type == 'HND' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >HND
-                            </option>
-                            <option value="MATURE"
+                                            {% endif %}
+                                    >HND
+                                    </option>
+                                    <option value="MATURE"
 
-                                    {% if 'type' in request.GET and request.GET.type == 'MATURE' %}
+                                            {% if 'type' in request.GET and request.GET.type == 'MATURE' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >MATURE
-                            </option>
-
-
-                            <option value="BTECH"
-
-                             {% if 'type' in request.GET and request.GET.type == 'BTECH' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >BTECH
-                                 </option>
-
-                             <option value="DEGREE"
-
-                             {% if 'type' in request.GET and request.GET.type == 'DEGREE' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >DEGREE
-
-                            </option>
-                                <option value="MTECH"
-
-                             {% if 'type' in request.GET and request.GET.type == 'MTECH' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >Masters
-
-                            </option>
+                                            {% endif %}
+                                    >MATURE
+                                    </option>
 
 
-                                <option value="PhD"
+                                    <option value="BTECH"
 
-                             {% if 'type' in request.GET and request.GET.type == 'PhD' %}
+                                            {% if 'type' in request.GET and request.GET.type == 'BTECH' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                {% endif %}
+                                            {% endif %}
 
-                            >Doctorate
+                                    >BTECH
+                                    </option>
 
-                            </option>
+                                    <option value="DEGREE"
 
-                        </select>
+                                            {% if 'type' in request.GET and request.GET.type == 'DEGREE' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >DEGREE
+
+                                    </option>
+                                    <option value="MTECH"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'MTECH' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >Masters
+
+                                    </option>
+
+
+                                    <option value="PhD"
+
+                                            {% if 'type' in request.GET and request.GET.type == 'PhD' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >Doctorate
+
+                                    </option>
+
+                                </select>
                             </div>
                         </div>
 
@@ -487,9 +532,9 @@
                                     <option value="">select hall</option>
                                     {% for halls in hall %}
 
-                                        <option value="{{halls.hall_id }}"
-                                         {% if 'hall' in request.GET and request.GET.hall == halls.hall_id|striptags %}
-                                            selected="selected"
+                                        <option value="{{ halls.id }}"
+                                                {% if 'hall' in request.GET and request.GET.hall == halls.id|striptags %}
+                                                selected="selected"
 
                                                 {% endif %}
 
@@ -497,7 +542,7 @@
                                         >
 
 
-                                         {{ halls.hall_name |upper }}
+                                            {{ halls.name |upper }}
 
                                         </option>
 
@@ -508,52 +553,51 @@
                             </div>
                         </div>
 
-                          <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <select class="md-input parent select" name="nationality">
 
 
-                            <option value="">All nationalities</option>
+                                    <option value="">All nationalities</option>
 
 
-                            <option value="239"
+                                    <option value="58"
 
-                                    {% if 'nationality' in request.GET and request.GET.nationality == '239' %}
+                                            {% if 'nationality' in request.GET and request.GET.nationality == '58' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >GHANAIAN APPLICANTS
-                            </option>
-
-
-                            <option value="0"
-
-                             {% if 'nationality' in request.GET and request.GET.nationality == '0' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >FOREIGN APPLICANTS
+                                            {% endif %}
+                                    >GHANAIAN APPLICANTS
+                                    </option>
 
 
+                                    <option value="0"
 
-                            </option>
-                        </select>
+                                            {% if 'nationality' in request.GET and request.GET.nationality == '0' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >FOREIGN APPLICANTS
+
+
+                                    </option>
+                                </select>
                             </div>
                         </div>
 
-                     <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
 
                                 <select id="parent select" class="md-input parent select" name="region">
                                     <option value="">select region</option>
                                     {% for region in regions %}
 
-                                        <option value="{{region.id }}"
-                                         {% if 'region' in request.GET and request.GET.region == region.id|striptags %}
-                                            selected="selected"
+                                        <option value="{{ region.id }}"
+                                                {% if 'region' in request.GET and request.GET.region == region.id|striptags %}
+                                                selected="selected"
 
                                                 {% endif %}
 
@@ -561,7 +605,7 @@
                                         >
 
 
-                                         {{ region.name |upper }}
+                                            {{ region.name |upper }}
 
                                         </option>
 
@@ -579,13 +623,13 @@
                                     <option value="">select former school</option>
                                     {% for schools in school %}
 
-                                        <option value="{{schools.id}}"
-                                         {% if 'school' in request.GET and request.GET.school == schools.id|striptags %}
-                                            selected="selected"
+                                        <option value="{{ schools.id }}"
+                                                {% if 'school' in request.GET and request.GET.school == schools.id|striptags %}
+                                                selected="selected"
 
                                                 {% endif %} >
 
-                                         {{ schools.name |upper }}
+                                            {{ schools.name |upper }}
 
                                         </option>
 
@@ -597,360 +641,437 @@
                         </div>
 
 
-                         <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <select class="md-input parent select" name="referral">
 
 
-                            <option value="">All referrals</option>
+                                    <option value="">All referrals</option>
 
 
-                            <option value="outreach"
+                                    <option value="outreach"
 
-                                    {% if 'referral' in request.GET and request.GET.referral == 'outreach' %}
+                                            {% if 'referral' in request.GET and request.GET.referral == 'outreach' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >OUTREACH TEAM
-                            </option>
-
-
-                            <option value="advert"
-
-                             {% if 'referral' in request.GET and request.GET.referral == 'advert' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >ADVERTISEMENT
+                                            {% endif %}
+                                    >OUTREACH TEAM
+                                    </option>
 
 
+                                    <option value="advert"
 
-                            </option>
+                                            {% if 'referral' in request.GET and request.GET.referral == 'advert' %}
 
-                                <option value="social"
+                                            selected="selected"
 
-                             {% if 'referral' in request.GET and request.GET.referral == 'social' %}
+                                            {% endif %}
 
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >SOCIAL MEDIA
+                                    >ADVERTISEMENT
 
 
+                                    </option>
 
-                            </option>
-                                <option value="friend"
+                                    <option value="social"
 
-                             {% if 'referral' in request.GET and request.GET.referral == 'friend' %}
+                                            {% if 'referral' in request.GET and request.GET.referral == 'social' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                {% endif %}
+                                            {% endif %}
 
-                            >FRIENDS
-
-
-
-                            </option>
-                                <option value="other"
-
-                             {% if 'referral' in request.GET and request.GET.referral == 'other' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >OTHER
+                                    >SOCIAL MEDIA
 
 
+                                    </option>
+                                    <option value="friend"
 
-                            </option>
-                        </select>
+                                            {% if 'referral' in request.GET and request.GET.referral == 'friend' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >FRIENDS
+
+
+                                    </option>
+                                    <option value="other"
+
+                                            {% if 'referral' in request.GET and request.GET.referral == 'other' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >OTHER
+
+
+                                    </option>
+                                </select>
                             </div>
                         </div>
 
 
-                     <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <select class="md-input parent select" name="admission_type">
 
 
-                            <option value="">All admission types</option>
+                                    <option value="">All admission types</option>
 
 
-                            <option value="regular"
+                                    <option value="regular"
 
-                                    {% if 'admission_type' in request.GET and request.GET.admission_type == 'regular' %}
+                                            {% if 'admission_type' in request.GET and request.GET.admission_type == 'regular' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >REGULAR
-                            </option>
-
-
-                            <option value="mature"
-
-                                    {% if 'admission_type' in request.GET and request.GET.admission_type == 'mature' %}
-
-                                    selected="selected"
-
-                                    {% endif %}
-                            >MATURE
-                            </option>
-
-                               <option value="conditional"
-
-                                    {% if 'admission_type' in request.GET and request.GET.admission_type == 'conditional' %}
-
-                                    selected="selected"
-
-                                    {% endif %}
-                            >CONDITIONAL
-                            </option>
-                               <option value="technical"
-
-                                    {% if 'admission_type' in request.GET and request.GET.admission_type == 'technical' %}
-
-                                    selected="selected"
-
-                                    {% endif %}
-                            >TECHNICAL
-                            </option>
-
-                                 <option value="foreign"
-
-                                    {% if 'admission_type' in request.GET and request.GET.admission_type == 'foreign' %}
-
-                                    selected="selected"
-
-                                    {% endif %}
-                            >International
-                            </option>
-
-                                 <option value="diploma_education"
-
-                                 {% if 'admission_type' in request.GET and request.GET.admission_type == 'diploma_education' %}
-
-                                    selected="selected"
-
-                                    {% endif %}
+                                            {% endif %}
+                                    >REGULAR
+                                    </option>
 
 
+                                    <option value="mature"
 
-                                 >Diploma_Education_Winneba</option>
+                                            {% if 'admission_type' in request.GET and request.GET.admission_type == 'mature' %}
 
-                        </select>
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >MATURE
+                                    </option>
+
+                                    <option value="conditional"
+
+                                            {% if 'admission_type' in request.GET and request.GET.admission_type == 'conditional' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >CONDITIONAL
+                                    </option>
+                                    <option value="technical"
+
+                                            {% if 'admission_type' in request.GET and request.GET.admission_type == 'technical' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >TECHNICAL
+                                    </option>
+
+                                    <option value="foreign"
+
+                                            {% if 'admission_type' in request.GET and request.GET.admission_type == 'foreign' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >International
+                                    </option>
+
+                                    <option value="diploma_education"
+
+                                            {% if 'admission_type' in request.GET and request.GET.admission_type == 'diploma_education' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+
+
+                                    >Diploma_Education_Winneba
+                                    </option>
+
+                                </select>
                             </div>
                         </div>
 
-                         <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <select class="md-input parent select" name="sort">
 
 
-                            <option value="">Select sorter</option>
+                                    <option value="">Select sorter</option>
+
+                                     <option value="status"
+
+                                            {% if 'status' in request.GET and request.GET.sort == 'status' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >Admission Status
+                                    </option>
+
+                                    <option value="lastname"
+
+                                            {% if 'sort' in request.GET and request.GET.sort == 'lastname' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >By name
+                                    </option>
 
 
-                            <option value="name"
+                                    <option value="gender"
 
-                                    {% if 'sort' in request.GET and request.GET.sort == 'name' %}
+                                            {% if 'sort' in request.GET and request.GET.sort == "gender" %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >By name
-                            </option>
+                                            {% endif %}
 
-
-                            <option value="gender"
-
-                             {% if 'sort' in request.GET and request.GET.sort == "gender" %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >By gender
+                                    >By gender
 
 
+                                    </option>
+                                    <option value="applicationuserid__type"
 
-                            </option>
-                                 <option value="form_type"
+                                            {% if 'sort' in request.GET and request.GET.sort == "applicationuserid__type" %}
 
-                             {% if 'sort' in request.GET and request.GET.sort == "form_type" %}
+                                            selected="selected"
 
-                                    selected="selected"
+                                            {% endif %}
 
-                                {% endif %}
-
-                            >By Form type
-
+                                    >By Form type
 
 
-                            </option>
-                                 <option value="programme_admitted_id__name"
+                                    </option>
+                                    <option value="programmeadmittedid"
 
-                             {% if 'sort' in request.GET and request.GET.sort == "programme_admitted_id__name" %}
+                                            {% if 'sort' in request.GET and request.GET.sort == "programmesadmitted_id" %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                {% endif %}
+                                            {% endif %}
 
-                            >By programme
+                                    >By programme
 
 
-
-                            </option>
-                        </select>
+                                    </option>
+                                </select>
                             </div>
                         </div>
 
 
-                     <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <select class="md-input parent select" name="limit">
 
 
-                            <option value="">Select total per page</option>
+                                    <option value="">Select total per page</option>
 
 
-                            <option value="150"
+                                    <option value="150"
 
-                                    {% if 'limit' in request.GET and request.GET.limit == '150' %}
+                                            {% if 'limit' in request.GET and request.GET.limit == '150' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >150
-                            </option>
+                                            {% endif %}
+                                    >150
+                                    </option>
 
-                                 <option value="200"
+                                    <option value="200"
 
-                                    {% if 'limit' in request.GET and request.GET.limit == '200' %}
+                                            {% if 'limit' in request.GET and request.GET.limit == '200' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >200
-                            </option>
+                                            {% endif %}
+                                    >200
+                                    </option>
 
-                                 <option value="400"
+                                    <option value="400"
 
-                                    {% if 'limit' in request.GET and request.GET.limit == '400' %}
+                                            {% if 'limit' in request.GET and request.GET.limit == '400' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >400
-                            </option>
-
-
-
-                                 <option value="500"
-
-                                    {% if 'limit' in request.GET and request.GET.limit == '500' %}
-
-                                    selected="selected"
-
-                                    {% endif %}
-                            >500
-                            </option>
+                                            {% endif %}
+                                    >400
+                                    </option>
 
 
+                                    <option value="500"
 
-                        </select>
+                                            {% if 'limit' in request.GET and request.GET.limit == '500' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >500
+                                    </option>
+
+
+                                </select>
                             </div>
                         </div>
 
-                    <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <select class="md-input parent select" name="sms">
 
 
-                            <option value="">All</option>
+                                    <option value="">All</option>
 
 
-                            <option value="1"
+                                    <option value="1"
 
-                                    {% if 'sms' in request.GET and request.GET.sms == '1' %}
+                                            {% if 'sms' in request.GET and request.GET.sms == '1' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >SMS sent
-                            </option>
-
-
-                            <option value="0"
-
-                             {% if 'sms' in request.GET and request.GET.sms == '0' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >SMS not sent
+                                            {% endif %}
+                                    >SMS sent
+                                    </option>
 
 
+                                    <option value="0"
 
-                            </option>
-                        </select>
+                                            {% if 'sms' in request.GET and request.GET.sms == '0' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >SMS not sent
+
+
+                                    </option>
+                                </select>
                             </div>
                         </div>
 
-                    <div class="uk-width-medium-1-5">
+                        <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <select class="md-input parent select" name="paid">
 
 
-                            <option value="">All Fees Payment Criteria</option>
+                                    <option value="">All Fees Payment Criteria</option>
 
 
-                            <option value="paid"
+                                    <option value="paid"
 
-                                    {% if 'paid' in request.GET and request.GET.paid == 'paid' %}
+                                            {% if 'paid' in request.GET and request.GET.paid == 'paid' %}
 
-                                    selected="selected"
+                                            selected="selected"
 
-                                    {% endif %}
-                            >Fees Paid
-                            </option>
-
-
-                            <option value="owing"
-
-                             {% if 'paid' in request.GET and request.GET.paid == 'owing' %}
-
-                                    selected="selected"
-
-                                {% endif %}
-
-                            >Owing Fees
+                                            {% endif %}
+                                    >Fees Paid
+                                    </option>
 
 
+                                    <option value="owing"
 
-                            </option>
-                        </select>
+                                            {% if 'paid' in request.GET and request.GET.paid == 'owing' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >Owing Fees
+
+
+                                    </option>
+                                </select>
                             </div>
                         </div>
 
+                      <div class="uk-width-medium-1-5">
+                            <div class="uk-margin-small-top">
+                                <select class="md-input parent select" name="programtype">
 
+
+                                    <option value="">Programme Types</option>
+
+
+                                    <option value="HND"
+
+                                            {% if 'programtype' in request.GET and request.GET.programtype == 'HND' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+                                    >HND
+                                    </option>
+
+
+                                    <option value="BTECH"
+
+                                            {% if 'programtype' in request.GET and request.GET.programtype == 'BTECH' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >BTECH
+
+
+                                    </option>
+                                 <option value="DIPLOMA"
+
+                                            {% if 'programtype' in request.GET and request.GET.programtype == 'DIPLOMA' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >DIPLOMA
+
+
+                                    </option>
+                                 <option value="DipTECH"
+
+                                            {% if 'programtype' in request.GET and request.GET.programtype == 'DipTECH' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >DIPLOMA OF TECHNOLOGY
+
+
+                                    </option>
+                                 <option value="POSTGRADUATE"
+
+                                            {% if 'programtype' in request.GET and request.GET.programtype == 'MTECH' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >MTECH
+
+
+                                    </option>
+                                 <option value="CERTIFICATE"
+
+                                            {% if 'programtype' in request.GET and request.GET.programtype == 'CERTIFICATE' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >CERTIFICATE
+
+
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
 
 
                         <div class="uk-width-medium-1-5">
                             <div class="uk-margin-small-top">
                                 <input type="text" style=" " name="search" class="md-input"
-                                       placeholder="search by name or form number">
+                                       placeholder="search serial no or application number">
                             </div>
                         </div>
-
-
-
 
 
                     </div>
@@ -958,7 +1079,8 @@
 
                         <button class="md-btn  md-btn-small md-btn-success uk-margin-small-top" type="submit"><i
                                 class="material-icons">search</i></button>
-                         <a title="click to refresh page" href="{% url 'applicants_index' %}" class="md-btn  md-btn-small md-btn-success uk-margin-small-top"  >Clear Filters</a>
+                        <a title="click to refresh page" href="{% url 'applicants_index' %}"
+                           class="md-btn  md-btn-small md-btn-success uk-margin-small-top">Clear Filters</a>
 
 
                     </div>
@@ -976,10 +1098,11 @@
             <div class="md-card-content">
                 <div class="uk-overflow-container" id='print'>
 
-                    <center><span class="uk-text-success uk-text-bold">{{ total }} Applicant(s)</span>
-                    </center>
+                    {% comment %}<center><span class="uk-text-success uk-text-bold">{{ total }} Applicant(s)</span>
+                    </center>{% endcomment %}
 
-                    <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesortera tablesorter-altairaa" id="ts_pager_filteraa">
+                    <table class="uk-table uk-table-align-vertical uk-table-nowrap tablesortera tablesorter-altairaa"
+                           id="ts_pager_filteraa">
 
                         <thead>
                         <tr>
@@ -988,14 +1111,17 @@
                             <th>VOUCHER</th>
                             <th>PHOTO</th>
                             <th>NAME</th>
-                             <th>GENDER</th>
-                             <th>NATIONALITY</th>
+                            <th>GENDER</th>
+                            <th>NATIONALITY</th>
                             <th>STATUS</th>
-                              <th>PROGRAMME ADMITTED</th>
+                            <th>PROGRAMME ADMITTED</th>
 
                             <th>ADMISSION TYPE</th>
 
-                         <th>LEVEL ADMITTED</th>
+                            <th>LEVEL ADMITTED</th>
+
+                             <th>AMOUNT PAID</th>
+                             <th>ROOM</th>
 
                             <th>AGE</th>
                             <th>PHONE</th>
@@ -1009,26 +1135,26 @@
 
                             <th>YEAR</th>
 
-                            <th>FEES</th>
+
                             <th>HALL</th>
 
-                        {% if request.user.username != "finance" %}
+                           {% if request.user.groups.all.0.name == 'admissions' or  request.user.groups.all.0.name == 'admin' %}
 
-                            <th class="filter-false remove sorter-false uk-text-center"
-                                data-priority="1">STEP 1 - SELECT HALL
-                            </th>
-                            <th class="filter-false remove sorter-false uk-text-center"
-                                data-priority="1">STEP 2 - SELECT PROGRAM
-                            </th>
-                            <th class="filter-false remove sorter-false uk-text-center"
-                                data-priority="1">STEP 3- SELECT ADMISSION TYPE
-                            </th>
-                            <th class="filter-false remove sorter-false uk-text-center"
-                                data-priority="1">STEP 3- SELECT LEVEL OF ADMISSION
-                            </th>
+                                <th class="filter-false remove sorter-false uk-text-center"
+                                    data-priority="1">STEP 1 - SELECT HALL
+                                </th>
+                                <th class="filter-false remove sorter-false uk-text-center"
+                                    data-priority="1">STEP 2 - SELECT PROGRAM
+                                </th>
+                                <th class="filter-false remove sorter-false uk-text-center"
+                                    data-priority="1">STEP 3- SELECT ADMISSION TYPE
+                                </th>
+                                <th class="filter-false remove sorter-false uk-text-center"
+                                    data-priority="1">STEP 3- SELECT LEVEL OF ADMISSION
+                                </th>
 
 
-                            <th>ACTION</th>
+                                <th>ACTION</th>
                             {% endif %}
 
                         </tr>
@@ -1040,28 +1166,27 @@
                             <tr>
                                 <td> {{ forloop.counter0|add:data.start_index }} {# starting index 1 #}</td>
                                 <td>{{ record.applicationnumber }}</td>
-                                <td> PIN - {{ record.applicationuserid.pin }}, SERIAL - {{ record.applicationuserid.username }}</td>
+                                <td> PIN - {{ record.applicationuserid.pin }}, SERIAL
+                                    - {{ record.applicationuserid.username }}</td>
                                 <td style="text-align: center">
 
 
-                                    <a title="click to view details of applicant"
-                                       href="https://apply.ttuportal.com/api/Data/{{record.applicationnumber}}">
+                                    <a target="_blank" title="click to view details of applicant"
+                                       href="https://apply.ttuportal.com/api/Data/{{ record.applicationnumber }}">
                                         <img class="ks-avatar"
-                                              src="https://photos.ttuportal.com/public/albums/thumbnails/{{record.applicationnumber}}.jpg"
+                                             src="https://photos.ttuportal.com/public/albums/thumbnails/{{ record.applicationnumber }}.jpg"
                                              onerror="this.onerror = function my()
-    { return this.src = 'https://photos.ttuportal.com/public/albums/thumbnails/{{record.applicationnumber}}.jpeg'; };
-    this.src = 'https://photos.ttuportal.com/public/albums/thumbnails/{{record.applicationnumber}}.JPG';"
+                                                     { return this.src = 'https://photos.ttuportal.com/public/albums/thumbnails/{{ record.applicationnumber }}.jpeg'; };
+                                                     this.src = 'https://photos.ttuportal.com/public/albums/thumbnails/{{ record.applicationnumber }}.JPG';"
 
                                              style="width:77px;height: auto"/></a>
 
 
-
-
                                 </td>
 
-                                <td> {{ record.lastname | upper }} {{  record.firstname  | upper }} {{  record.middlename  | upper }}</td>
+                                <td> {{ record.lastname | upper }} {{ record.firstname  | upper }} {{ record.middlename  | upper }}</td>
                                 <td>{{ record.gender|upper }}</td>
-                             <td>{{ record.nationalityid.name }}</td>
+                                <td>{{ record.nationalityid.name }}</td>
                                 <td>
 
 
@@ -1078,27 +1203,28 @@
                                 </td>
 
 
-
                                 <td style="width:200px">
 
-                                      {% if record.status == "admitted" or record.status == "ADMITTED" %}
+                                    {% if record.status == "admitted" or record.status == "ADMITTED" %}
                                         {{ record.programmeadmittedid.name |upper }}
 
 
 
-                                      {% else %}
+                                    {% else %}
 
-                                      ADMISSION PENDING
-                                      {% endif %}
-
-
-                                  </td>
+                                        ADMISSION PENDING
+                                    {% endif %}
 
 
-                              <td>{{ record.admissiontype |upper }}</td>
+                                </td>
 
 
-                             <td>  {{ record.leveladmitted |upper }}</td>
+                                <td>{{ record.admissiontype |upper }}</td>
+
+
+                                <td>  {{ record.leveladmitted |upper }}</td>
+                                <td>  {{ record.feespaid  }}</td>
+                                <td>  {{ record.roomno  }}</td>
 
 
                                 <td>{{ record.age }}yrs</td>
@@ -1114,26 +1240,18 @@
 
                                 <td>{{ record.firstqualification }}</td>
                                 <td>
-                                    {% if record.sms == 0 and record.admit == 1 %}
-                                    SMS SENT
-                                    {%  else %}
-                                    SMS PENDING
+                                    {% if record.smssent == True and record.admitted == True %}
+                                        SMS SENT
+                                    {% else %}
+                                        SMS PENDING
                                     {% endif %}
                                 </td>
                                 <td>{{ record.yearofadmission }}</td>
 
-                                <td>
-                                     {% if record.admissiontype == "foreign" %}
-                                            USD2000
-                                    {% else %}
-                                         GHS{{ record.admissionfees }}
-                                    {% endif %}
 
-
-                                </td>
                                 {% if record.residentialstatus == False %}
 
-                                    <td>Affiliated to {{ record.halladmitted.name}}</td>
+                                    <td>Affiliated to {{ record.halladmitted.name }}</td>
 
                                 {% elif record.residentialstatus == True %}
 
@@ -1144,133 +1262,156 @@
                                     <td>Not known</td>
 
                                 {% endif %}
-                            {% if request.user.username != "finance" %}
 
-                                <form id="gads" method="get" accept-charset="utf8">
-                                    {% csrf_token %}
+                                 {% if request.user.groups.all.0.name == 'admissions' or  request.user.groups.all.0.name == 'admin' %}
+
+
+                                    <form id="gads" method="get" accept-charset="utf8">
+                                        {% csrf_token %}
+                                        <td>
+                                            <select class="halls select" name="hall" style="width:80px"
+                                                    v-model='hall'
+                                                    v-form-ctrl="" v-select="">
+                                                <option value="">select hall</option>
+                                                {% for halls in hall %}
+                                                    <option value="{{ halls.id }}">{{ halls.name |upper }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+
+
+                                        <td style="width:300px">
+                                            <select class="select programs" name="choice"
+                                                    style="width:150px" v-model='programme'
+                                                    v-form-ctrl="" v-select="">
+                                                <option value="">select programme applied</option>
+                                                {% for programs in programme %}
+                                                    <option value="{{ programs.id }}">{{ programs.name |upper }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <input type="hidden" name="{{ record.applicationnumber }}"
+                                                   id="{{ record.applicationnumber }}"
+                                                   value="{{ record.id }}" class="app"/>
+                                            <input type="hidden" name="applicant" class="applicant"
+                                                   value="{{ record.id }}"/>
+                                            <input type="hidden" name="names" class="names" value="{{ record.firstname }}"/>
+
+                                        </td>
+                                        <td>
+                                            <select name="type" required="" class="type select">
+                                                <option>select admission type</option>
+                                                <option value="regular">Regular</option>
+                                                <option value="bridging">Bridging</option>
+
+                                                <option value="mature">Mature</option>
+
+                                                <option value="technical">Technical</option>
+                                                    <option value="distance">Distance</option>
+                                                    <option value="proficiency">English Proficiency</option>
+                                                <option value="foreign">International</option>
+                                                <option value="diploma_education">Diploma_Education_Winneba</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="level" required="" class="select level">
+                                                <option value="">select level of admission</option>
+
+                                                <option value="200H">200 HND</option>
+                                                <option value="100H">100 HND</option>
+
+                                                <option value="100PD">100 Prof Diploma</option>
+                                                <option value="100NT">100 Diploma</option>
+                                                <option value="100BT">100 Four Yrs</option>
+                                                <option value="200BT">200 Four Yrs</option>
+                                                <option value="300BT">300 Four Yrs</option>
+                                                <option value="100BTT">100 BTECH Top up</option>
+                                                <option value="500MT">100 Masters</option>
+
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="resident" required="" class="resident select">
+                                                <option value="">select residential status</option>
+                                                {#                                            <option value="1">Resident</option>#}
+                                                <option value="False">Affiliated</option>
+
+                                            </select>
+                                        </td>
+
+
+                                    </form>
+
+
                                     <td>
-                                        <select class="halls select" name="hall" style="width:80px"
-                                                v-model='hall'
-                                                v-form-ctrl="" v-select="">
-                                            <option value="">select hall</option>
-                                            {% for halls in hall %}
-                                                <option value="{{ halls.id }}">{{ halls.name |upper }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </td>
 
+                                    {% if start_admit == True %}
+                                        <input title="click to admit" type="checkbox"
 
-                                    <td style="width:300px">
-                                        <select class="select programs" name="choice"
-                                                style="width:150px" v-model='programme'
-                                                v-form-ctrl="" v-select="">
-                                            <option value="">select programme applied</option>
-                                            {% for programs in programme %}
-                                                <option value="{{ programs.id }}">{{ programs.name |upper }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        <input type="hidden" name="{{ record.applicationnumber }}"
-                                               id="{{ record.applicationnumber }}"
-                                               value="{{ record.id }}" class="app"/>
-                                        <input type="hidden" name="applicant" class="applicant"
-                                               value="{{ record.id }}"/>
-                                        <input type="hidden" name="names" class="names" value="{{ record.name }}"/>
+                                               value="admit" db_id="{{ record.applicationnumber }}"
+                                               name="{{ record.applicationnumber }}"
+                                               id="{{ record.applicationnumber }}" class="admit"/>
 
-                                    </td>
-                                    <td>
-                                        <select name="type" required="" class="type select">
-                                            <option>select admission type</option>
-                                            <option value="regular">Regular</option>
-                                            <option value="bridging">Bridging</option>
-                                            <option value="conditional">Conditional</option>
-                                            <option value="mature">Mature</option>
-                                            <option value="provisional">Provisional</option>
-                                            <option value="technical">Technical</option>
-                                            <option value="foreign">International</option>
-                                            <option value="diploma_education">Diploma_Education_Winneba</option>
-                                        </select>
-                                    </td>
-                                 <td>
-                                        <select name="level" required="" class="select level">
-                                            <option value="">select level of admission </option>
+                                        <input title="click to reverse admission" type="checkbox"
 
-                                             <option value="200H">200 HND</option>
-                                            <option value="100H">100 HND</option>
-
-                                            <option value="100PD">100 Prof Diploma</option>
-                                            <option value="100NT">100 Diploma</option>
-                                            <option value="100BT">100 Four Yrs</option>
-                                            <option value="100BTT">100 BTECH Top up</option>
-                                            <option value="500MT">100 Masters</option>
-
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select name="resident" required="" class="resident select">
-                                            <option value="">select residential status</option>
-{#                                            <option value="1">Resident</option>#}
-                                            <option value="0">Affiliated</option>
-
-                                        </select>
-                                    </td>
-
-
-                                </form>
-
-
-                                <td>
-
-
-                                    <input title="click to admit" type="checkbox"
-
-                                           value="admit" db_id="{{ record.applicationnumber }}"
-                                           name="{{ record.applicationnumber }}"
-                                           id="{{ record.applicationnumber }}" class="admit" />
-
-                                 <input title="click to reverse admission" type="checkbox"
-
-                                           value="reverse" db_id="{{ record.id }}"
-                                           name="{{ record.id }}"
-                                           id="{{ record.id }}" class="reverse" />
-
-                                    <a onclick="return MM_openBrWindow('https://apply.ttuportal.com/api/Data/{{record.applicationnumber}}', 'mark', 'width=800,height=500')"><i
-                                            title='Click to view applicant .. please allow popups on browser'
-                                            class="md-icon material-icons">&#xE8F4;</i></a>
-
-
-
-
-
-                                    {% if   record.admited == 1 %}
-                                         {% if   record.year_of_admission == "2017/2018" %}
-
-
-                                             <a onclick="return MM_openBrWindow('https://www.ttuportal.com/srms/applicant/letter/{{record.applicationnumber}}/printout', 'mark', 'width=800,height=500')"><i
-                                                title='Click to print letter .. please allow popups on browser'
-                                                class="md-icon material-icons">book</i></a>
-                                          {% else %}
-
-                                              <a onclick="return MM_openBrWindow('{% url 'letter'  record.id %}', 'mark', 'width=800,height=500')"><i
-                                                title='Click to print letter .. please allow popups on browser'
-                                                class="md-icon material-icons">book</i></a>
-                                          {% endif %}
-
-
+                                               value="reverse" db_id="{{ record.id }}"
+                                               name="{{ record.id }}"
+                                               id="{{ record.id }}" class="reverse"/>
+                                    {% else %}
+                                        <span>Admissions closed</span>
                                     {% endif %}
+                                        <a onclick="return MM_openBrWindow('https://apply.ttuportal.com/api/Data/{{ record.applicationnumber }}', 'mark', 'width=800,height=500')"><i
+                                                title='Click to view applicant .. please allow popups on browser'
+                                                class="md-icon material-icons">&#xE8F4;</i></a>
 
-                                    {% if   record.sms_sent == 0 and record.admit == 1 %}
 
-                                        <a onclick="return confirm('This will send sms notification to this applicant. Are you sure you want to continue?')"
-                                           href='{% url 'refire_sms'  record.applicationnumber %}'><i title='Click to send sms'
-                                                                                           class="md-icon material-icons">phonelink_ring</i></a>
+
+
+
+                                        {% if   record.admitted == True %}
+                                            {% if   record.year_of_admission == "2017/2018" %}
+
+
+                                                <a onclick="return MM_openBrWindow('https://www.ttuportal.com/srms/applicant/letter/{{ record.applicationnumber }}/printout', 'mark', 'width=800,height=500')"><i
+                                                        title='Click to print letter .. please allow popups on browser'
+                                                        class="md-icon material-icons">book</i></a>
+                                            {% else %}
+
+                                                <a onclick="return MM_openBrWindow('{% url 'letter'  record.id %}', 'mark', 'width=800,height=500')"><i
+                                                        title='Click to print letter .. please allow popups on browser'
+                                                        class="md-icon material-icons">book</i></a>
+                                            {% endif %}
+
 
                                         {% endif %}
 
-                                </td>
+                                        {% if   record.smssent == False and record.admitted == True %}
 
+                                            <a onclick="return confirm('This will send sms notification to this applicant. Are you sure you want to continue?')"
+                                               href='{% url 'refire_sms'  record.applicationnumber %}'><i
+                                                    title='Click to send sms'
+                                                    class="md-icon material-icons">phonelink_ring</i></a>
 
+                                        {% endif %}
 
-                            {% endif %}
+                                    </td>
+                                {% else %}
+                                    <td>
+
+                                     {% if   record.smssent == False  and record.admitted == True %}
+
+                                            <a onclick="return confirm('This will send sms notification to this applicant. Are you sure you want to continue?')"
+                                               href='{% url 'refire_sms'  record.applicationnumber %}'><i
+                                                    title='Click to send sms'
+                                                    class="md-icon material-icons">phonelink_ring</i></a>
+
+                                        {% endif %}
+                                     <a onclick="return MM_openBrWindow('https://apply.ttuportal.com/api/Data/{{ record.applicationnumber }}', 'mark', 'width=800,height=500')"><i
+                                                title='Click to view applicant .. please allow popups on browser'
+                                                class="md-icon material-icons">&#xE8F4;</i></a>
+                                    </td>
+
+                                {% endif %}
+
 
                             </tr>
 
@@ -1296,9 +1437,9 @@
                     {% endif %}
                     {% for pg in data.paginator.page_range %}
                         {% if data.number == pg %}
-                            <li class="uk-active"><a href="?{% url_replace request 'page' pg  %}">{{ pg }}</a></li>
+                            <li class="uk-active"><a href="?{% url_replace request 'page' pg %}">{{ pg }}</a></li>
                         {% else %}
-                            <li><a href="?{% url_replace request 'page' pg  %}">{{ pg }}</a></li>
+                            <li><a href="?{% url_replace request 'page' pg %}">{{ pg }}</a></li>
 
 
                         {% endif %}
@@ -1328,11 +1469,11 @@
 
 {% block js %}
 
- <script>$(document).ready(function () {
-    $('select').select2({ dropdownAutoWidth: true });
+    <script>$(document).ready(function () {
+        $('select').select2({dropdownAutoWidth: true});
 
 
-        });</script>
+    });</script>
 
 
 {% endblock %}

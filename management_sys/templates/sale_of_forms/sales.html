@@ -408,6 +408,18 @@
 
 
                                     </option>
+                                 <option value="RBG"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'RBG' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >RBG
+
+
+                                    </option>
 
                                  <option value="PRUDENTIAL"
 
@@ -457,7 +469,19 @@
                                     >GCB
 
 
+
+
                                     </option>
+                                <option value="ECOBANK"
+
+                                            {% if 'sold' in request.GET and request.GET.sold == 'ECOBANK' %}
+
+                                            selected="selected"
+
+                                            {% endif %}
+
+                                    >ECOBANK
+                                </option>
 
                                 </select>
                             </div>
@@ -491,8 +515,8 @@
         </div>
     </div>
     <p></p>
-    <h3 class="heading_c uk-margin-bottom">Sales - Transactions  = {{ total}}</h3>
-
+   {% comment %} <h3 class="heading_c uk-margin-bottom">Sales - Transactions  = {{ total}}</h3>
+{% endcomment %}
 
 
 
@@ -520,6 +544,7 @@
                             <th>DATE SOLD</th>
                              <th>UNIT</th>
                             <th>SOLD BY</th>
+                            <th>REASONS</th>
                             <TH>ACTION</TH>
 
 
@@ -545,6 +570,12 @@
                                 <td>{{ record.date_sold | naturalday }}</td>
                                 <td>{{ record.belongs }}</td>
                                 <td>{{ record.sold_by.username }}</td>
+
+
+
+                                     <td>{{ record.reasons }}</td>
+
+
                                 <td>
 
                                     <input type="hidden" value="{{ record.id }}" id="ids" name="ids" class="ids"/>
@@ -560,6 +591,7 @@
 
 
                                 </td>
+
 
 
 

@@ -4,201 +4,212 @@
 {% load custom_tags %}
 
 {% load account_tags %}
-{% block style %}
-    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
 
-    <script src="{% static 'assets/js/jquery-ui.min.js' %}"></script>
-
-    <link rel="stylesheet" href="{% static 'assets/css/jquery-ui.css' %}" media="all">
-    <script type="text/javascript">
-        //Javascript
-        $(function () {
-            $("#q").autocomplete({
-                source: "{% url 'applicant_live_search' %}",
-                minLength: 3,
-                select: function (event, ui) {
-                    $('#q').val(ui.item.value);
-
-                }
-            });
-        });
-    </script>
-
-{% endblock %}
 
 {% block contents %}
 
 
-    <center><h3 class="heading_c uk-margin-bottom">Applicant Form settings</h3></center>
 
 
-    <div class="uk-width-xLarge-1-1">
+
+
+
+
+    <div class="uk-modal" id="new_task">
+        <div class="uk-modal-dialog uk-modal-dialog uk-modal-dialog-large">
+            <div class="uk-modal-header">
+                <h4 class="uk-modal-title">Create configuration settings</h4>
+            </div>
+
+
+            <form method="POST" class="createForms"
+                  data-validate="parsley">
+                {% csrf_token %}
+                <div class="uk-grid" data-uk-grid-margin="">
+
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Admissions Oficer's Name</label>
+                        <input type="text" class="md-input name" name="name" required="">
+                    </div>
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Orientation starts</label>
+                        <input type="text" class="md-input orient_starts" name="orient_starts" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Orientation ends</label>
+                        <input type="text" class="md-input orient_ends" name="orient_ends" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Reporting date</label>
+                        <input type="text" class="md-input reporting" name="reporting" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Deadline for payment of fees</label>
+                        <input type="text" class="md-input deadline" name="deadline" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Medicals Starts</label>
+                        <input type="text" class="md-input medicals_start" name="medicals_starts" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Medicals Ends</label>
+                        <input type="text" class="md-input medicals_end" name="medicals_ends" required=""
+                               data-uk-datepicker="{format:'YYYY-MM-DD'}">
+                    </div>
+
+
+                    <div class="uk-width-medium-3-10">
+                        <label for="product_search_price">Admission Year</label>
+
+                           <input type="text" class="md-input year" name="year" required="">
+
+                    </div>
+
+
+                </div>
+                <div class="uk-modal-footer uk-text-right">
+                    <button type="button" class="createForm md-btn md-btn-flat md-btn-flat-primary md-btn-wave"
+                            id="snippet_new_save">Save
+                    </button>
+                    <button type="button" class="md-btn md-btn-flat uk-modal-close md-btn-wave">Close</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <h3 class="heading_c uk-margin-bottom">Systems Settings</h3>
+
+    <div class="md-card uk-margin-medium-bottom">
+        <div class="md-card-content">
+            <div class="uk-overflow-container">
+                <table class="uk-table uk-table-hover uk-table-condensed uk-table-align-vertical uk-table-nowrap tablesorter tablesorter-altair"
+                       id="ts_pager_filter">
+                    <thead>
+                    <tr>
+                        <th class="uk-width-1-10">Admissions Officer</th>
+                        <th class="uk-width-2-10">Reporting date</th>
+                        <th class="uk-width-2-10">Deadline for fees</th>
+                        <th class="uk-width-2-10">Medicals Starts</th>
+                        <th class="uk-width-2-10">Medicals Ends</th>
+                        <th class="uk-width-1-10">Orientation starts</th>
+                        <th class="uk-width-2-10">Orientation ends</th>
+                        <th class="uk-width-2-10">Academic year</th>
+                        <th class="uk-width-2-10">Application Starts</th>
+                        <th class="uk-width-2-10">Admission Starts</th>
+                        <th class="uk-width-2-10">Created by</th>
+                        <th class="uk-width-2-10">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for row in data %}
+
+                        <tr>
+
+                            <td name="name" class="name">{{ row.officer|upper }}</td>
+                            <td class="reporting">{{ row.reporting |date:"d-m-Y" }}</td>
+                            <td class="deadline">{{ row.fees_deadline |date:"d-m-Y" }}</td>
+                            <td class="medicals_start">{{ row.medical_examinations_starts |date:"d-m-Y" }}</td>
+                            <td class="medicals_end">{{ row.medical_examinations_ends |date:"d-m-Y" }}</td>
+                            <td class="orient_starts">{{ row.orientation_starts|date:"d-m-Y" }}</td>
+                            <td class="orient_ends">{{ row.orientation_ends |date:"d-m-Y" }}</td>
+                            <td class="year">{{  row.working_year }}</td>
+
+                            <td class="year">
+                                 {% now "Y" as todays_date %}
+                                {% if row.working_year|slice:"0:4" ==  todays_date  %}
+
+                                <input type="checkbox" data-switchery value="1"
+                                        {% if row.running == "1" %}
+                                       checked
+                                       {% endif %}
+
+                                       class="application"   id="settings_site_online" name="system_online" />
+
+                                {% else %}
+                                <input type="checkbox" disabled data-switchery  checked id="settings_site_online" name="system_online" />
+
+                               {% endif %}
+                            <span class="uk-text-muted uk-text-small">Open system for applicants to apply;</span>
+                            </td>
+                           <td class="year">
+                            {% now "Y" as todays_date %}
+                                {% if row.working_year|slice:"0:4" ==  todays_date  %}
+
+                                <input type="checkbox" value="1" data-switchery class="admitss"
+                                       {% if row.start_admit == True %}
+                                       checked
+                                       {% endif %}
+                                       id="settings_site_online" name="system_online" />
+
+                            {% else %}
+                                <input type="checkbox" disabled data-switchery  checked id="settings_site_online" name="system_online" />
+
+                               {% endif %}
+                            <span class="uk-text-muted uk-text-small">Start admitting applicants;</span>
+                            </td>
+                            <td>{{ row.created_by.username|capfirst }}</td>
+
+
+                            <input type="hidden" value="{{ row.id }}" id="id" name="id" class="id"/>
+
+                            <td class="uk-text-center">
+                             {% now "Y" as todays_date %}
+                                {% if row.working_year|slice:"0:4" ==  todays_date  %}
+                                <a class="deletes" id="delete" href="#"><i title="delete current year" class="md-icon material-icons">&#xE872;</i></a>
+                                {% else%}
+                                    <span>cannot delete</span>
+                                {% endif %}
+                            </td>
+
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="md-fab-wrapper">
+        <a class="md-fab md-fab-small md-fab-accent md-fab-wave" href="#new_task" data-uk-modal="{ center:true }">
+            <i class="material-icons md-18">&#xE145;</i>
+        </a>
+    </div>
+
+     <div class="uk-grid" data-uk-grid-margin data-uk-grid-match="{target:'.md-card-content'}">
+    <div class="uk-width-medium-1-1">
         <div class="md-card">
             <div class="md-card-content">
+                <div class="uk-overflow-container">
+                    <table class="uk-table">
+                        <thead>
+                            <tr>
+                                <th class="uk-text-nowrap">Program</th>
+                                <th class="uk-text-nowrap">First Choice</th>
+                                <th class="uk-text-nowrap">Second Choice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                <h4 class="heading_a uk-margin-bottom">Main Settings (Edit Mode) </h4>
-                <form method="POST" action="" accept-charset="UTF-8" class="uk-form-stacked" enctype="multipart/form-data"><input name="_method" type="hidden" value="PATCH"><input name="_token" type="hidden" value="bXXkWfdh6CABJuS62SW4cIundemsNGzKBo6gL7g6">
-
-
-    <div class="uk-grid" data-uk-grid-margin>
-        <div class="uk-width-large-1-3 uk-width-medium-1-1">
-            <div class="md-card">
-                <div class="md-card-content">
-                    <div class="uk-form-row">
-                        <label for="school_name">School Name : </label>
-                        <input class="md-input" required="required" name="school_name" type="text" value="TTU" id="school_name">
-                    </div>
-                    <div class="uk-form-row">
-                        <div class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-1" data-uk-grid-margin>
-                            <div>
-                              <label for="abbreviation">Acronym(Abbreviation) : </label>
-                              <input class="md-input" required="required" name="abbreviation" type="text" value="TTU" id="abbreviation">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="uk-form-row">
-                      <div class="" style="border-bottom: 1px solid;">
-                        <label for="schoolLogo">School Logo(less than 400KB)</label>
-                        <input type="file" id="schoolLogo" name="school_logo" value="">
-                      </div>
-
-                    </div>
-                    <div class="uk-form-row">
-                        <label for="registrar_address">Registrar&#039;s Address : </label>
-                        <textarea class="md-input" required="required" rows="4" cols="30" name="registrar_address" id="registrar_address">The Registrar
-University of Health and Allied Sciences,Ho
-PMB 31, Ho</textarea>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="uk-width-large-1-3 uk-width-medium-1-2">
-          <div class="md-card">
-            <div class="md-card-content" style="height: 350px; ">
-              <div class="uk-form-row">
-                                <label for="form_types">Form Types : </label>
-               <select class="formTypesEle" multiple="" style="width :100%" name="form_types[]"></select>
-              </div>
-              <div class="uk-form-row">
-                  <div class="uk-grid uk-grid-width-1-1 uk-grid-width-medium-1-1" data-uk-grid-margin>
-                      <div>
-                        <label for="admission_year">Admission Year : </label>
-                        <select class="form-control" required="required" data-md-selectize="data-md-selectize" id="admission_year" name="admission_year"><option value="2018/2019" selected="selected">2018/2019</option><option value="2019/2020">2019/2020</option><option value="2020/2021">2020/2021</option></select>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="uk-width-large-1-3 uk-width-medium-1-2">
-          <div class="md-card">
-            <div class="md-card-content" style="height: 300px;">
-              <div class="uk-form-row">
-                <ul class="md-list">
-                    <li>
-                        <div class="md-list-content">
-                            <div class="uk-float-right">
-                                <input type="checkbox" data-switchery  checked id="settings_site_online" name="system_online" />
-                            </div>
-                            <span class="md-list-heading">System Online</span>
-                            <span class="uk-text-muted uk-text-small">Ready for use or not&hellip;</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="md-list-content">
-                            <div class="uk-float-right">
-                                <input type="checkbox" data-switchery  checked id="" name="setup_status"  />
-                            </div>
-                            <span class="md-list-heading">Setup Complete</span>
-                            <span class="uk-text-muted uk-text-small">Select if you have made all the necessary entries for the Admission system to work&hellip;</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="md-list-content">
-                            <div class="uk-float-right">
-                                <input type="checkbox" data-switchery  checked id="" name="awaiting_resume"  />
-                            </div>
-                            <span class="md-list-heading">Awaiting Result Resume</span>
-                            <span class="uk-text-muted uk-text-small">Select if you want to allow <em>WASSCE AWAITING RESULT</em> applicants to resume filling the forms&hellip;</span>
-                        </div>
-                    </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
     </div>
-    <div class="uk-grid" data-uk-grid-margin>
-       <div class="uk-width-large-1-2 uk-width-medium-1-2">
-           <div class="md-card">
-               <div class="md-card-content" style="background: #1976d2;">
-                   <div class="uk-form-row" >
-                   <p style="color: #fff;" >Dashboard Message (Local Applicants)</p>
-                   </div>
-                </div>
-              </div>
-          </div>
-          <div class="uk-width-large-1-2 uk-width-medium-1-2">
-              <div class="md-card">
-                  <div class="md-card-content" style="background: #1976d2;">
-                    <p style="color: #fff;" >Dashboard Message (Foreign Applicants)</p>
-                  </div>
-              </div>
-          </div>
-    </div>
-    <div class="uk-grid" data-uk-grid-margin>
-      <div class="uk-width-1-2">
-
-        <textarea id="local" name="dashboard_local" cols="30" rows="20">&lt;p&gt;&nbsp;DOMESTIC (GHANAIAN) APPLICANTS&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&nbsp;&lt;strong&gt;Fee Paying Applicants:&lt;/strong&gt; Those who wish to be considered for &lt;strong&gt;FEE PAYING&lt;/strong&gt; in case they are unable to make the cut-off point(s) should tick the column provided on the online application form for &lt;strong&gt;FEE PAYING.&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;In completing the online form, applicants will be required to upload their passport size photograph &lt;strong&gt;(not more than 400KB)&lt;/strong&gt; with a white background.&lt;/li&gt;&lt;li&gt;Applicants are advised to check thoroughly all details entered before they finally submit their online applications.&nbsp;A form, once submitted &lt;strong&gt;cannot be edited.&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;&nbsp;&lt;strong&gt;Awaiting Result:&lt;/strong&gt;&nbsp;Those awaiting their results may apply (Only those who started the application process before the &lt;strong&gt;CLOSING DATE&lt;/strong&gt; will be allowed to complete the process after results are released by WAEC).&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Awaiting results:&lt;/strong&gt; Those awaiting results&nbsp;can start the application process but cannot complete the Application Process and therefore &lt;strong&gt;CANNOT SUBMIT&lt;/strong&gt;. They also cannot&nbsp;&lt;strong&gt;PRINT&lt;/strong&gt;. They should&nbsp;&lt;strong&gt;LOG OUT&nbsp;at Step 2&lt;/strong&gt; on the application platform&nbsp;and return to input their grades when their results are ready&lt;/li&gt;&lt;li&gt;After filling the online form, submit and &nbsp;&lt;strong&gt;PRINT&lt;/strong&gt; three copies of the &lt;strong&gt;APPLICATION SUMMARY&lt;/strong&gt;. &nbsp;Please note that you must &lt;strong&gt;SUBMIT&lt;/strong&gt;&nbsp;before &lt;strong&gt;PRINTING&lt;/strong&gt; the application&nbsp;summary.&lt;/li&gt;&lt;li&gt;Upon completion of the application process, print out &lt;strong&gt;3 copies&lt;/strong&gt; of the summary; WASSCE/SSSCE applicants should attach 3 copies of each result slip; Access Course and Top-Up applicants should attach 3 copies each of their professional&nbsp;certificate(s) or transcript(s) or both.&lt;/li&gt;&lt;li&gt;Applicants should purchase &lt;strong&gt;UHAS EMS&lt;/strong&gt; envelopes (one big size envelope and one quarto size self-address envelope) from the nearest Ghana Post office.&lt;/li&gt;&lt;li&gt;The application documents as specified at &lt;strong&gt;(VII)&lt;/strong&gt; above in addition to the quarto size self-address envelope, should be put in the big UHAS EMS envelope and be submitted at the nearest Ghana Post office.&lt;/li&gt;&lt;li&gt;All application document(s) should be submitted via &lt;strong&gt;Ghana Post&lt;/strong&gt;. The University will not accept any application document DIRECTLY from applicants.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&nbsp;&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enquires may be addressed to:&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;strong&gt; The Registrar&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; University of Health and Allied Sciences,Ho&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PMB 31, Ho&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mobile: +233245125359 /&nbsp;+233505310747&lt;/strong&gt;&lt;/p&gt;</textarea>
-      </div>
-      <div class="uk-width-1-2">
-
-        <textarea id="foreign" name="dashboard_foreign" cols="30" rows="20">&lt;p&gt;Foreign Applicants&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Foreign applicants who have the qualifications listed under&lt;strong&gt;&nbsp;ENTRY REQUIREMENT&lt;/strong&gt;&nbsp;or their equivalent from an accredited/recognized institution can apply as follows&lt;/li&gt;&lt;li&gt;Make payment of a non - refundable fee of&nbsp;$130.00 (One Hundred and Thirty US Dollars)&nbsp;&nbsp;at any&nbsp;Ecobank Branch&nbsp;in your country:&lt;/li&gt;&lt;li&gt;International Applicants should note that by the laws of Ghana, they are expected to obtain&nbsp;Non-Citizen Ghanacard&nbsp;before they can be enrolled for courses offered at the University. International Applicants should therefore contact the&nbsp;Academic Affairs Unit&nbsp;for assistance on how to obtain a&nbsp;Ghanacard.&lt;/li&gt;&lt;li&gt;Access the online form by visiting our online admission portal at&nbsp;uhasonline.com/Admissions&nbsp;and click on &quot;Click to apply as a Foreign Student&quot;. Please complete the form below the page to start your online admission process&lt;/li&gt;&lt;li&gt;An activation code will be sent to your mobile number and email address.&lt;/li&gt;&lt;li&gt;Go back to&nbsp;Form Type at uhasonline.com/admissions&nbsp; and select&nbsp;Foreign Student. Use the activation code to access the application form.&lt;/li&gt;&lt;li&gt;&nbsp;Applicants will be required to upload their passport size photograph&nbsp;(&lt;strong&gt;not more than 400 KB&lt;/strong&gt;)&nbsp;with a white background.&lt;/li&gt;&lt;li&gt;After filling the online form, submit online. Then print out the application summary, scan the application summary, your pay-in slip and certificates/results slips into one PDF or WORD document and send as an&nbsp;attachment&nbsp;to&nbsp;info@uhas.edu.gh.&lt;/li&gt;&lt;li&gt;Applicants should note that no application will be processed without proof of payment of the application fee.&lt;/li&gt;&lt;li&gt;Upon completion of the application process, print out 3 copies of the application summary; WASSCE/SSSCE or equivalent applicants should attach 3 copies of each result slip;&nbsp;Access Course and&nbsp;Top-Up applicants should attach 3 copies each of their professional certificate(s) and transcript(s).&lt;/li&gt;&lt;li&gt;The application documents as specified (VIII) above should be put in ONE envelope and be posted by any fast and reliable means to&lt;/li&gt;&lt;/ul&gt;</textarea>
-      </div>
-
-    </div>
-    <div class="uk-grid" data-uk-grid-margin>
-       <div class="uk-width-large-1-1 uk-width-medium-1-1">
-           <div class="md-card">
-               <div class="md-card-content" style="background: #1976d2;">
-                   <div class="uk-form-row" >
-                   <p style="color: #fff;" >Dashboard Message (Post Graduate Applicants)</p>
-                   </div>
-                </div>
-              </div>
-          </div>
-    </div>
-    <div class="uk-grid" data-uk-grid-margin>
-      <div class="uk-width-1-1">
-
-        <textarea id="postgrad" name="dashboard_postgrad" cols="30" rows="20">&lt;p&gt;DOMESTIC (GHANAIAN) APPLICANTS&lt;/p&gt;&lt;ul&gt;&lt;li&gt;MPhil Applicants for&nbsp; Medical Imaging&nbsp;must hold a first degree (at least 2nd class lower or 2.2 GPA&nbsp; in&nbsp; Medical Imaging &quot;Diagnostic/therapy Radiography&quot;, Nuclear Medicine or related MI area from a recongnised University.&nbsp;&lt;/li&gt;&lt;li&gt;In addition Applicant must have at least &lt;strong&gt;two years&nbsp;&lt;/strong&gt;work experience as a diagnostic or therapy radiographer, mammographer, sonographer or other related MI specialities. &lt;strong&gt;Two reference statement/letters from professional and /or academic referees.&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;Applicant must pass an admission interview.&lt;/li&gt;&lt;li&gt;PHD Applicants for Medical Imaging must hold MPhil or MSc in&nbsp;Medical Imaging, therapy radiography, Nuclear Medicine or related MI area from a recongnised University.&lt;/li&gt;&lt;li&gt;In addition Applicant must have at least &lt;strong&gt;three&nbsp;years&nbsp;&lt;/strong&gt;work experience as a diagnostic or therapy radiographer, mammographer, sonographer or other related MI specialities. &lt;strong&gt;Two reference statement/letters from professional and /or academic referees.&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;Applicant must pass an admission interview.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Research proposal (not more than 700 words), Statement of purpose (not more than 500 words).&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;All documents must be sent to the Dean through &lt;em&gt;&lt;u&gt;deansahs@uhas.edu.gh&lt;/u&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&nbsp;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;In completing the online form, applicants will be required to upload their passport size photograph (&lt;strong&gt;not more than 400KB&lt;/strong&gt;) with a white background, Transcripts, Curriculumn Vitae, Undergraduate Certificate(s) and any other relevant Document(s) that may be reqiured.&lt;/li&gt;&lt;li&gt;Applicants are advised to check thoroughly all details entered before they finally submit their online applications.&nbsp;A form, once submitted cannot be edited.&lt;/li&gt;&lt;li&gt;After filling the online form, submit and &nbsp;PRINT three copies of the &lt;strong&gt;APPLICATION SUMMARY&lt;/strong&gt;. &nbsp;Please note that you must &lt;strong&gt;SUBMIT&lt;/strong&gt;&nbsp;before &lt;strong&gt;PRINTING&lt;/strong&gt; the application&nbsp;summary.&lt;/li&gt;&lt;li&gt;Upon completion of the application process, print out &lt;strong&gt;3 copies&lt;/strong&gt; of the summary; Applicants should attach 3 copies of each result slip;3 copies each of their&nbsp;certificate(s)&nbsp;and &nbsp;transcript(s).&lt;/li&gt;&lt;li&gt;Applicants should purchase UHAS EMS envelopes (one big size envelope and one quarto size self-address envelope) from the nearest Ghana Post office.&lt;/li&gt;&lt;li&gt;The application documents as specified at (VII) above in addition to the quarto size self-address envelope, should be put in the big &lt;strong&gt;UHAS EMS&lt;/strong&gt; envelope and be submitted at the nearest Ghana Post office.&lt;/li&gt;&lt;li&gt;All application document(s) should be submitted via Ghana Post. The University will not accept any application document &lt;strong&gt;DIRECTLY&lt;/strong&gt; from applicants.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&nbsp;&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Enquires may be addressed to:&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Registrar&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; University of Health and Allied Sciences,Ho&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PMB 31, Ho&lt;br /&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mobile: +233245125359 /&nbsp;+233505310747&lt;/p&gt;</textarea>
-      </div>
-
-    </div>
-
-                    <div class="uk-grid" data-uk-grid-margin>
-                        <textarea id="wysiwyg_tinymce" cols="30" rows="20"><img alt="" src="assets/img/gallery/Image01.jpg" style="float:left; height:173px; margin-right:16px; margin-bottom: 16px; width:260px" />
-<h1>Header</h1>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet consequuntur deleniti ducimus, eos fugit, mollitia neque praesentium quia quisquam quos sapiente voluptatem voluptatibus voluptatum. Assumenda consectetur deleniti doloremque fuga harum illum molestiae nisi possimus quidem vero. A accusantium alias aliquam animi cum doloremque eos est facilis illo, illum inventore ipsam itaque laboriosam maiores modi mollitia necessitatibus nemo non omnis perferendis quam quia, repellendus rerum vel veritatis voluptas voluptate? Aliquid asperiores at atque autem beatae consequatur culpa delectus eaque earum error et fugiat incidunt laborum libero molestias natus nobis odit optio, perspiciatis possimus quas saepe sapiente sed sint sit temporibus vel voluptatem. Adipisci alias assumenda dolorum eligendi enim, facilis ipsum iusto perferendis quod ratione repellat reprehenderit suscipit voluptatem. Cumque debitis eum facere facilis fugiat quo repellat sed veniam voluptas voluptate? Adipisci aliquid asperiores culpa laboriosam sint unde velit veritatis vero, voluptatibus? Accusantium aperiam aspernatur assumenda at consectetur consequuntur cupiditate dicta ducimus earum ex exercitationem explicabo fugit id illo inventore iste magnam minima molestiae mollitia nam nihil nobis officiis omnis perspiciatis porro praesentium provident quibusdam quidem quo ratione reiciendis sed sunt tempora tempore ullam, ut veritatis! Ab, aliquid asperiores cum et impedit, labore obcaecati perferendis quae, quas recusandae sint suscipit vitae voluptatem.
-            </textarea>
-                    </div>
-
-    <div class="md-fab-wrapper">
-        <button type="submit" class="md-fab md-fab-success" data-uk-tooltip title="Click to Update" href="#" id="">
-            <i class="material-icons">&#xE161;</i>
-        </button>
-    </div>
-
-<input type="hidden" name="id" value="1">
-</form>
-
-
-
-            </div>
-        </div>
-    </div>
-    </div>
+     </div>
 
 
 

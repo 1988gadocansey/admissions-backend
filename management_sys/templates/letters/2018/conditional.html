@@ -1,46 +1,148 @@
 {% extends "printLayout.html" %}
 {% load static %}
 {% load humanize %}
+{% load custom_tags %}
 
 {% load account_tags %}
 {% block style %}
     <link rel="stylesheet" type="text/css" href="{% static 'libs/sweetalert/sweetalert.min.css' %}"> <!-- original -->
 
-    <style type="text/css">
-
-        html, body, #page3,  #page1, #page2 { float: none;  background: none;font-size:16px}
-
-
-        fieldset {
-            background: none;
+     <style>
+@font-face {
+            font-family: Avenir;
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/l/font?kit=ijwUs5PnXdA4ZZUA6Zd-m2FJXA&skey=8887f17a62203d44&v=v4) format('woff2');
         }
-        .uppercase {
-            font-weight: bold;
+body {
+                height: auto;
+                  size: A4 portrait;
+            font-family: Arial, sans-serif;
+            font-family: 'Avenir', cursive;
+            font-size: 14px;
+            }
+</style>
+   <style type="text/css" media="print">
+@font-face {
+            font-family: Avenir;
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/l/font?kit=ijwUs5PnXdA4ZZUA6Zd-m2FJXA&skey=8887f17a62203d44&v=v4) format('woff2');
+        }
+        #print{
+            text-align:right;
+        }
+        .capitalize {
+            text-transform: capitalize;
+        }
+
+        .ui.table td .uppercase {
+
             text-align: right;
+            text-transform: uppercase;
         }
-        @media print
-        {
-            table {float: none !important; }
-            div { float: none !important; }
-            #page1  { page-break-inside: avoid; page-break-before: always; }
-            #page2  { page-break-inside: avoid; page-break-before: always; }
-            #page3  { page-break-inside: avoid; page-break-before: always; }
+
+        @media print {
+            body {
+                height: auto;
+                  size: A4 portrait;
+            font-family: Arial, sans-serif;
+            font-family: 'Avenir', cursive;
+            font-size: 14px;
+            }
+            img {
+                -webkit-print-color-adjust: exact;
+            }
+            #print {
+                text-align: right;
+            }
+
+            .capitalize {
+                text-transform: capitalize;
+            }
+
+            .ui.table td .uppercase {
+                font-weight: bold;
+                text-align: right;
+                text-transform: uppercase;
+            }
+            table {
+                float: none !important;
+            }
+
+            * {
+                overflow: visible !important;
+            }
+
+            div {
+                float: none !important;
+            }
+
+            #page1 {
+                page-break-inside: avoid;
+                page-break-after: always;
+            }
+
+            #page2 {
+                page-break-inside: avoid;
+                page-break-after: always;
+
+            }
+
+            #page3 {
+                page-break-inside: avoid;
+                page-break-before: always;
+            }
+
+            #page4 {
+                page-break-inside: avoid;
+                page-break-before: always;
+            }
+
+            .clear {
+                clear: both;
+            }
+            /* clear here */
+            table {
+                page-break-inside: auto;
+                border-collapse: collapse
+            }
+
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto
+            }
+
+            thead {
+                display: table-header-group
+            }
+
+            tfoot {
+                display: table-footer-group
+            }
+
+
+
         }
 
         @page {
             size: A4;
+
         }
 
         table, figure {
             page-break-inside: avoid;
         }
+
         fieldset legend {
             page-break-before: always;
         }
+
         h1, h2, h3, h4, h5 {
             page-break-after: avoid;
         }
-        table{
+
+        table {
             background: none;
         }
     </style>
@@ -52,7 +154,7 @@
     <a onclick="javascript:printDiv('print')" class="btn btn-outline-info ks-light">Click to print letter</a>
     <div id="print">
 
-        <div id="page1">
+    <div id="page1">
         <img src="{% static 'assets/img/header.jpg' %}" style="width:1086px;height: auto"
              class="ui fluid image"/>
 
@@ -60,46 +162,69 @@
         <br/>
         <div class="content" id="regular">
             <div class="watermark">
-                <div id="photo" style="margin-left: 970px">
+               <div id="photo" style="margin-left: 600px;margin-top: -17px">
                     <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
                     <img class=''
-                          src="http://45.33.4.164/admissions_portal/public/albums/thumbnails/{{ applicant.application_number }}.jpg"
+                         src="http://photos.ttuportal.com/public/albums/thumbnails/{{ applicant.applicationnumber }}.jpg"
 
                          style="width:106px;height: auto ">
                 </div>
-
-
                 <div style="margin-left: 0px">
                     <p style="text-transform: capitalize">Dear <span
-                            style=""> {{ applicant.title | capfirst }}. {{ applicant.name |capfirst }}</span></p>
+                            style="text-transform: capitalize"> {{ applicant.title | capfirst }}. {{ applicant.lastname |lower }} {{ applicant.firstname |capfirst }}
+
+
+                        {% if applicant.middlename != None %}
+                        {{ applicant.middlename |lower }}
+                        {% endif %}
+
+                    </span></p>
                 </div>
 
                 <div style="margin-left: 2px;text-align: justify">
 
                     <center><b>OFFER OF ADMISSION
-                        - {{ applicant.programme_admitted.department.faculty_id.faculty_name | upper }} (Conditional Admission) - ADMISSION
-                        N<u>O </u>: {{ applicant.application_number }} </b></center>
+                        - {{ applicant.programmeadmittedid.department.faculty_id.faculty_name | upper }}
+                          {% if applicant.nationalityid.id  == 239 %}
+
+
+                              ({{ applicant.sectionadmitted|upper }})
+
+                             {% else %}
+                             (INTERNATIONAL STUDENT)
+                            {% endif %}
+                        - ADMISSION
+
+                        N<u>O </u>: {{ applicant.applicationnumber }} </b></center>
                     <hr>
                     <div id="letter">
                         <p>We write on behalf of the Academic Board to offer you admission to Takoradi Technical
                             University to pursue a programme of study leading
-                            to the award of Higher National Diploma in  ({{ applicant.programme_admitted.name }}).
+                            to the award of
+                            {% if applicant.programmeadmittedid.type == 'HND' %}
+                                Higher National Diploma
+                            {% elif applicant.programmeadmittedid.type == 'BTECH' %}
 
-                                The duration of the programme is {{ applicant.programme_admitted.duration}} academic years.</p>
 
-                          <p><i>
+                             {% elif applicant.programmeadmittedid.type == 'MTECH' %}
+
+
+                            {% endif %}
+
+                            ({{ applicant.programmeadmittedid.name }}).
+                            The
+                            duration of the programme is {{ applicant.programmeadmittedid.duration }} academic years.</p>
+
+                         <p><i>
                                         <b><i> Note: Your admission is conditional. Per the new requirements you are supposed to have a minimum of D7 in six subjects with at least C6 in three relevant subjects in the area of specialization. You are therefore required to rewrite to make good the deficiencies within a period of one academic year. <br/>Your eligibility to continue with the HND programme would be based on the outcome of the SSCE/WASSCE result. You would be required to present your new results in writing to the DEPUTY REGISTRAR Academic affairs</i></b>
 
                                     </i></p>
+                       <p>All payment of fees should be done with your admission number above.</p>
 
 
-                        <p>1. Your admission is for <b>the 2018/2019 Academic Year.</b> If you fail to enroll, or if
 
-                            you withdraw from the programme without prior approval from the University,
-                            you shall forfeit the admission automatically.
-                        </p>
-                            {% if applicant.programme_admitted.department.faculty_id.faculty_name == 'FACULTY OF ENGINEERING' %}
-                           <p>Note: Engineering students are to pay for the underlisted equipments at a cost of GHC300.</p>
+                        {% if applicant.programmeadmittedid.department.faculty_id.faculty_name == 'FACULTY OF ENGINEERING' %}
+                            <p>Note: Engineering students are to pay for the underlisted equipments at a cost of GHC300.</p>
                             <p>
                             <ul>
                                 <li> Overall with reflectors - GHC85</li>
@@ -115,32 +240,57 @@
                             </p>
 
                         {% endif %}
-                          <p>2. <b>The 2018/2019 Academic Year</b> is scheduled to begin on Monday 20th August,
+
+                        <p>1. Your admission is for <b>the 2018/2019 Academic Year.</b> If you fail to enroll, or if
+
+                            you withdraw from the programme without prior approval from the University,
+                            you shall forfeit the admission automatically.
+                        </p>
+                        <p>2. <b>The 2018/2019 Academic Year</b> is scheduled to begin on Monday 20th August,
                             2018.
                             You are therefore expected to report for medical examinations and registration from
                             <b>Monday 20th August, 2018</b> to <b>Friday 31st August, 2018.</b>
                             You are also mandated to participate in an orientation programme which shall run from
 
-                            <b>Monday 3rd September, 2018</b> to <b>Friday 7th September, 2018.</b>
+                            <b>3rd September,2018</b> to <b>7th September,2018.</b>
                         </p>
                         <p>3.
-                            You are required to make a <b>PAYMENT</b> of GH¢{{ applicant.admission_fees }} at any
+                            You are required to make a <b>PAYMENT</b> of <b>
+                                {% if applicant.nationalityid.name == 'Ghana' %}
+                                       GHS{% getFees applicant.programmeadmittedid.code applicant.leveladmitted applicant.yearofadmission %}
+
+
+
+
+                            {% else %}
+
+                                     USD1750.00
+                            {% endif %}
+                            </b>
+
+                            at any
                             branch of
-                            {% if   applicant.programme_admitted.section == 'Evening' %}
-                                <!-- Ecobank into Account  Number 0189104488868901 -->
+                            {% if   applicant.programmeadmittedid.section == 'Evening' %}
+                              <!--  Ecobank into Account  Number 0189104488868901 -->
                                  Calbank Bank into Account  Number 1400001216327
-                            {% elif applicant.programme_admitted.type == 'NON TERTIARY' %}
+                            {% elif applicant.programmeadmittedid.type == 'NON TERTIARY' %}
 
                                 UBA into Account  Number 00511448001580
+                             {% elif applicant.programmeadmittedid.type == 'BTECH' %}
+
+                               Calbank Bank into Account  Number 1400001216327
+                            {% elif applicant.nationalityid != 58 %}
+
+                                Zenith Bank into Account 6010406900
                             {% else %}
-                            <b>{{ applicant.programme_admitted.department.faculty_id.bank_id.bank_name }}</b> into Account
-                            Number <b>{{ applicant.programme_admitted.department.faculty_id.bank_id.bank_account_number }}
+                            <b>{{ applicant.programmeadmittedid.department.faculty_id.bank_id.bank_name }}</b> into Account
+                            Number <b>{{ applicant.programmeadmittedid.department.faculty_id.bank_id.bank_account_number }}
                             {% endif %}
 
-                            with this admission number <b>{{ applicant.application_number }}</b>
+                              with this admission number <b>{{ applicant.applicationnumber }}</b>
                             . If you do not indicate acceptance of
                             this
-                            admission by paying the fees before <b>  30th September, 2018</b> your admission will
+                            admission by paying the fees before <b>  30th September, 2018,</b> your admission will
 
                             be offered to another applicant on the waiting list. You are to make a photocopy of the
 
@@ -196,19 +346,19 @@
                             medical care whilst on campus.
                         </p>
 
-                        {% if applicant.hall_accomodation == 1 %}
-                             <p>10.
-                                You have been given Hall Accommodation at {{ applicant.hall_admitted.hall_name }} You
+                        {% if applicant.hallaccomodation == True %}
+                            <p>10.
+                                You have been given Hall Accommodation at {{ applicant.halladmitted.hall_name }} You
                                 will be required to
-                                make a payment of {{ applicant.hall_admitted.hall_fees}} into any branch of {{applicant.hall_admitted.hall_bank.bank_name}} with Account Number
-                                 {{ applicant.hall_admitted.hall_bank.bank_account_number }}. You shall report to your assigned hall of residence with the original copy
+                                make a payment of <b>{{ applicant.halladmitted.hall_fees}}</b> into any branch of <b>{{applicant.hall_admitted.hall_bank.bank_name}}</b> with Account Number
+                                <b> {{ applicant.hall_admitted.hall_bank.bank_account_number }}</b>. You shall report to your assigned hall of residence with the original copy
                                 of the pay-in-slip. Note that hall fees paid are not refundable.
                             </p>
                             <p>11.
-                            Any applicant who falsifies result(s) shall be withdrawn from the University
-                            and shall forfeit his/her fees paid.
-                        </p>
-                          {% else %}
+                                Any applicant who falsifies result(s) shall be withdrawn from the University
+                                and shall forfeit his/her fees paid.
+                            </p>
+                        {% else %}
                              <p>11.
                             Any applicant who falsifies result(s) shall be withdrawn from the University
                             and shall forfeit his/her fees paid.
@@ -223,7 +373,7 @@
 
                         </p>
                         <p>Yours faithfully</p>
-                        <p><img src="{% static 'assets/img/signature_2018.png' %}" style="width:90px;height:auto;"/></p>
+                        <p><img src="https://ttuportal.com/static/assets/img/signature_2018.png" style="width:90px;height:auto;"/></p>
                         <p>SNR. ASSISTANT REGISTRAR(ADMISSIONS)<br/>For: REGISTRAR</p>
 
                     </div>
@@ -231,7 +381,7 @@
 
                 </div>
                 <div id="foot">
-                    <img src="{% static 'assets/img/footer.jpg' %}" style="width:1086px;height: auto"
+                    <img src="https://ttuportal.com/static/assets/footer.jpg" style="width:1086px;height: auto"
                          class="image-responsive responsive"/>
 
                 </div>
@@ -239,11 +389,12 @@
             </div>
         </div>
         </div>
+    </div>
 
-</div>
 {% endblock %}
 {% block js %}
 
 
 
 {% endblock %}
+

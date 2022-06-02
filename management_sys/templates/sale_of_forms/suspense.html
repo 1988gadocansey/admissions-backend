@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+
+
+
+    <h6 class="heading_b uk-margin-bottom">Issue new voucher. SMS of new code will be sent to Customer phone.</h6>
+    <div class="uk-width-xLarge-1-10">
+        <div class="md-card">
+            <div class="md-card-content" style="">
+
+
+                <form method="POST" accept-charset="utf-8" name="updateForm" v-form>
+                    {% csrf_token %}
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <div class="uk-width-medium-2-10" style="margin-top: 16px">
+
+
+                            <select required="required" class="md-input type select" v-model="type" v-form-ctrl=""
+                                    v-select="type" name="type">
+                                <option value="">Select form</option>
+
+                                <option value="HND">HND</option>
+
+                                <option value="HND">BRIDGING</option>
+                                <option value="MATURE">MATURE</option>
+                                <option>DIPLOMA</option>
+                                 <option>BTECH</option>
+                                 <option value="ACCELERATED">ACCELERATED BTECH</option>
+                                 <option value="TOPUP">ACCELERATED TOPUP</option>
+                                 <option>OUTREACH</option>
+
+                                <option>MTECH</option>
+
+
+                            </select>
+                            <p class=" uk-text-danger uk-text-small" v-if="updateForm.type.$error.required">Please
+                                select form type</p>
+
+                        </div>
+                        <div class="uk-width-medium-2-10" style="margin-top: 16px">
+
+
+                            <select required="required" class="md-input type select" v-model="vendor" v-form-ctrl=""
+                                    v-select="vendor" name="vendor">
+                                <option value="">Sold By</option>
+
+                                <option value="TTU">TTU</option>
+
+                                <option value="GCB">GCB</option>
+                                <option value="POST">Post Office</option>
+                                <option>ZENITH</option>
+                                 <option>CALBANK</option>
+                                 <option value="ECOBANK">ECOBANK</option>
+                                 <option value="PRUDENTIAL">PRUDENTIAL</option>
+                                 <option>STANBIC</option>
+
+                                <option>UBA</option>
+                                <option>CBGH</option>
+                                <option>GTBANK</option>
+                                <option value="RBG">Republic Bank</option>
+
+
+                            </select>
+                            <p class=" uk-text-danger uk-text-small" v-if="updateForm.vendor.$error.required">Please
+                                select vendor</p>
+
+                        </div>
+
+                        <div class="uk-width-medium-2-10">
+                            <label for="product_search_price">Customer Name</label>
+                            <input type="text" class="md-input name" id="name" name="name" required="" v-model="name"
+                                   v-form-ctrl>
+                            <p class=" uk-text-danger uk-text-small" v-if="updateForm.name.$error.required">Please
+                                provide customer name</p>
+
+                        </div>
+                        <div class="uk-width-medium-2-10">
+                            <label for="product_search_price">Customer Phone</label>
+                            <input type="text" class="md-input name" name="phone" required="" v-model="phone"
+                                   v-form-ctrl data-parsley-type="digits" minlength="10" maxlength="10"
+                                   pattern='^[0-9]{10}$'>
+
+                            <p class="uk-text-danger uk-text-small" v-if="updateForm.phone.$invalid">Please enter a
+                                valid phone </p>
+
+
+                        </div>
+                         <div class="uk-width-medium-2-10">
+                            <label for="product_search_price">Reasons</label>
+                            <input type="text" class="md-input name" id="reasons" name="reasons" required="" v-model="reasons"
+                                   v-form-ctrl>
+                            <p class=" uk-text-danger uk-text-small" v-if="updateForm.reasons.$error.required">Please
+                                provide reasons for new voucher</p>
+
+                        </div>
+
+
+                        <div class="uk-width-medium-2-10" style="margin-top: 19px">
+
+                            <input v-show="updateForm.$valid" class="md-btn md-btn-primary uk-margin-small-top"
+                                   type="submit" name="suspense" value="Issue Voucher" v-on:click="suspense"/>
+
+                            <button type="reset" class="md-btn md-btn-flat">Cancel</button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}

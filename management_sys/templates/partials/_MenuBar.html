@@ -21,21 +21,38 @@
                     <span class="menu_title">Home</span>
                 </a>
             </li>
+           {% comment %}  <li title="Plugins">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
+                    <span class="menu_title">Applicants</span>
+                </a>
+                 <ul>
+                    <li><a href="{% url 'applicants_index' %}">View Applicants</a></li>
 
+{#                    <li><a href="#">Applicants Issues</a></li>#}
+
+                </ul>
+
+            </li>{% endcomment %}
              <li title="Plugins">
                 <a href="#">
                     <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
                     <span class="menu_title">Forms</span>
                 </a>
                 <ul>
-                    <li><a href="{% url 'sell' %}">Sell</a></li>
+                    <li><a href="{% url 'sell' %}">Sell Form</a></li>
 
+                    <li><a title="eg change frm hnd to btech ..." href="{% url 'changeForm' %}">Change Voucher</a></li>
+
+                    <li><a href="{% url 'suspense' %}">Re-issue voucher</a></li>
                     <li><a href="{% url 'sales' %}">View Sales</a></li>
 
-{#                    <li><a href="{% url 'recover_voucher' %}">Recover Lost Voucher</a></li>#}
+
                 </ul>
 
             </li>
+
+
 
             <li title="Click to Logout">
 
@@ -63,15 +80,7 @@
                     <span class="menu_title">Home</span>
                 </a>
             </li>
-
-             <li class='dash ' title="Letters">
-                    <a href="#">
-                        <span class="menu_icon"><i class="uk-icon-list-alt uk-icon-small"></i></span>
-                        <span class="menu_title">Letters</span>
-                    </a>
-                </li>
-
-
+        {% if request.user.groups.all.0.name == 'support' %}
             <li title="Forms">
                 <a href="#">
                     <span class="menu_icon"><i class="material-icons">person</i></span>
@@ -84,7 +93,43 @@
 
                 </ul>
             </li>
+    {% endif %}
+{% if request.user.groups.all.0.name == 'admin' or  request.user.groups.all.0.name == 'admission' %}
+             <li class='dash ' title="Letters">
+                    <a href="#">
+                        <span class="menu_icon"><i class="uk-icon-list-alt uk-icon-small"></i></span>
+                        <span class="menu_title">Letters</span>
+                    </a>
+                </li>
 
+{% if  request.user.groups.all.0.name == 'admin' or  request.user.groups.all.0.name == 'admission' %}
+            <li title="Forms">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">person</i></span>
+                    <span class="menu_title">Applicants</span>
+                </a>
+                <ul>
+                    <li><a href="{% url 'applicants_index' %}">View Applicants</a></li>
+
+{#                    <li><a href="#">Applicants Issues</a></li>#}
+
+                </ul>
+            </li>
+    {% endif %}
+{% if request.user.username == '751772'%}
+        <li title="Forms">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">person</i></span>
+                    <span class="menu_title">Outreach</span>
+                </a>
+                <ul>
+                    <li><a href="{% url 'outreach' %}">Generate Outreach</a></li>
+
+
+
+                </ul>
+            </li>
+{% endif %}
             <li class='' title="View Programs">
                     <a href="{% url 'programmes' %}"> <!-- &#xE158;-->
                         <span class="menu_icon"><i class="material-icons">view_list</i></span>
@@ -92,25 +137,38 @@
                     </a>
                 </li>
                 <li class='dash ' title="Hall Management">
-                    <a href="#">
+                    <a href="{% url 'rooms' %}">
                         <span class="menu_icon"><i class="material-icons">home</i></span>
-                        <span class="menu_title">Accommodation</span>
+                        <span class="menu_title">Protocol Rooms</span>
                     </a>
                 </li>
 
              <li class='dash ' title="SMS">
-                    <a href="#">
+                    <a href="{% url 'messages' %}">
                         <span class="menu_icon"><i class="material-icons">sms</i></span>
                         <span class="menu_title">SMS</span>
                     </a>
                 </li>
 
-            <li class='dash ' title="Downloads">
+            <li class='dash ' title="Generate custom reports">
                     <a href="#">
                         <span class="menu_icon"><i class="material-icons">download</i></span>
-                        <span class="menu_title">Downloads</span>
+                        <span class="menu_title">Downloads Excel</span>
                     </a>
+                    <ul>
+                    {% comment %}    <li><a href="{% url 'excel' %}">Current Admission Data</a></li>
+{% endcomment %}
+                        <li><a href="{% url 'show_export_form' %}">Verification Data</a></li>
+
+                        <li><a href="{% url 'download_admission_excel' %}">Admission Statistics</a></li>
+{#                        <li><a href="{% url 'vocationalSSCE' %}">Wassce/Technical List</a></li>#}
+
+
+
+                    </ul>
                 </li>
+
+
 
  <li title="Forms">
                 <a href="#">
@@ -119,13 +177,15 @@
                 </a>
                 <ul>
 
-                    <li><a href="{% url 'block_unblock' %}">Open or Close Applicant</a></li>
-                    <li><a href="{% url 'changeForm' %}">Change Voucher</a></li>
+                    <li><a href="{% url 'block_unblock' %}">Block or Unblock Applicant</a></li>
+{#                    <li><a title="eg change frm hnd to btech ..." href="{% url 'changeForm' %}">Change Voucher</a></li>#}
+
+                    <li><a href="{% url 'upload_photo' %}">Upload Applicant Photo</a></li>
 
                 </ul>
             </li>
-
-            <li title="Plugins">
+    {% if request.user.groups.all.0.name == 'admin'%}
+    <li title="Plugins">
                 <a href="#">
                     <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
                     <span class="menu_title">Settings</span>
@@ -133,12 +193,50 @@
                 <ul>
                     <li><a href="{% url 'calender' %}">Calendar</a></li>
 
+                     <li><a href="{% url 'admin:index' %}">User Management</a></li>
+
 
                 </ul>
 
             </li>
+        {% endif %}
+    {% elif request.user.groups.all.0.name != 'planning'  %}
+<li title="Forms">
+                <a href="#">
+                    <span class="menu_icon"><i class="material-icons">person</i></span>
+                    <span class="menu_title">User Support</span>
+                </a>
+                <ul>
 
+                    <li><a href="{% url 'block_unblock' %}">Block or Unblock Applicant</a></li>
+{#                    <li><a title="eg change frm hnd to btech ..." href="{% url 'changeForm' %}">Change Voucher</a></li>#}
+
+                    <li><a href="{% url 'upload_photo' %}">Upload Applicant Photo</a></li>
+
+                </ul>
+            </li>
+
+{% endif %}
+  {% if request.user.groups.all.0.name != 'admin' or request.user.groups.all.0.name != 'support' or request.user.groups.all.0.name != 'admission'%}
+         <li class='dash ' title="Generate custom reports">
+                    <a href="#">
+                        <span class="menu_icon"><i class="material-icons">download</i></span>
+                        <span class="menu_title">Planning Office</span>
+                    </a>
+                    <ul>
+                        <li><a href="{% url 'applicants_index' %}">View Applicants</a></li>
+
+                        <li><a href="{% url 'show_export_form' %}">Verification Data</a></li>
+
+                        <li><a href="{% url 'download_admission_excel' %}">Admission Statistics</a></li>
+
+
+
+                    </ul>
+                </li>
+{% endif %}
             <li title="Click to Logout">
+
 
 
                 <a href="{% url 'logout' %}" class="nav-link text-dark">
@@ -150,22 +248,10 @@
                 </a>
 
 
-            </li>
-            {% comment %} <li title="Plugins">
-                <a href="#">
-                    <span class="menu_icon"><i class="material-icons">&#xE8C0;</i></span>
-                    <span class="menu_title">Forms</span>
-                </a>
-                <ul>
-                    <li><a href="{% url 'sell' %}">Sell</a></li>
 
-                    <li><a href="{% url 'sales' %}">View Sales</a></li>
-
-{#                    <li><a href="{% url 'recover_voucher' %}">Recover Lost Voucher</a></li>#}
-                </ul>
 
             </li>
-{% endcomment %}
+
         </ul>
     </div>
 {% endif %}

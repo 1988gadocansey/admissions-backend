@@ -28,6 +28,7 @@
                                 <th><strong>Size</strong></th>
                                 <th><strong>Total Admitted</strong></th>
                                 <th><strong>Running</strong></th>
+                                <th><strong>Admitting</strong></th>
                                 <th><strong>Action</strong></th>
 
                             </tr>
@@ -43,8 +44,8 @@
                                     <td>{{ record.code }}</td>
                                     <td>{{ record.type }}</td>
                                     <td>{{ record.duration }}</td>
-                                    <td>   GHS0.0  </td>
-</td>
+                                    <td>    GHS0.0</td>
+
                                     <td>Not available</td>
                                     <td>Not available</td>
                                     <td>
@@ -67,6 +68,22 @@
 
 
                                     </td>
+                                <td>
+                                     <select class="admitt" name="admitt">
+                                            <option>--select--</option>
+                                            <option value="true"{% if  record.admitting == True %}
+                                                    selected="selected" {% endif %} >
+                                                Admitting
+                                            </option>
+
+                                            <option value="false" {% if  record.admitting == False %}
+                                                    selected="selected" {% endif %}>
+                                                Not Admitting
+                                            </option>
+
+
+                                        </select>
+                                </td>
 
                                     <td>
                                         <input type="hidden" name="pid" class="programID" value="{{ record.id }}">

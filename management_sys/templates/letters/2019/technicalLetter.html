@@ -1,139 +1,215 @@
+{% extends "printLayout.html" %}
 {% load static %}
+{% load humanize %}
 {% load custom_tags %}
-<html>
-<head>
 
-    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{% load account_tags %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/sweetalert/sweetalert.min.css' %}"> <!-- original -->
 
-    <title>Applicant Placement and Management System | Print page</title>
-    <!-- uikit -->
-    <link rel="stylesheet" href="https://ttuportal.com/static/bower_components/uikit/css/uikit.almost-flat.min.css" media="all">
-
-
-    <link rel="stylesheet" href="https://ttuportal.com/static/assets/css/main.min.css" media="all">
-
-
-    <link rel="stylesheet" href="https://ttuportal.com/static/assets/css/themes/themes_combined.min.css" media="all">
-
-
-    <style>
-
-    body{
-        font: Georgia, "Times New Roman", Times, serif;
-        background: #fff;
-        font-size: 13px;
-
-    }
-    @media print {
-    body {
-        font: Georgia, "Times New Roman", Times, serif;
-        background: #fff;
-        font-size: 13px;
-    }
-}
-
-        tbody tr:nth-child(odd) {
-
-}
-
-tbody tr:nth-child(even) {
-
-}
-
-tbody tr {
-  background-image: url(noise.png);
-}
-
-table {
-
-}
-thead, tfoot {
-
-  color: white;
-  text-shadow: 1px 1px 1px black;
-}
-
-thead th, tfoot th, tfoot td {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
-
-}
-        th, td {
-  padding: 9px;
-  text-align: left;
-}
-
+ <style>
+@font-face {
+            font-family: Avenir;
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/l/font?kit=ijwUs5PnXdA4ZZUA6Zd-m2FJXA&skey=8887f17a62203d44&v=v4) format('woff2');
+        }
+body {
+                height: auto;
+                  size: A4 portrait;
+            font-family: Arial, sans-serif;
+            font-family: 'Avenir', cursive;
+            font-size: 14px;
+            }
 </style>
+   <style type="text/css" media="print">
+@font-face {
+            font-family: Avenir;
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/l/font?kit=ijwUs5PnXdA4ZZUA6Zd-m2FJXA&skey=8887f17a62203d44&v=v4) format('woff2');
+        }
+        #print{
+            text-align:right;
+        }
+        .capitalize {
+            text-transform: capitalize;
+        }
+
+        .ui.table td .uppercase {
+
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+        @media print {
+            body {
+                height: auto;
+                  size: A4 portrait;
+            font-family: Arial, sans-serif;
+            font-family: 'Avenir', cursive;
+            font-size: 14px;
+            }
+            img {
+                -webkit-print-color-adjust: exact;
+            }
+            #print {
+                text-align: right;
+            }
+
+            .capitalize {
+                text-transform: capitalize;
+            }
+
+            .ui.table td .uppercase {
+                font-weight: bold;
+                text-align: right;
+                text-transform: uppercase;
+            }
+            table {
+                float: none !important;
+            }
+
+            * {
+                overflow: visible !important;
+            }
+
+            div {
+                float: none !important;
+            }
+
+            #page1 {
+                page-break-inside: avoid;
+                page-break-after: always;
+            }
+
+            #page2 {
+                page-break-inside: avoid;
+                page-break-after: always;
+
+            }
+
+            #page3 {
+                page-break-inside: avoid;
+                page-break-before: always;
+            }
+
+            #page4 {
+                page-break-inside: avoid;
+                page-break-before: always;
+            }
+
+            .clear {
+                clear: both;
+            }
+            /* clear here */
+            table {
+                page-break-inside: auto;
+                border-collapse: collapse
+            }
+
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto
+            }
+
+            thead {
+                display: table-header-group
+            }
+
+            tfoot {
+                display: table-footer-group
+            }
 
 
 
-</head>
-<body>
-{#<a onclick="javascript:printDiv('print')" class="btn btn-outline-info ks-light">Click to print letter</a>#}
-<div id="print">
+        }
+
+        @page {
+            size: A4;
+
+        }
+
+        table, figure {
+            page-break-inside: avoid;
+        }
+
+        fieldset legend {
+            page-break-before: always;
+        }
+
+        h1, h2, h3, h4, h5 {
+            page-break-after: avoid;
+        }
+
+        table {
+            background: none;
+        }
+    </style>
+
+{% endblock %}
+
+{% block contents %}
+
+    <a onclick="javascript:printDiv('print')" class="btn btn-outline-info ks-light">Click to print letter</a>
+    <div id="print">
 
     <div id="page1">
-        <input type="hidden" value="{{ applicant.id }}" class="data"/>
-
-        <img src="https://ttuportal.com/static/assets/img/header.jpg" alt="photo" style="margin-top: -460px"
+        <img src="{% static 'assets/img/header.jpg' %}" style="width:1086px;height: auto"
              class="ui fluid image"/>
 
 
         <br/>
         <div class="content" id="regular">
             <div class="watermark">
+               <div id="photo" style="margin-left: 600px;margin-top: -17px">
+                    <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</p>
+                    <img class=''
+                         src="http://photos.ttuportal.com/public/albums/thumbnails/{{ applicant.applicationnumber }}.jpg"
 
-                <div id="photo" style="margin-left: 622px;margin-top: -150px">
-
-                     <img alt="photo"
-                             src="https://ttuportal.com/admissions_portal/public/albums/thumbnails/{{ applicant.application_number }}.jpg"
-
-                         style="width:96px;height: auto ">
-
-
+                         style="width:106px;height: auto ">
+                </div>
+                <div style="margin-left: 0px">
+                    <p style="text-transform: capitalize">Dear <span
+                            style="text-transform: capitalize"> {{ applicant.title | capfirst }}. {{ applicant.lastname |lower }} {{ applicant.firstname |capfirst }} {{ applicant.middlename |lower }}</span></p>
                 </div>
 
                 <div style="margin-left: 2px;text-align: justify">
-                    <div style="margin-left: 0px">
-                        <p style="text-transform: capitalize">Dear <span
-                                style="">  {{ applicant.title | title }}. {{ applicant.name |title }}</span></p>
-                    </div>
+
                     <center><b>OFFER OF ADMISSION
-                        - {{ applicant.programme_admitted.department.faculty_id.faculty_name | upper }}
-                        {% if applicant.nationality.name == 'Ghana' %}
+                        - {{ applicant.programmeadmittedid.department.faculty_id.faculty_name | upper }}
+                          {% if applicant.nationalityid.id  == 58 %}
 
-                            (GHANAIAN)
 
-                        {% else %}
-                            (INTERNATIONAL STUDENT)
-                        {% endif %}
+                              ({{ applicant.sectionadmitted|upper }})
+
+                             {% else %}
+                             (INTERNATIONAL STUDENT)
+                            {% endif %}
                         - ADMISSION
 
-                        N<u>O </u>: {{ applicant.application_number }} </b></center>
+                        N<u>O </u>: {{ applicant.applicationnumber }} </b></center>
                     <hr>
-
                     <div id="letter">
                         <p>We write on behalf of the Academic Board to offer you admission to Takoradi Technical
                             University to pursue a programme of study leading
                             to the award of
-                            {% if applicant.programme_admitted.type == 'HND' %}
+                            {% if applicant.programmeadmittedid.type == 'HND' %}
                                 Higher National Diploma
-                            {% elif applicant.programme_admitted.type == 'BTECH' %}
+                            {% elif applicant.programmeadmittedid.type == 'BTECH' %}
 
 
-                            {% elif applicant.programme_admitted.type == 'MTECH' %}
+                             {% elif applicant.programmeadmittedid.type == 'MTECH' %}
 
 
                             {% endif %}
 
-                            ({{ applicant.programme_admitted.name }}).
+                            ({{ applicant.programmeadmittedid.name }}).
                             The
-                            duration of the programme is {{ applicant.programme_admitted.duration }} academic years.</p>
-                        <p>All payment of fees should be done with your admission number above.</p>
+                            duration of the programme is {{ applicant.programmeadmittedid.duration }} academic years.</p>
 
-
-
-                         <p>
+                       <p>All payment of fees should be done with your admission number above.</p>
+                          <p>
                             Note: A mandatory Preparatory Course in Engineering Mathematics
                             and Engineering Science shall be organised
                             for all applicants from Technical
@@ -142,9 +218,9 @@ thead th, tfoot th, tfoot td {
                         </p>
 
 
-                        <p>The preparatory course starts from <b>Monday 2nd July, 2019 </b>
-                            and ends on <b>Friday 2nd August, 2019.</b> You are therefore required
-                            to pay a non-refundable special tuition fee of GH¢300 at any branch of <b>Bank of Africa</b>
+                        <p>The preparatory course starts from <b>Monday 2nd July, 2018 </b>
+                            and ends on <b>Friday 27th August, 2018.</b> You are therefore required
+                            to pay a non-refundable special tuition fee of GH¢200 at any branch of <b>Bank of Africa</b>
                             into Account Number <b>0002004101441</b>
                             There is an option for accommodation on campus at a fee of GH¢65 during the preparatory
                             course <br>
@@ -154,40 +230,74 @@ thead th, tfoot th, tfoot td {
                         </p>
 
 
-                        <p>1. Your admission is for <b>the {{ applicant.letter_settings.working_year }} Academic Year.</b> If you fail to enroll, or if
+                        {% if applicant.programmeadmittedid.department.faculty_id.faculty_name == 'FACULTY OF ENGINEERING' %}
+                            <p>Note: Engineering students are to pay for the underlisted equipments at a cost of GHC300.</p>
+                            <p>
+                            <ul>
+                                <li> Overall with reflectors - GHC85</li>
+                                <li> Safety Boots - GHC85</li>
+                                <li> Helmet - GHC20</li>
+                                <li> Hand Gloves - GHC10</li>
+                                <li> Safety Googles - GHC10</li>
+                                <li> Safety Googles - GHC10</li>
+                                <li> Set of Drawing Instruments - GHC90</li>
+                            </ul>
+
+
+                            </p>
+
+                        {% endif %}
+
+                        <p>1. Your admission is for <b>the 2018/2019 Academic Year.</b> If you fail to enroll, or if
 
                             you withdraw from the programme without prior approval from the University,
                             you shall forfeit the admission automatically.
                         </p>
-                        <p>2. <b>The {{ applicant.letter_settings.working_year }} Academic Year</b> is scheduled to begin on {{ applicant.letter_settings.reporting|date:"l jS F Y" }}.
+                        <p>2. <b>The 2018/2019 Academic Year</b> is scheduled to begin on Monday 20th August,
+                            2018.
                             You are therefore expected to report for medical examinations and registration from
-                            <b>{{ applicant.letter_settings.medical_examinations_starts |date:"l jS F Y" }}</b> to <b>{{ applicant.letter_settings.medical_examinations_ends |date:"l jS F Y" }}.</b>
+                            <b>Monday 20th August, 2018</b> to <b>Friday 31st August, 2018.</b>
                             You are also mandated to participate in an orientation programme which shall run from
 
-                            <b>{{ applicant.letter_settings.orientation_starts|date:"l jS F Y" }}</b> to <b>{{ applicant.letter_settings.orientation_ends |date:"l jS F Y" }}.</b>
+                            <b>3rd September,2018</b> to <b>7th September,2018.</b>
                         </p>
                         <p>3.
                             You are required to make a <b>PAYMENT</b> of <b>
-                                {% if applicant.nationality.name == 'Ghana' %}
-                                      {% if applicant.year_of_admission == "2019/2020" %}
-                                    GH¢{% getFees applicant.programme_admitted.code applicant.level_admitted applicant.year_of_admission %}
-                                    {% else %}
-                                        GHC{{ applicant.admission_fees }}
+                                {% if applicant.nationalityid.name == 'Ghana' %}
+                                       GHS{% getFees applicant.programmeadmittedid.code applicant.leveladmitted applicant.yearofadmission %}
 
-                                        {% endif %}
-                                {% else %}
 
-                                    USD1750.00
-                                {% endif %}
+
+
+                            {% else %}
+
+                                     USD1750.00
+                            {% endif %}
                             </b>
 
                             at any
                             branch of
-                              {{ applicant.programme_admitted.bank}}
-                            with this admission number <b>{{ applicant.application_number }}</b>
+                            {% if   applicant.programmeadmittedid.section == 'Evening' %}
+                              <!--  Ecobank into Account  Number 0189104488868901 -->
+                                 Calbank Bank into Account  Number 1400001216327
+                            {% elif applicant.programmeadmittedid.type == 'NON TERTIARY' %}
+
+                                UBA into Account  Number 00511448001580
+                             {% elif applicant.programmeadmittedid.type == 'BTECH' %}
+
+                               Calbank Bank into Account  Number 1400001216327
+                            {% elif applicant.nationalityid != 58 %}
+
+                                Zenith Bank into Account 6010406900
+                            {% else %}
+                            <b>{{ applicant.programmeadmittedid.department.faculty_id.bank_id.bank_name }}</b> into Account
+                            Number <b>{{ applicant.programmeadmittedid.department.faculty_id.bank_id.bank_account_number }}
+                            {% endif %}
+
+                              with this admission number <b>{{ applicant.applicationnumber }}</b>
                             . If you do not indicate acceptance of
                             this
-                            admission by paying the fees before <b>{{ applicant.letter_settings.fees_deadline |date:"l jS F Y" }},</b> your admission will
+                            admission by paying the fees before <b>  30th September, 2018,</b> your admission will
 
                             be offered to another applicant on the waiting list. You are to make a photocopy of the
 
@@ -197,12 +307,10 @@ thead th, tfoot th, tfoot td {
                             fees
                             forfeits his/her admission.
                             <span> <b>Note: Fee payment is for an Academic Year, and it is non-refundable.</b></span>
+                        </p>
 
-                        </p>
-                         <p>
-                            4. A mandatory Health and Safety programme will be pursued by all first year students at a fee of GHC100.00 to be paid at any branch of Guaranty Trust (GT) Bank into Account Number 4011091305110.
-                        </p>
-                        <p>5.
+
+                        <p>4.
                             You shall be on probation for the full duration of your programme, and you may
                             be dismissed at any time for unsatisfactory academic work or misconduct.
                             You shall be required to adhere to <b>ALL</b> the rules and regulations of the
@@ -212,7 +320,7 @@ thead th, tfoot th, tfoot td {
                         </p>
 
 
-                        <p>6.
+                        <p>5.
                             You are also to note that your admission is subject to your being declared
                             medically fit to pursue the programme of study in this University. <b>You are,
                                 therefore, required to undergo medical examinations at the University Health
@@ -220,18 +328,18 @@ thead th, tfoot th, tfoot td {
                                 fail to undergo the medical examinations.</b>
                         </p>
 
-                        <p>7.
+                        <p>6.
                             Applicants shall also be held personally responsible for any false statement(s) or
                             omission(s) made in their applications.
                         </p>
 
-                        <p>8.
+                        <p>7.
                             The University does not give financial assistance to students. It is therefore the
                             responsibility of students to arrange for their own sponsorship and maintenance
                             during their period of study.
                         </p>
 
-                        <p>9.
+                        <p>8.
                             You are to note that the University is a secular institution; it is therefore not
                             bound by observance of any religious or sectarian practices. As much as possible,
                             the University lectures and/or examinations would be scheduled to take place
@@ -239,37 +347,30 @@ thead th, tfoot th, tfoot td {
                             examinations would be held on other days.
                         </p>
 
-                        <p>10.
+                        <p>9.
                             As a policy of the University, all students shall be required to register under the
                             National Health Insurance Scheme (NHIS) on their own to enable them access
                             medical care whilst on campus.
                         </p>
-                         {% if applicant.hall_accomodation == 1 %}
-                            <p>11.
-                                You have been given Hall Accommodation at {{ applicant.hall_admitted.hall_name }} You
+
+                        {% if applicant.hallaccomodation == True %}
+                            <p>10.
+                                You have been given Hall Accommodation at {{ applicant.halladmitted.hall_name }} You
                                 will be required to
-                                make a payment of <b>GHC{{ applicant.hall_admitted.hall_fees }}</b> into any branch of
-                                <b>{{ applicant.hall_admitted.hall_bank.bank_name }}</b> with Account Number
-                                <b> {{ applicant.hall_admitted.hall_bank.bank_account_number }}</b>. You shall report to
-                                your assigned
-                                hall of residence with the original copy
+                                make a payment of <b>{{ applicant.halladmitted.hall_fees}}</b> into any branch of <b>{{applicant.hall_admitted.hall_bank.bank_name}}</b> with Account Number
+                                <b> {{ applicant.hall_admitted.hall_bank.bank_account_number }}</b>. You shall report to your assigned hall of residence with the original copy
                                 of the pay-in-slip. Note that hall fees paid are not refundable.
                             </p>
-                            <p>12. All first year students who are allocated rooms in any of the University halls are required to pay an amount GHS150 as hall dues at any branch of Guaranty Trust (GT) Bank into Account Number 4011091305110.</p>
-
-                        {% else %}
-
-                              <p>12.  You are affiliated to {{ applicant.hall_admitted.hall_name}} You are required to pay GHC50 as hall dues at any branch of Guaranty Trust (GT) Bank into Account Number 4011091305110</p>
-
-
-                        {% endif %}
-
-
-                        <p>13.
+                            <p>11.
                                 Any applicant who falsifies result(s) shall be withdrawn from the University
                                 and shall forfeit his/her fees paid.
                             </p>
-
+                        {% else %}
+                             <p>11.
+                            Any applicant who falsifies result(s) shall be withdrawn from the University
+                            and shall forfeit his/her fees paid.
+                        </p>
+                        {% endif %}
 
 
 
@@ -279,76 +380,28 @@ thead th, tfoot th, tfoot td {
 
                         </p>
                         <p>Yours faithfully</p>
-                        <p><img src="https://ttuportal.com/static/assets/img/signature_2019.png" style="width:90px;height:auto;"/></p>
+                        <p><img src="https://ttuportal.com/static/assets/img/signature_2018.png" style="width:90px;height:auto;"/></p>
                         <p>SNR. ASSISTANT REGISTRAR(ADMISSIONS)<br/>For: REGISTRAR</p>
 
                     </div>
 
-                    <div id="foot">
-                        <img src="https://ttuportal.com/static/assets/img/footer.jpg" style="width:1086px;height: auto"
-                             class="image-responsive responsive"/>
-
-                    </div>
-                {% if applicant.programme_admitted.department.faculty_id.faculty_name == 'FACULTY OF ENGINEERING' %}
-
-
-
-                <div id="attachment" style="display: block; page-break-before: always;font-family: 'Roboto' "  >
-                    <u><center><h4>FACULTY OF ENGINEERING</h4></center></u>
-                    <u> <center><h4>DRAWING EQUIPMENT AND PERSONAL PROTECTIVE EQUIPMENT (PPE)</h4></center></u>
-                    <p>STUDENTS MAY BUY THE FOLLOWING ITEMS ON CAMPUS AT THE UNIVERSITY BOOKSHOP AT AFFORDABLE AND ADVANTAGEOUS PRICES</p>
-                    <table border="1">
-                        <thead>
-                        <th>ITEM NAME</th>
-                        <th>UNIT PRICE (GHC)</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>STANDARD A3 DRAWING BOARD ENGINEERING INSTRUMENT SET, ENGINEERING SET SQUARE,
-100 PIECES A3 DRAWING SHEETS</td>
-                                <td>200.00</td>
-                            </tr>
-                            <tr>
-                                <td>HARD STEEL TOED SAFETY BOOTS</td>
-                                <td>130.00</td>
-
-                            </tr>
-                        <tr>
-                            <td>SAFETY HELMET</td>
-                            <td>20.0</td>
-                        </tr>
-                        <tr>
-                            <td>REFLECTOR JACKET</td>
-                            <td>20.0</td>
-                        </tr>
-                        <tr>
-                            <td>SAFETY GOGGLES</td>
-                            <td>10.0</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <br/>
-                    <p><b>   FOR RESEVATION AND PAYMENT</b></p>
-                    <p>KINDLY CALL <b>0552570226/ 0552570234</b> OR DEPOSIT THE MONEY INTO THE <b>BANK ACCOUNT</b> OR THE
-                        <b>MOBILE MONEY NUMBER</b> STATED BELOW.</p>
-                    <p>KINDLY COME ALONG WITH YOUR PAY –IN-SLIP SHOULD YOU PAY INTO THE BANK ACCOUNT.</p>
-                    <p>BANK NAME: ECOBANK GHANA LIMITED<br/> ACCOUNT NAME: M&G STATIONERY GH. LTD <br/>ACCOUNT NUMBER: 0270264644894701<br/> ACCOUNT BRANCH: TEMA LONG ROOM<br/></p>
-
-                    <p>BANK NAME: UMB GHANA LIMITED<br/> ACCOUNT NAME: M&G STATIONERY GH. LTD<br/> ACCOUNT NUMBER: 0251427590014<br/> ACCOUNT BRANCH: AIRPORT CITY</p>
-                    <p><i>MTN / VODAFONE / AIRTELTIGO MOBILE MONEY NUMBERS AVAILABLE UPON REQUEST</i></p>
-                </div>
-
-
-
-                {% endif %}
 
                 </div>
+                <div id="foot">
+                    <img src="https://ttuportal.com/static/assets/footer.jpg" style="width:1086px;height: auto"
+                         class="image-responsive responsive"/>
+
+                </div>
+
             </div>
         </div>
+        </div>
     </div>
-</div>
+
+{% endblock %}
+{% block js %}
 
 
-</body>
-</html>
+
+{% endblock %}
 

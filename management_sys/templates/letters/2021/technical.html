@@ -1,0 +1,175 @@
+{% load static %}
+{% load custom_tags %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Applicant Placement and Management System | Print page</title>
+    <!-- uikit -->
+    <link rel="stylesheet" href="https://ttuportal.com/static/bower_components/uikit/css/uikit.almost-flat.min.css"
+          media="all">
+
+
+    <link rel="stylesheet" href="https://ttuportal.com/static/assets/css/main.min.css" media="all">
+
+
+    <link rel="stylesheet" href="https://ttuportal.com/static/assets/css/themes/themes_combined.min.css" media="all">
+    <link href='http://fonts.googleapis.com/css?family=Avenir' rel='stylesheet' type='text/css'>
+
+    <style type="text/css">
+        @font-face {
+            font-family: Avenir;
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/l/font?kit=ijwUs5PnXdA4ZZUA6Zd-m2FJXA&skey=8887f17a62203d44&v=v4) format('woff2');
+        }
+
+        body {
+            position: relative;
+            margin: 0 auto;
+
+            background: #FFFFFF;
+            font-family: Arial, sans-serif;
+            font-family: Avenir;
+            font-size: 14px;
+             pdf-page-break: always;
+             page-break-after: always;
+        }
+        .img{
+            content: url('https://www.w3docs.com/uploads/media/default/0001/01/477719675fecaac0362957c214fb9aa56fca99b5.jpeg');
+        }
+        @page {
+            size: A4 portrait;
+            font-family: Arial, sans-serif;
+            font-family: 'Avenir', cursive;
+
+            font-size: 14px;
+            pdf-page-break: always;
+             page-break-after: always;
+        background-image: url('https://ttuportal.com/static/assets/watermark.jpg');
+        }
+
+        #photo {
+            margin-left: 625px;
+        }
+
+        .letter {
+            margin: 2cm;
+
+        }
+p {
+
+  margin-bottom: 5px; /* between paragraphs */
+     line-height: 17px;   /* within paragraph */
+  }
+        .ui.table td .uppercase {
+            font-weight: bold;
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+       /* spacing */
+
+.uk-table {
+  table-layout: fixed;
+  width: 100%;
+    margin-top: -250px;
+
+}
+
+
+.uk-table th, td {
+  padding: 1px;
+}
+
+
+
+    </style>
+
+
+</head>
+<body>
+{#<a onclick="javascript:printDiv('print')" class="btn btn-outline-info ks-light">Click to print letter</a>#}
+<div id="print">
+
+    <div id="page1">
+        <input type="hidden" value="{{ applicant.id }}" class="data"/>
+
+        <img src="https://ttuportal.com/static/assets/letterheads/2021/header.jpg" alt="photo"
+             style="margin-top: -460px"
+             class="ui fluid image"/>
+
+        <br/>
+        <div class="content" id="regular">
+            <div class="watermark">
+
+                <div id="photo" style="margin-top: -50px">
+                    <img alt="photo" src="{% getPicture applicant.applicationnumber %}"  class="img" style="width:96px;height: auto ">
+
+                </div>
+
+                <div style="text-align: justify">
+                    <div style=" margin-left: 100px;">
+                        <p style="text-transform: capitalize">Dear <span
+                                style=""> <b>{{ applicant.title | title }}. {{ applicant.lastname |title }}</b>,</span></p>
+                    </div>
+                    <center><b>OFFER OF ADMISSION
+                        - {{ applicant.programmeadmittedid.department.faculty_id.faculty_name | upper }}
+                        {% if applicant.nationalityid.name == 'Ghana' %}
+
+                            (GHANAIAN)
+
+                        {% else %}
+                            (INTERNATIONAL STUDENT)
+                        {% endif %}
+                        - ADMISSION
+
+                        NO : {{ applicant.applicationnumber }} </b></center>
+                    <hr width="80%">
+                    <div class="letter">
+                        <p>1.We write on behalf of the Academic Board to offer you admission into this University to read
+                             a
+                            {% if applicant.applicationuserid.type == "TOPUP" %}
+                                two(2) year
+                            {% else %}
+
+                                {{ applicant.programmeadmittedid.duration }} year
+
+                            {% endif %}
+                            programme leading to the award of
+
+                            <b>{{ applicant.programmeadmittedid.name }}</b>.
+
+                        </p>
+
+                        <p>2.	The offer is based on available information that you have satisfied the entry requirements for the above mentioned programme of study.</p>
+                        <p>3.	Any applicant who falsify result(s) shall be withdrawn from the University and shall forfeit all fees paid.</p>
+                        <p>4.	Your admission is also subject to you being declared medically fit by the Medical Director of the University to pursue the programme. You are accordingly required to come along with your National Health Insurance Card.</p>
+                        <p>5.	Your admission is for <b>the {{ applicant.lettersettings.working_year }}</b> academic year which begins provisionally on <b>{{ applicant.lettersettings.reporting|date:"l jS F Y" }}</b>.</p>
+                        <p>6.	You shall be on probation for the full duration of your programme and you may be dismissed anytime for unsatisfactory academic work or gross misconduct pursuant to the rules and regulations of the University</p>
+                        <p>7.	Kindly log on to <b>admissions.ttuportal.com</b> with your serial number and pin to view the fee schedule. All payment of fees should be done with your <b>admission number</b> above before the beginning of the academic year at any branch of the banks listed below.</p>
+                        <p>8.	Since your programme will involve online studies, you are encouraged to acquire a laptop to facilitate your academic work in the University.</p>
+                        <p>9.	You have been affiliated to {{ applicant.halladmitted.name }}. For accommodation at the Hall log on to <b>admissions.ttuportal.com </b>for instructions. Hall fees should be paid at any branch of GCB or UBA. Accept our congratulations on your admission to the University.</p>
+                         <p>Yours faithfully</p>
+                        <p style="margin-top: -120px"><img src="https://ttuportal.com/static/assets/signatures/2021.png"
+                                style="width:90px;height:auto;"/> <br/>
+                         <b>SNR. ASSISTANT REGISTRAR (ADMISSIONS)</b><br/>For: REGISTRAR</p>
+                         <p style="margin-left: -80px"><img src="https://ttuportal.com/static/assets/bank.png"/></p>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+

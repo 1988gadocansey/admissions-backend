@@ -31,7 +31,7 @@ SECRET_KEY = 'jh$ub2&&$^w5t4c%b!_la1*24b6*=$2-4$r_k0%-js-n@4%!wv'
 DEBUG = True
 
 ALLOWED_HOSTS = ['45.33.4.164', '127.0.0.1', 'localhost', 'ttuportal.com','https://ttuportal.com']
-
+#USE_TZ = False
 # Application definition
 
 INSTALLED_APPS = [
@@ -108,7 +108,7 @@ PASSWORD_HASHERS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'admissions',
+        'NAME': 'admissions3',
         'USER': 'gadocansey',
         'PASSWORD': '1988Gadocansey',
         'HOST': 'localhost',
@@ -154,8 +154,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
-
-EFAULT_FROM_EMAIL = 'noreply@ttu.edu.gh'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@ttu.edu.gh'
 ACCOUNT_EMAIL_UNIQUE = True
 ACCOUNT_EMAIL_CONFIRMATION_REQUIRED = True
 ACCOUNT_PASSWORD_EXPIRY = 60 * 60 * 24 * 5  # seconds until pw expires, this example shows five days
@@ -163,8 +163,8 @@ ACCOUNT_PASSWORD_USE_HISTORY = True
 ACCOUNT_LOGIN_URL = '/login'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'tpconnect@tpoly.edu.gh'
-EMAIL_HOST_PASSWORD = 'ocansey2018'
+EMAIL_HOST_USER = 'admissions@ttu.edu.gh'
+EMAIL_HOST_PASSWORD = 'PRINT45dull@'
 EMAIL_PORT = 587
 # DEFAULT_EMAIL_FROM = 'admin@payitgh.com'
 ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window; you may, of course, use a different value.
@@ -217,3 +217,14 @@ STATIC_ROOT = os.path.join(SITE_ROOT, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 
+SFTP_STORAGE_HOST = '45.33.4.164'
+SFTP_STORAGE_PORT = 44444
+SFTP_STORAGE_ROOT = '/var/www/html/photos/public/albums/thumbnails'
+SFTP_STORAGE_PARAMS = {
+    'username': 'tpconnect',
+    'password': 'PRINT45dull',
+    'allow_agent': False,
+    'look_for_keys': False,
+}
+# SFTP_KNOWN_HOST_FILE = '~/.ssh/known_hosts'
+SFTP_STORAGE_INTERACTIVE = False
