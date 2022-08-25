@@ -34,12 +34,14 @@
             font-family: Arial, sans-serif;
             font-family: Avenir;
             font-size: 14px;
-             pdf-page-break: always;
-             page-break-after: always;
+            pdf-page-break: always;
+            page-break-after: always;
         }
-        .img{
+
+        .img {
             content: url('https://www.w3docs.com/uploads/media/default/0001/01/477719675fecaac0362957c214fb9aa56fca99b5.jpeg');
         }
+
         @page {
             size: A4 portrait;
             font-family: Arial, sans-serif;
@@ -47,8 +49,8 @@
 
             font-size: 14px;
             pdf-page-break: always;
-             page-break-after: always;
-        background-image: url('https://ttuportal.com/static/assets/watermark.jpg');
+            page-break-after: always;
+            background-image: url('https://ttuportal.com/static/assets/watermark.jpg');
         }
 
         #photo {
@@ -59,31 +61,32 @@
             margin: 2cm;
 
         }
-p {
 
-  margin-bottom: 5px; /* between paragraphs */
-     line-height: 17px;   /* within paragraph */
-  }
+        p {
+
+            margin-bottom: 5px; /* between paragraphs */
+            line-height: 15px; /* within paragraph */
+        }
+
         .ui.table td .uppercase {
             font-weight: bold;
             text-align: right;
             text-transform: uppercase;
         }
 
-       /* spacing */
+        /* spacing */
 
-.uk-table {
-  table-layout: fixed;
-  width: 100%;
-    margin-top: -250px;
+        .uk-table {
+            table-layout: fixed;
+            width: 100%;
+            margin-top: -250px;
 
-}
+        }
 
 
-.uk-table th, td {
-  padding: 1px;
-}
-
+        .uk-table th, td {
+            padding: 1px;
+        }
 
 
     </style>
@@ -106,14 +109,16 @@ p {
             <div class="watermark">
 
                 <div id="photo" style="margin-top: -50px">
-                    <img alt="photo" src="{% getPicture applicant.applicationnumber %}"  class="img" style="width:96px;height: auto ">
+                    <img alt="photo" src="{% getPicture applicant.applicationnumber %}" class="img"
+                         style="width:96px;height: auto ">
 
                 </div>
 
                 <div style="text-align: justify">
                     <div style=" margin-left: 100px;">
                         <p style="text-transform: capitalize">Dear <span
-                                style=""> <b>{{ applicant.title | title }}. {{ applicant.lastname |title }}</b>,</span></p>
+                                style=""> <b>{{ applicant.title | title }}. {{ applicant.firstname | title }} {{ applicant.middlename | title }} {{ applicant.lastname |title }}</b>,</span>
+                        </p>
                     </div>
                     <center><b>OFFER OF ADMISSION
                         - {{ applicant.programmeadmittedid.department.faculty_id.faculty_name | upper }}
@@ -129,8 +134,9 @@ p {
                         NO : {{ applicant.applicationnumber }} </b></center>
                     <hr width="80%">
                     <div class="letter">
-                        <p>1.We write on behalf of the Academic Board to offer you admission into this University to read
-                             a
+                        <p>1.We write on behalf of the Academic Board to offer you admission into this University to
+                            read
+                            a
                             {% if applicant.applicationuserid.type == "TOPUP" %}
                                 two(2) year
                             {% else %}
@@ -139,33 +145,52 @@ p {
 
                             {% endif %}
                             programme leading to the award of
+                         {% if applicant.programmeadmittedid.type == "DEGREE" or applicant.programmeadmittedid.type == "BTECH" %}
+                              {% comment %}  <b>{{ applicant.programmeadmittedid.name|slice:":-6" }}</b>.{% endcomment %}
+                            <b>{{ applicant.programmeadmittedid.name }}</b>.
+                            {% else %}
 
                             <b>{{ applicant.programmeadmittedid.name }}</b>.
-
+                            {% endif %}
                         </p>
 
-                        <p>2.	The offer is based on available information that you have satisfied the entry requirements for the above mentioned programme of study.</p>
-                         <p>3.	You shall be on probation for the full duration of your programme and you may be dismissed anytime for unsatisfactory academic work or gross misconduct pursuant to the rules and regulations of the University.</p>
+                        <p>2. The offer is based on available information that you have satisfied the entry requirements
+                            for the above mentioned programme of study.</p>
+                        <p>3. Your admission is also subject to you being declared medically fit by the Medical Director
+                            of the University to pursue the programme. You are accordingly required to come along with
+                            your <b>National Health Insurance Card</b>.</p>
+                       {% comment %} <p>4. Your admission is for <b>the {{ applicant.lettersettings.working_year }}</b> academic year
+                            which begins <b>provisionally on</b>
+                            <b>{{ applicant.lettersettings.reporting|date:"l jS F Y" }}</b>.</p>{% endcomment %}
+                        <p>4. The reopening date for the {{ applicant.lettersettings.working_year }} academic year shall be communicated later via sms.</p>
 
-                        <p>4.	Your admission is also subject to you being declared medically fit by the Medical Director of the University to pursue the programme.</p>
-                        <p>5.	Your admission is for <b>the {{ applicant.lettersettings.working_year }}</b> academic year which begins provisionally on <b>{{ applicant.lettersettings.reporting|date:"l jS F Y" }}</b>.</p>
-                         <p>6.	Any applicant who falsify result(s) shall be withdrawn from the University and shall forfeit all fees paid.</p>
+                       {% comment %} <p>5. You shall be on probation for the full duration of your programme and subject to the rules
+                            of the University.</p>{% endcomment %}
+                    <p>5. You shall be on probation until matriculation whereafter you may become a junior member of the university subject to the rules and regulations of the university.</p>
 
-                        <p>7.	Addition to your school fees you are to pay USD600 for accommodation for one year. All fees must be paid into Zenith bank account(6040404999) with Swift code- ZEBLGHAC using <b>admission number</b> above before the beginning of the academic year.</p>
-                         <p>8.	Fee payment is for an Academic Year, and it is non-refundable.</p>
-                         <p>9.	Since your programme will involve online studies, you are encouraged to acquire a laptop to facilitate your academic work in the University.</p>
+                        <p>6. Any applicant who falsify result(s) shall be withdrawn from the University forthwith and
+                            shall
+                            forfeit all fees paid.</p>
 
-                        <p>10.	You have been affiliated to {{ applicant.halladmitted.name }}. For accommodation in the Hall log on to <b>admissions.ttuportal.com </b>. </p>
+                        <p>7. Kindly log on to <b>apply.ttuportal.com</b> with your serial number and pin to view
+                            the fee schedule. All fees must be paid into Zenith bank account(6040404999) with Swift code- ZEBLGHAC using <b>admission number</b> above
+                            before the beginning of the academic year.</p>
+                        <p>8. Fee payment is for an Academic Year, and it is non-refundable.</p>
+                        <p>9. Kindly note that acceptance of this offer of admission is subject to the full payment of
+                            the admission fees on or before the close of registration.</p>
+                        <p>10. Since your programme will involve online studies, you are encouraged to acquire a laptop
+                            to facilitate your academic work in the University.</p>
+                        <p>11. You have been affiliated to {{ applicant.halladmitted.name }}. For accommodation in the
+                            Hall log on to <b>apply.ttuportal.com </b>for instructions. <b>Hall fees should be paid only to the university accounts with
+                                GCB bank or UBA</b>. Payment can be made in any of the banks' branches nationwide. </p>
                         <p>Accept our congratulations on your admission to the University.</p>
-                         <p>Yours faithfully</p>
+                        <p>Yours faithfully</p>
                         <p style="margin-top: -120px"><img src="https://ttuportal.com/static/assets/signatures/2021.png"
-                                style="width:90px;height:auto;"/> <br/>
-                         <b>SNR. ASSISTANT REGISTRAR (ADMISSIONS)</b><br/>For: REGISTRAR</p>
-                         <p style="margin-left: -80px"><img src="https://ttuportal.com/static/assets/bank.png"/></p>
+                                                           style="width:90px;height:auto;"/> <br/>
+                            <b>SNR. ASSISTANT REGISTRAR (ADMISSIONS)</b><br/>For: REGISTRAR</p>
+                        <p style="margin-left: -80px"><img src="https://ttuportal.com/static/assets/bank.png"/></p>
 
                     </div>
-
-
 
 
                 </div>

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_tags %}
+
+{% load account_tags %}
+
+
+{% block contents %}
+
+
+    <h3 class="heading_c uk-margin-bottom">GTECH Data Download</h3>
+
+     <div class="uk-width-xLarge-1-10">
+        <div class="md-card">
+            <div class="md-card-content" style="">
+
+
+                 <form method="POST" name="admission"
+                      action="{% url 'export_gtech' %}" v-form>
+                    {% csrf_token %}
+
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <div class="uk-width-medium-2-10" style="margin-top: 16px">
+
+
+                            <select required="required" class="md-input select" v-model="programme" v-form-ctrl=""
+                                v-select="programme" name="programme">
+                            <option selected="selected" value="">Select programme</option>
+
+                            {% for program in programme %}
+                                <option value="{{ program.id }}">{{ program.name|upper }}</option>
+                            {% endfor %}
+
+                        </select>
+                        <p class="uk-text-danger text-small" v-if="admission.programme.$error.required">Programme is
+                            required</p>
+
+                        </div>
+
+                        <div class="uk-width-medium-2-10" style="margin-top: 19px">
+                             <select required="required" class="md-input select" v-model="year" v-form-ctrl=""
+                                v-select="year" name="year" >
+                            <option selected="selected" value="">Select year</option>
+
+
+                            {% for year in years %}
+                                <option value="{{ year }}">{{ year }}</option>
+                            {% endfor %}
+
+
+                        </select>
+                        <p class="uk-text-danger text-small" v-if="admission.year.$error.required">Year is
+                            required</p>
+
+                        </div>
+
+
+                        <div class="uk-width-medium-2-10" style="margin-top: 19px">
+
+                            <input v-show="admission.$valid" class="md-btn md-btn-primary uk-margin-small-top"
+                                   type="submit" name="submit_order" value="Download Excel" />
+
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+{% block js %}
+
+
+
+
+{% endblock %}

@@ -1,5 +1,7 @@
 {% load static %}
 {% load custom_tags %}
+{% load filters %}
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -65,7 +67,7 @@
         p {
 
             margin-bottom: 5px; /* between paragraphs */
-            line-height: 17px; /* within paragraph */
+            line-height: 15px; /* within paragraph */
         }
 
         .ui.table td .uppercase {
@@ -117,7 +119,7 @@
                 <div style="text-align: justify">
                     <div style=" margin-left: 100px;">
                         <p style="text-transform: capitalize">Dear <span
-                                style=""> <b>{{ applicant.title | title }}. {{ applicant.lastname |title }}</b>,</span>
+                                style=""> <b>{{ applicant.title | title }}. {{ applicant.firstname | title }} {{ applicant.middlename | title }} {{ applicant.lastname |title }}</b>,</span>
                         </p>
                     </div>
                     <center><b>OFFER OF ADMISSION
@@ -137,42 +139,46 @@
                         <p>1.We write on behalf of the Academic Board to offer you admission into this University to
                             read
                             a
-                            {% if applicant.applicationuserid.type == "TOPUP" %}
-                                two(2) year
+                                {{ levels|key:applicant.leveladmitted }}
+                            programme leading to the award of
+                         {% if applicant.programmeadmittedid.type == "DEGREE" or applicant.programmeadmittedid.type == "BTECH" %}
+                              {% comment %}  <b>{{ applicant.programmeadmittedid.name|slice:":-6" }}</b>.{% endcomment %}
+                            <b>{{ applicant.programmeadmittedid.name }}</b>.
                             {% else %}
 
-                                {{ applicant.programmeadmittedid.duration }} year
-
-                            {% endif %}
-                            programme leading to the award of
-
                             <b>{{ applicant.programmeadmittedid.name }}</b>.
-
+                            {% endif %}
                         </p>
 
                         <p>2. The offer is based on available information that you have satisfied the entry requirements
                             for the above mentioned programme of study.</p>
-                        <p>3. You shall be on probation for the full duration of your programme and you may be dismissed
-                            anytime for unsatisfactory academic work or gross misconduct pursuant to the rules and
-                            regulations of the University</p>
-                        <p>4. Your admission is also subject to you being declared medically fit by the Medical Director
+                        <p>3. Your admission is also subject to you being declared medically fit by the Medical Director
                             of the University to pursue the programme. You are accordingly required to come along with
-                            your National Health Insurance Card.</p>
-                        <p>5. Your admission is for <b>the {{ applicant.lettersettings.working_year }}</b> academic year
-                            which begins provisionally on
-                            <b>{{ applicant.lettersettings.reporting|date:"l jS F Y" }}</b>.</p>
-                        <p>6. Any applicant who falsify result(s) shall be withdrawn from the University and shall
+                            your <b>National Health Insurance Card</b>.</p>
+                       {% comment %} <p>4. Your admission is for <b>the {{ applicant.lettersettings.working_year }}</b> academic year
+                            which begins <b>provisionally on</b>
+                            <b>{{ applicant.lettersettings.reporting|date:"l jS F Y" }}</b>.</p>{% endcomment %}
+                        <p>4. The reopening date for the {{ applicant.lettersettings.working_year }} academic year is <b>Friday, 7th October 2022</b>.</p>
+
+                       {% comment %} <p>5. You shall be on probation for the full duration of your programme and subject to the rules
+                            of the University.</p>{% endcomment %}
+                    <p>5. You shall be on probation until matriculation whereafter you may become a junior member of the university subject to the rules and regulations of the university.</p>
+
+                        <p>6. Any applicant who falsify result(s) shall be withdrawn from the University forthwith and
+                            shall
                             forfeit all fees paid.</p>
 
-                        <p>7. Kindly log on to <b>admissions.ttuportal.com</b> with your serial number and pin to view
+                        <p>7. Kindly log on to <b>apply.ttuportal.com</b> with your serial number and pin to view
                             the fee schedule. All payment of fees should be done with your <b>admission number</b> above
-                            before the beginning of the academic year at any branch of the banks listed below.</p>
+                            before the beginning of the academic year.</p>
                         <p>8. Fee payment is for an Academic Year, and it is non-refundable.</p>
-                        <p>9. Since your programme will involve online studies, you are encouraged to acquire a laptop
+                        <p>9. Kindly note that acceptance of this offer of admission is subject to the full payment of
+                            the admission fees on or before the close of registration.</p>
+                        <p>10. Since your programme will involve online studies, you are encouraged to acquire a laptop
                             to facilitate your academic work in the University.</p>
-                        <p>10. You have been affiliated to {{ applicant.halladmitted.name }}. For accommodation at the
-                            Hall log on to <b>admissions.ttuportal.com </b>for instructions. Hall fees should be paid at
-                            any branch of GCB or UBA. </p>
+                        <p>11. You have been affiliated to {{ applicant.halladmitted.name }}. For accommodation in the
+                            Hall log on to <b>apply.ttuportal.com </b>for instructions. <b>Hall fees should be paid only to the university accounts with
+                                GCB bank or UBA</b>. Payment can be made in any of the banks' branches nationwide. </p>
                         <p>Accept our congratulations on your admission to the University.</p>
                         <p>Yours faithfully</p>
                         <p style="margin-top: -120px"><img src="https://ttuportal.com/static/assets/signatures/2021.png"
